@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Tap-Payments/SharedDataModels-iOS.git",
       "state" : {
-        "revision" : "5c7f3941cbec4cee75ed5bcb71563bf949e6139a",
-        "version" : "0.0.9"
+        "revision" : "fa700f35db4b1e5a2c60b1ea327da79d211cbd29",
+        "version" : "0.0.11"
       }
     },
     {

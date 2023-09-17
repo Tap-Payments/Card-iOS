@@ -192,6 +192,14 @@ class CardSettingsViewController: FormViewController {
             }
         }
         
+        <<< SwitchRow("addons.scanner"){ row in
+            row.title = "scanner"
+            row.value = config?.addons?.scanner ?? false
+            row.onChange { row in
+                self.config?.addons?.scanner = row.value ?? false
+            }
+        }
+        
         form +++ Section("interface")
         <<< AlertRow<String>("interface.locale"){ row in
             row.title = "locale"

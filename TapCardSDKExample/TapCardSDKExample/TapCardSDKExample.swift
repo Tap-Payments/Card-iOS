@@ -28,7 +28,7 @@ class TapCardSDKExample: UIViewController {
                                              customer: Customer(id: nil, name: [.init(lang: "en", first: "Tap", last: "Payments", middle: "")], nameOnCard: "Tap Payments", editable: true, contact: .init(email: "tappayments@tap.company", phone: .init(countryCode: "+965", number: "88888888"))),
                                              acceptance: Acceptance(supportedBrands: ["AMERICAN_EXPRESS","VISA","MASTERCARD","OMANNET","MADA"], supportedCards: ["CREDIT","DEBIT"]),
                                              fields: Fields(cardHolder: true),
-                                             addons: Addons(displayPaymentBrands: true, loader: true, saveCard: false),
+                                             addons: Addons(displayPaymentBrands: true, loader: true, saveCard: false, scanner: false),
                                              interface: Interface(locale: "en", theme: UIView().traitCollection.userInterfaceStyle == .dark ? "dark" : "light", edges: "curved", direction: "dynamic"))
     
     override func viewDidLoad() {
