@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Osama Rabie on 17/09/2023.
 //
@@ -28,6 +28,6 @@ internal extension Bundle {
                 return bundle
             }
         }
-        fatalError("unable to find bundle named BioSwift_BioSwift")
+        return Bundle(for: TapCardView.self)
     }
 }
