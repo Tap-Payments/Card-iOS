@@ -59,8 +59,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Tap-Payments/TapCardScannerWebWrapper-iOS.git",
       "state" : {
-        "revision" : "b03455c9c692791142283a657e67baa33a7191fe",
-        "version" : "0.0.2"
+        "revision" : "551248e633c2c3ad0739b2e27685f97e309b5a43",
+        "version" : "0.0.4"
       }
     },
     {

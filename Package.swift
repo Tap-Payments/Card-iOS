@@ -17,9 +17,9 @@ let package = Package(
         .package(url: "https://github.com/huri000/SwiftEntryKit.git", from: "1.0.0"),
         .package(url: "https://github.com/SnapKit/SnapKit.git", from: "5.0.0"),
         .package(url: "https://github.com/TakeScoop/SwiftyRSA.git", from: "1.0.0"),
-        .package(url: "https://github.com/airbnb/lottie-spm.git", from: "4.3.0"),
+        .package(url: "https://github.com/airbnb/lottie-spm.git", .upToNextMajor(from: "4.0.0")),
         .package(url: "https://github.com/Tap-Payments/SharedDataModels-iOS.git", from: "0.0.1"),
-        .package(url: "https://github.com/Tap-Payments/TapCardScannerWebWrapper-iOS.git", from: "0.0.2")
+        .package(url: "https://github.com/Tap-Payments/TapCardScannerWebWrapper-iOS.git", from: "0.0.4")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -28,13 +28,19 @@ let package = Package(
             name: "Tap-Card-SDK",
             dependencies: ["SwiftEntryKit",
                           "SnapKit",
+                           .product(name: "Lottie", package: "lottie-spm"),
                           "SwiftyRSA",
-                           "Lottie",
                           "SharedDataModels-iOS",
-                          "TapCardScannerWebWrapper-iOS"]),
+                          "TapCardScannerWebWrapper-iOS"],
+            resources: [.process("Resources")]),
         .testTarget(
             name: "Tap-Card-SDKTests",
-            dependencies: ["Tap-Card-SDK"]),
+            dependencies: ["Tap-Card-SDK",
+                           "SwiftEntryKit",
+                            "SnapKit",
+                            "SwiftyRSA",
+                            "SharedDataModels-iOS",
+                            "TapCardScannerWebWrapper-iOS"]),
     ],
     swiftLanguageVersions: [.v5]
 )
