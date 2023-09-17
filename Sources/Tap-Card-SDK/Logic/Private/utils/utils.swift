@@ -86,7 +86,7 @@ internal extension TapCardView {
         
         let bundleID = TapApplicationPlistInfo.shared.bundleIdentifier ?? ""
         
-        let sdkPlistInfo = TapBundlePlistInfo(bundle: Bundle.currentBundle)
+        let sdkPlistInfo = TapBundlePlistInfo(bundle: Bundle(for: TapCardView.self))
         
         guard let requirerVersion = sdkPlistInfo.shortVersionString, !requirerVersion.isEmpty else {
             
