@@ -32,8 +32,8 @@ let package = Package(
                           "SwiftyRSA",
                           "SharedDataModels-iOS",
                           "TapCardScannerWebWrapper-iOS"],
-            resources: [.process("Resources/Dark_Mode_Button_Loader.json"),
-                        .process("Resources/Light_Mode_Button_Loader.json"),
+            resources: [.copy("Resources/Dark_Mode_Button_Loader.json"),
+                        .copy("Resources/Light_Mode_Button_Loader.json"),
                         .process("Resources/Media.xcassets")]),
         .testTarget(
             name: "Tap-Card-SDKTests",
