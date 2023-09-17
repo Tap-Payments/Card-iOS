@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="JPS-iV-rdU">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Tap CardSDK Example-->
+        <scene sceneID="o4a-cG-a8q">
+            <objects>
+                <viewController storyboardIdentifier="CardWebSDKExample" useStoryboardIdentifierAsRestorationIdentifier="YES" id="JPS-iV-rdU" customClass="TapCardSDKExample" customModule="TapCardSDKExample" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="yKI-yB-Tqf">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xAw-VV-0cn" customClass="TapCardView" customModule="Tap_Card_SDK">
+                                <rect key="frame" x="10" y="259" width="373" height="95"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" priority="250" constant="95" id="I5a-8G-3yU"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vkb-n0-5UZ">
+                                <rect key="frame" x="124.66666666666669" y="374" width="144" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="LjH-k5-fSv"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="labelColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Generate Token"/>
+                                <connections>
+                                    <action selector="generateToken:" destination="JPS-iV-rdU" eventType="touchUpInside" id="gBC-zJ-bWa"/>
+                                </connections>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a2i-nZ-R0j">
+                                <rect key="frame" x="20" y="432" width="353" height="386"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9MK-gv-hJc">
+                                <rect key="frame" x="289" y="59" width="84" height="35"/>
+                                <color key="tintColor" systemColor="labelColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Options"/>
+                                <connections>
+                                    <action selector="optionsClicked:" destination="JPS-iV-rdU" eventType="touchUpInside" id="ojv-nL-fHC"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="ahX-FJ-iuT"/>
+                        <color key="backgroundColor" name="bgColor"/>
+                        <constraints>
+                            <constraint firstItem="a2i-nZ-R0j" firstAttribute="bottom" secondItem="ahX-FJ-iuT" secondAttribute="bottom" id="1b8-CT-2JP"/>
+                            <constraint firstItem="ahX-FJ-iuT" firstAttribute="trailing" secondItem="a2i-nZ-R0j" secondAttribute="trailing" constant="20" id="1hv-p9-wUm"/>
+                            <constraint firstItem="9MK-gv-hJc" firstAttribute="top" secondItem="ahX-FJ-iuT" secondAttribute="top" id="3wu-YE-5Uv"/>
+                            <constraint firstItem="Vkb-n0-5UZ" firstAttribute="centerX" secondItem="yKI-yB-Tqf" secondAttribute="centerX" id="68i-O6-dx7"/>
+                            <constraint firstItem="Vkb-n0-5UZ" firstAttribute="top" secondItem="xAw-VV-0cn" secondAttribute="bottom" constant="20" id="GLi-nJ-cMz"/>
+                            <constraint firstItem="a2i-nZ-R0j" firstAttribute="leading" secondItem="ahX-FJ-iuT" secondAttribute="leading" constant="20" id="Kl4-vs-oXj"/>
+                            <constraint firstItem="ahX-FJ-iuT" firstAttribute="trailing" secondItem="9MK-gv-hJc" secondAttribute="trailing" constant="20" id="Lu4-vc-7mf"/>
+                            <constraint firstItem="xAw-VV-0cn" firstAttribute="leading" secondItem="ahX-FJ-iuT" secondAttribute="leading" constant="10" id="Mbn-K1-SEf"/>
+                            <constraint firstItem="a2i-nZ-R0j" firstAttribute="top" secondItem="Vkb-n0-5UZ" secondAttribute="bottom" constant="8" id="gEc-jf-4iA"/>
+                            <constraint firstItem="xAw-VV-0cn" firstAttribute="top" secondItem="ahX-FJ-iuT" secondAttribute="top" constant="200" id="qF1-aw-nQY"/>
+                            <constraint firstItem="ahX-FJ-iuT" firstAttribute="trailing" secondItem="xAw-VV-0cn" secondAttribute="trailing" constant="10" id="zO4-3q-DrC"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="button" destination="Vkb-n0-5UZ" id="IbH-Bl-0ie"/>
+                        <outlet property="eventsTextView" destination="a2i-nZ-R0j" id="yMG-hN-PCj"/>
+                        <outlet property="tapCardView" destination="xAw-VV-0cn" id="Eqv-N0-94G"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="huY-Ec-Y8S" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3860.8695652173915" y="809.59821428571422"/>
+        </scene>
+        <!--Card Settings View Controller-->
+        <scene sceneID="217-6a-NUy">
+            <objects>
+                <viewController storyboardIdentifier="CardSettingsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Lrp-r7-fSg" customClass="CardSettingsViewController" customModule="TapCardSDKExample" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="UHI-sb-J4F">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="l8w-0M-2M2"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Pzq-mi-76R" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4837" y="832"/>
+        </scene>
+    </scenes>
+    <resources>
+        <namedColor name="bgColor">
+            <color red="0.32899999618530273" green="0.32400000095367432" blue="0.4779999852180481" alpha="0.33000001311302185" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

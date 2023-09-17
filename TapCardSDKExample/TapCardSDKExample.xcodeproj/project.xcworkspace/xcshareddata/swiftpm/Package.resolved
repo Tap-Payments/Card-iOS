@@ -1,0 +1,95 @@
+{
+  "pins" : [
+    {
+      "identity" : "eureka",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/xmartlabs/Eureka.git",
+      "state" : {
+        "revision" : "b6e35acf77a5551070afa6248935ec68e71f22af",
+        "version" : "5.4.0"
+      }
+    },
+    {
+      "identity" : "lottie-spm",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/airbnb/lottie-spm.git",
+      "state" : {
+        "revision" : "2ae19d3c4f1603b45e551e6bebf02f523ca22a2e",
+        "version" : "4.3.0"
+      }
+    },
+    {
+      "identity" : "quicklayout",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/huri000/QuickLayout",
+      "state" : {
+        "revision" : "6be62decbe508d8fc8f9dbafc349d05bab03c38b",
+        "version" : "3.0.1"
+      }
+    },
+    {
+      "identity" : "shareddatamodels-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Tap-Payments/SharedDataModels-iOS.git",
+      "state" : {
+        "revision" : "5c7f3941cbec4cee75ed5bcb71563bf949e6139a",
+        "version" : "0.0.9"
+      }
+    },
+    {
+      "identity" : "snapkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SnapKit/SnapKit.git",
+      "state" : {
+        "revision" : "f222cbdf325885926566172f6f5f06af95473158",
+        "version" : "5.6.0"
+      }
+    },
+    {
+      "identity" : "swiftentrykit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/huri000/SwiftEntryKit.git",
+      "state" : {
+        "revision" : "c2d42574e4fe4e1f9719843f35add7922942a16b",
+        "version" : "1.2.7"
+      }
+    },
+    {
+      "identity" : "swiftyrsa",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/TakeScoop/SwiftyRSA.git",
+      "state" : {
+        "revision" : "6521919ad0e99dff927685f142d8136479acb452",
+        "version" : "1.8.0"
+      }
+    },
+    {
+      "identity" : "tapcardscannerwebwrapper-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Tap-Payments/TapCardScannerWebWrapper-iOS.git",
+      "state" : {
+        "revision" : "551248e633c2c3ad0739b2e27685f97e309b5a43",
+        "version" : "0.0.4"
+      }
+    },
+    {
+      "identity" : "tapcardvlidatorkit-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Tap-Payments/TapCardVlidatorKit-iOS.git",
+      "state" : {
+        "revision" : "61e2949915e2a210d89a57f450cba54d7aac551f",
+        "version" : "1.0.24"
+      }
+    },
+    {
+      "identity" : "toast-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/BastiaanJansen/toast-swift",
+      "state" : {
+        "revision" : "bc52aa61d6a372da553d1d59bdd4e56037ae2f14",
+        "version" : "1.5.0"
+      }
+    }
+  ],
+  "version" : 2
+}
