@@ -176,7 +176,7 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
     /// used to setup the constraint of the shimmerling loading view
     private func setupShimmeringView() {
         // let us load the correct shimmerling lottie json file
-        animationView = .init(name: "Light_Mode_Button_Loader", bundle: Bundle.module)
+        animationView = .init(name: "Light_Mode_Button_Loader", bundle: Bundle.currentBundle)
         
         // let us set the needed configuratons for the shimmering view
         animationView!.frame = .zero
@@ -192,7 +192,7 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
     /// - Parameters url; The url that contains the configurations passed to the web card sdk
     private func reAdjustShimmeringView(with url:URL?) {
         // First set the light/dark based on the card theme
-        animationView?.animation = .named(getCardTheme() == "dark" ? "Dark_Mode_Button_Loader" : "Light_Mode_Button_Loader", bundle: Bundle.module)
+        animationView?.animation = .named(getCardTheme() == "dark" ? "Dark_Mode_Button_Loader" : "Light_Mode_Button_Loader", bundle: Bundle.currentBundle)
             
         
         // Second set the curves based on the card edges
@@ -236,9 +236,9 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
     /// Decides which lottie json animation file to be used based on the current theme of the device
     internal func setAnimationLoader() {
         if self.traitCollection.userInterfaceStyle == .dark {
-            animationView?.animation = .named("Dark_Mode_Button_Loader", bundle: Bundle(for: TapCardView.self))
+            animationView?.animation = .named("Dark_Mode_Button_Loader", bundle: Bundle.currentBundle)
         }else{
-            animationView?.animation = .named("Light_Mode_Button_Loader", bundle: Bundle(for: TapCardView.self))
+            animationView?.animation = .named("Light_Mode_Button_Loader", bundle: Bundle.currentBundle)
         }
     }
     

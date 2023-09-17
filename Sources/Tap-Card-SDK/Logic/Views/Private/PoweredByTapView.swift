@@ -101,7 +101,7 @@ extension PoweredByTapView {
     
     /// Theme the back button level
     func themePoweredByTap() {
-        poweredByTapImageView.image = UIImage(named: "Powered-by-tap",in: Bundle(for: PoweredByTapView.self), with: nil)
+        poweredByTapImageView.image = UIImage(named: "Powered-by-tap",in: Bundle.currentBundle, with: nil)
         poweredByTapImageView.tintColor = .white
         poweredByTapImageView.contentMode = .scaleAspectFit
     }
