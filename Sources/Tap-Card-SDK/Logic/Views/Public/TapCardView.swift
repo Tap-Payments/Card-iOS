@@ -14,74 +14,6 @@ import Foundation
 import TapCardScannerWebWrapper_iOS
 import AVFoundation
 import SwiftEntryKit
-/// A protocol that allows integrators to get notified from events fired from Tap card sdk
-@objc public protocol TapCardViewDelegate {
-    /// Will be fired whenever the card is rendered and loaded
-    @objc optional func onReady()
-    /// Will be fired once the user focuses any of the card fields
-    @objc optional func onFocus()
-    /// Will be fired once we detect the brand and related issuer data for the entered card data
-    /** - Parameter data: will include the data in JSON format. example :
-     *{
-        "bin": "424242",
-        "bank": "",
-        "card_brand": "VISA",
-        "card_type": "CREDIT",
-        "card_category": "",
-        "card_scheme": "VISA",
-        "country": "GB",
-        "address_required": false,
-        "api_version": "V2",
-        "issuer_id": "bnk_TS02A5720231337s3YN0809429",
-        "brand": "VISA"
-     }*     */
-    @objc optional func onBinIdentification(data: String)
-    /// Will be fired whenever the validity of the card data changes.
-    /// - Parameter invalid: Will be true if the card data is invalid and false otherwise.
-    @objc optional func onInvalidInput(invalid: Bool)
-    /**
-        Will be fired whenever the card sdk finishes successfully the task assigned to it. Whether `TapToken` or `AuthenticatedToken`
-     - Parameter data: will include the data in JSON format. For `TapToken`:
-     {
-         "id": "tok_MrL97231045SOom8cF8G939",
-         "created": 1694169907939,
-         "object": "token",
-         "live_mode": false,
-         "type": "CARD",
-         "source": "CARD-ENCRYPTED",
-         "used": false,
-         "card": {
-             "id": "card_d9Vj7231045akVT80B8n944",
-             "object": "card",
-             "address": {},
-             "funding": "CREDIT",
-             "fingerprint": "gRkNTnMrJPtVYkFDVU485Gc%2FQtEo%2BsV44sfBLiSPM1w%3D",
-             "brand": "VISA",
-             "scheme": "VISA",
-             "category": "",
-             "exp_month": 4,
-             "exp_year": 24,
-             "last_four": "4242",
-             "first_six": "424242",
-             "name": "AHMED",
-             "issuer": {
-                "bank": "",
-                "country": "GB",
-                "id": "bnk_TS07A0720231345Qx1e0809820"
-            }
-         },
-         "url": ""
-     }
-     */
-    @objc optional func onSuccess(data: String)
-    /// Will be fired whenever there is an error related to the card connectivity or apis
-    /// - Parameter data: includes a JSON format for the error description and error
-    @objc optional func onError(data: String)
-    /// Will be fired whenever the card element changes its height for your convience
-    /// - Parameter height: The new needed height
-    @objc optional func onHeightChange(height: Double)
-}
-
 
 /// The custom view that provides an interface for the Tap card sdk form
 @objc public class TapCardView: UIView {
@@ -294,9 +226,10 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
         
     }
     
-    /// Will handle start scanner click
-    internal func handleScanner() {
-        scanCard()
+    /// Will handle passing the scanned data to the web based sdk
+    /// - Parameter with scannedCard: The card data needed to be passed to the web card sdk
+    internal func handleScanner(with scannedCard:TapCard) {
+        webView?.evaluateJavaScript("window.fillCardInputs({cardNumber: '\(scannedCard.tapCardNumber ?? "")',expiryDate: '\(scannedCard.tapCardExpiryMonth ?? "")/\(scannedCard.tapCardExpiryYear ?? "")',cvv: '\(scannedCard.tapCardCVV ?? "")',cardHolderName: '\(scannedCard.tapCardName ?? "")'})")
     }
     
     /// Will do needed logic post getting a message from the web sdk that it is ready to be displayd
@@ -369,7 +302,7 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
     
     
     /// Starts the scanning process if all requirements are met
-    @objc public func scanCard() {
+    internal func scanCard() {
         //Make sure we have something to present within
         guard let presentScannerIn = presentScannerIn else {
             let error:[String:String] = ["error":"In order to be able to use the scanner, you need to reconfigure the card and pass presentScannerIn"]
@@ -378,19 +311,18 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
                 options: []), encoding: .utf8) ?? "In order to be able to use the scanner, you need to reconfigure the card and pass presentScannerIn")
             return }
         let scannerController:TapScannerViewController = .init()
+        scannerController.delegate = self
         //scannerController.modalPresentationStyle = .overCurrentContext
         // Second grant the authorization to use the camera
         AVCaptureDevice.requestAccess(for: AVMediaType.video) { response in
             if response {
                 //access granted
                 DispatchQueue.main.async {
-                    //self?.fullScanner = TapFullScreenScannerViewController(dataSource: self!)
-                    //self?.fullScanner?.delegate = self
-                    //presentScannerIn.present((self?.fullScanner)!, animated: true)
                     presentScannerIn.present(scannerController, animated: true)
+                    //SwiftEntryKit.display(entry: scannerController, using: ThreeDSView().swiftEntryAttributes())
                 }
             }else {
-                
+                self.delegate?.onError?(data: "{\"error\":\"The user didn't approve accessing the camera.\"}")
             }
         }
     }

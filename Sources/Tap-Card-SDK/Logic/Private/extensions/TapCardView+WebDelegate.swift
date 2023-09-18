@@ -52,7 +52,7 @@ extension TapCardView:WKNavigationDelegate {
             handleRedirection(data: tap_extractDataFromUrl(url.absoluteURL))
             break
         case _ where url.absoluteString.contains("onScannerClick"):
-            handleScanner()
+            scanCard()
             break
         case _ where url.absoluteString.contains("onHeightChange"):
             

@@ -6,26 +6,13 @@
 //
 
 import Foundation
-import TapCardScannerWebWrapper_iOS
-import TapCardVlidatorKit_iOS
 import SharedDataModels_iOS
 
-extension TapCardView: TapScannerDataSource, TapCreditCardScannerViewControllerDelegate {
-    public func allowedCardBrands() -> [CardBrand] {
-        return CardBrand.allCases
+extension TapCardView: TapScannerViewControllerDelegate {
+    
+    func cardScanned(with card: TapCard, and scanner: TapScannerViewController) {
+        scanner.dismiss(animated: true) {
+            self.handleScanner(with: card)
+        }
     }
-    
-    public func creditCardScannerViewControllerDidCancel(_ viewController: TapCardScannerWebWrapper_iOS.TapFullScreenScannerViewController) {
-        
-    }
-    
-    public func creditCardScannerViewController(_ viewController: TapCardScannerWebWrapper_iOS.TapFullScreenScannerViewController, didErrorWith error: Error) {
-        
-    }
-    
-    public func creditCardScannerViewController(_ viewController: TapCardScannerWebWrapper_iOS.TapFullScreenScannerViewController, didFinishWith card: TapCard) {
-        
-    }
-    
-    
 }

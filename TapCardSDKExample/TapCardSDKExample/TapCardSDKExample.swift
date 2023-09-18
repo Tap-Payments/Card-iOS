@@ -133,7 +133,8 @@ class TapCardSDKExample: UIViewController {
         let configCtrl:CardSettingsViewController = storyboard?.instantiateViewController(withIdentifier: "CardSettingsViewController") as! CardSettingsViewController
         configCtrl.config = config
         configCtrl.delegate = self
-        present(configCtrl, animated: true)
+        //present(configCtrl, animated: true)
+        self.navigationController?.pushViewController(configCtrl, animated: true)
         
     }
     

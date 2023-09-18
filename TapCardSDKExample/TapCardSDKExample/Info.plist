@@ -23,7 +23,7 @@
 	</dict>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
-	<key>Privacy - Camera Usage Description</key>
+	<key>NSCameraUsageDescription</key>
 	<string>Requires access to your phone’s camera to scan a card.</string>
 </dict>
 </plist>
