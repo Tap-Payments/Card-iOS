@@ -120,8 +120,8 @@ class TapCardSDKExample: UIViewController {
     }
 
     func setupTapCardSDK() {
-        //tapCardView.initTapCardSDK(config: self.config, delegate: self, presentScannerIn: self)
-        tapCardView.initTapCardSDK(configDict: self.dictConfig, delegate: self, presentScannerIn: self)
+        tapCardView.initTapCardSDK(config: self.config, delegate: self, presentScannerIn: self)
+        //tapCardView.initTapCardSDK(configDict: self.dictConfig, delegate: self, presentScannerIn: self)
     }
     
     @IBAction func generateToken(_ sender: Any) {

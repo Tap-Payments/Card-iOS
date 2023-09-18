@@ -34,7 +34,7 @@ let package = Package(
                           "TapCardScannerWebWrapper-iOS"],
             resources: [.copy("Resources/Dark_Mode_Button_Loader.json"),
                         .copy("Resources/Light_Mode_Button_Loader.json"),
-                        .process("Resources/Media.xcassets")],
+                        .process("Resources/TapCardMedia.xcassets")],
             swiftSettings: [
                     .define("SPM")
                   ]),
