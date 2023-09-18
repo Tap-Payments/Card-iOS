@@ -353,7 +353,9 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
         self.presentScannerIn = presentScannerIn
         let operatorModel:Operator = .init(publicKey: configDict["publicKey"] as? String ?? "", metadata: generateApplicationHeader())
         var updatedConfigurations:[String:Any] = configDict
-        updatedConfigurations["operator"] = operatorModel
+        updatedConfigurations["operator"] = ["publicKey":operatorModel.publicKey ?? "",
+                                             "metaData":[:]]
+        updatedConfigurations["headers"] = operatorModel.metadata
         
         do {
             try openUrl(url: URL(string: generateTapCardSdkURL(from: updatedConfigurations)))

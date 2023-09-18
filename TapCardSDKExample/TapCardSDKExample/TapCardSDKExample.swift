@@ -31,6 +31,29 @@ class TapCardSDKExample: UIViewController {
                                              addons: Addons(displayPaymentBrands: true, loader: true, saveCard: false, scanner: false),
                                              interface: Interface(locale: "en", theme: UIView().traitCollection.userInterfaceStyle == .dark ? "dark" : "light", edges: "curved", direction: "dynamic"))
     
+    var dictConfig:[String:Any] = ["publicKey":"pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7",
+                                   "scope":"Token",
+                                   "merchant":["id":""],
+                                   "transaction":["amount":1, "currency":"SAR"],
+                                   "authentication":["description": "Authentication description",
+                                                     "metadata":["example":"value"],
+                                                     "reference":["transaction":generateRandomTransactionId(),
+                                                                  "order":generateRandomOrderId(),
+                                                                  "invoice":["id":""],
+                                                                  "authentication":["channel":"PAYER_BROWSER","purpose":"PAYMENT_TRANSACTION"],
+                                                                  "post":["url":""]]],
+                                   "customer":["id":nil,
+                                               "name":["lang":"en","first":"TAP","middle":"","last":"PAYMENTS"],
+                                               "nameOnCard":"TAP PAYMENTS",
+                                               "editble":true,
+                                               "contact":["email":"tap@tap.company",
+                                                          "phone":["countryCode":"+965","number":"88888888"]]],
+                                   "acceptance":["supportedBrands":["AMERICAN_EXPRESS","VISA","MASTERCARD","OMANNET","MADA"],
+                                                 "supportedCards":["CREDIT","DEBIT"]],
+                                   "fields":["cardHolder":true],
+                                   "addons":["displayPaymentBrands": true, "loader": true, "saveCard": false, "scanner": false],
+                                   "interface":["locale": "en", "theme": "light", "edges": "curved", "direction": "dynamic"]]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTapCardSDK()
@@ -97,7 +120,8 @@ class TapCardSDKExample: UIViewController {
     }
 
     func setupTapCardSDK() {
-        tapCardView.initTapCardSDK(config: self.config, delegate: self, presentScannerIn: self)
+        //tapCardView.initTapCardSDK(config: self.config, delegate: self, presentScannerIn: self)
+        tapCardView.initTapCardSDK(configDict: self.dictConfig, delegate: self, presentScannerIn: self)
     }
     
     @IBAction func generateToken(_ sender: Any) {
