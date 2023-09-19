@@ -82,6 +82,7 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
         //webView?.isHidden = true
         reAdjustShimmeringView(with: url)
         //animationView?.isHidden = false
+        //self.animationView?.isHidden = false
         self.updateShimmerView(with: true)
         // Second, instruct the web view to load the needed url
         let request = URLRequest(url: url!)
@@ -108,7 +109,7 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
     /// used to setup the constraint of the shimmerling loading view
     private func setupShimmeringView() {
         // let us load the correct shimmerling lottie json file
-        animationView = .init(name: "Light_Mode_Button_Loader", bundle: Bundle.currentBundle)
+        animationView = .init(name: UIView().traitCollection.userInterfaceStyle == .dark ? "Dark_Mode_Button_Loader" : "Light_Mode_Button_Loader", bundle: Bundle.currentBundle)
         
         // let us set the needed configuratons for the shimmering view
         animationView!.frame = .zero
@@ -117,7 +118,9 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
         animationView!.animationSpeed = 0.75
         // Add it to the view
         self.addSubview(animationView!)
-        animationView!.play()
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
+            self.animationView!.play()
+        }
     }
     
     /// Will recolor and adjust the corners of teh shimmerig view basde on the configurations
@@ -206,6 +209,7 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
             
             //originalCardViewAlpha = 1
             finalCardViewAlpha = 0
+            self.animationView?.play()
         }else {
             //originalAnimationViewAlpha = 1
             finalAnimationViewAlpha = 0

@@ -21,7 +21,7 @@ class TapCardSDKExample: UIViewController {
                                              customer: Customer(id: nil, name: [.init(lang: "en", first: "Tap", last: "Payments", middle: "")], nameOnCard: "Tap Payments", editable: true, contact: .init(email: "tappayments@tap.company", phone: .init(countryCode: "+965", number: "88888888"))))*/
     // full
     var config: TapCardConfiguration = .init(publicKey: "pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7",
-                                             scope: .Token,
+                                             scope: .Authenticate,
                                              merchant: Merchant(id: ""),
                                              transaction: Transaction(amount: 1, currency: "SAR"),
                                              authentication: Authentication(description: "Authentication description", metadata: ["utf1":"data"], reference: Reference(transaction: TapCardSDKExample.generateRandomTransactionId(), order: TapCardSDKExample.generateRandomOrderId()), invoice: nil, authentication: AuthenticationClass(), post: nil),
@@ -32,7 +32,7 @@ class TapCardSDKExample: UIViewController {
                                              interface: Interface(locale: "en", theme: UIView().traitCollection.userInterfaceStyle == .dark ? "dark" : "light", edges: "curved", direction: "dynamic"))
     
     var dictConfig:[String:Any] = ["publicKey":"pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7",
-                                   "scope":"Token",
+                                   "scope":"Authenticate",
                                    "merchant":["id":""],
                                    "transaction":["amount":1, "currency":"SAR"],
                                    "authentication":["description": "Authentication description",
@@ -42,8 +42,8 @@ class TapCardSDKExample: UIViewController {
                                                                   "invoice":["id":""],
                                                                   "authentication":["channel":"PAYER_BROWSER","purpose":"PAYMENT_TRANSACTION"],
                                                                   "post":["url":""]]],
-                                   "customer":["id":nil,
-                                               "name":["lang":"en","first":"TAP","middle":"","last":"PAYMENTS"],
+                                   "customer":["id":"",
+                                               "name":[["lang":"en","first":"TAP","middle":"","last":"PAYMENTS"]],
                                                "nameOnCard":"TAP PAYMENTS",
                                                "editble":true,
                                                "contact":["email":"tap@tap.company",
@@ -58,6 +58,12 @@ class TapCardSDKExample: UIViewController {
         super.viewDidLoad()
         setupTapCardSDK()
         button.isEnabled = false
+        do {
+                    let jsonData = try JSONSerialization.data(withJSONObject: self.dictConfig, options: [.prettyPrinted])
+                            print(String(data: jsonData, encoding: .utf8) ?? "")
+                        } catch {
+                            print("json serialization error: \(error)")
+                        }
         /*tapCardView?.initWebCardSDK(configString: """
 {
     "publicKey": "pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7",
