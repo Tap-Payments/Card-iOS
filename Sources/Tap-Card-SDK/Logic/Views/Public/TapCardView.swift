@@ -192,6 +192,7 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
             self.layoutSubviews()
             self.webView?.layoutIfNeeded()
             self.animationView?.layoutIfNeeded()
+            self.delegate?.onHeightChange?(height: newHeight ?? 95)
         }
     }
     
