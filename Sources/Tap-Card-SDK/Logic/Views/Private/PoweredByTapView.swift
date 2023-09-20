@@ -6,13 +6,16 @@
 //
 
 import UIKit
+import TapFontKit_iOS
 
 class PoweredByTapView: UIView {
 
     /// The view holding the back button
     var backView: UIView = .init(frame: .zero)
-    /// The back indicator label
+    /// The back button
     var backButton: UIButton = .init(frame: .zero)
+    /// The back label
+    var backLabel: UILabel = .init(frame: .zero)
     /// Indicating the back icon for the user
     var backIconImageView: UIImageView = .init(frame: .zero)
     /// Indicating the powered by tap icon for the user
@@ -86,7 +89,7 @@ extension PoweredByTapView {
         blurView.scale = 1
         blurView.blurRadius = 6
         blurView.colorTint = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-        blurView.colorTintAlpha = 0.06
+        blurView.colorTintAlpha = UIView().traitCollection.userInterfaceStyle == .dark ? 0.32 : 0.06
     }
     
     
@@ -94,6 +97,8 @@ extension PoweredByTapView {
     func themeBackButton() {
         backIconImageView.image = .init(systemName: "chevron.backward")
         backIconImageView.tintColor = .white
+        backLabel.textColor = .white
+        backLabel.backgroundColor = .clear
         backView.backgroundColor = .clear
         backButton.backgroundColor = .clear
         backView.backgroundColor = .clear
@@ -108,6 +113,7 @@ extension PoweredByTapView {
     
     func setupConstraints() {
         backView.addSubview(backIconImageView)
+        backView.addSubview(backLabel)
         backView.addSubview(backButton)
         addSubview(blurView)
         addSubview(poweredByTapImageView)
@@ -116,6 +122,7 @@ extension PoweredByTapView {
         blurView.translatesAutoresizingMaskIntoConstraints = false
         backView.translatesAutoresizingMaskIntoConstraints = false
         backIconImageView.translatesAutoresizingMaskIntoConstraints = false
+        backLabel.translatesAutoresizingMaskIntoConstraints = false
         backButton.translatesAutoresizingMaskIntoConstraints = false
         poweredByTapImageView.translatesAutoresizingMaskIntoConstraints = false
         poweredByTapImageView.tintColor = .white
@@ -136,7 +143,7 @@ extension PoweredByTapView {
         
         
         backView.snp.remakeConstraints { make in
-            make.width.equalTo(44)
+            make.width.equalTo(64)
             make.height.equalTo(20)
             make.centerY.equalTo(poweredByTapImageView.snp.centerY)
             make.leading.equalToSuperview().offset(16)
@@ -156,6 +163,12 @@ extension PoweredByTapView {
             make.leading.equalToSuperview()
         }
         
+        backLabel.snp.remakeConstraints { make in
+            make.centerY.equalTo(backIconImageView.snp.centerY)
+            make.leading.equalTo(backIconImageView.snp.trailing).offset(8)
+            make.trailing.equalToSuperview()
+        }
+        
         DispatchQueue.main.async {
             self.blurView.setNeedsLayout()
             self.blurView.updateConstraints()
@@ -172,6 +185,9 @@ extension PoweredByTapView {
             self.backIconImageView.setNeedsLayout()
             self.backIconImageView.updateConstraints()
             
+            self.backLabel.setNeedsLayout()
+            self.backLabel.updateConstraints()
+            
             self.setNeedsLayout()
             self.updateConstraints()
         }
@@ -184,6 +200,9 @@ extension PoweredByTapView {
             self.semanticContentAttribute = self.selectedLocale.lowercased() == "ar" ? .forceRightToLeft : .forceLeftToRight
             self.backIconImageView.semanticContentAttribute = self.selectedLocale.lowercased() == "ar" ? .forceRightToLeft : .forceLeftToRight
             self.backView.semanticContentAttribute = self.selectedLocale.lowercased() == "ar" ? .forceRightToLeft : .forceLeftToRight
+            self.backLabel.font = FontProvider.localizedFont(.robotoRegular, size: 16, languageIdentifier: self.selectedLocale.lowercased())
+            self.backLabel.text = self.selectedLocale.lowercased() == "ar" ? "رجوع" : "Back"
+            self.backLabel.semanticContentAttribute = self.selectedLocale.lowercased() == "ar" ? .forceRightToLeft : .forceLeftToRight
         }
     }
     

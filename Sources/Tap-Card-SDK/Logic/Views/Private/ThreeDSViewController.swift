@@ -82,7 +82,7 @@ extension ThreeDSView {
         webView?.scrollView.backgroundColor = UIColor.clear
         webView?.scrollView.bounces = false
         webView?.navigationDelegate = self
-        webView?.layer.cornerRadius = 18
+        webView?.layer.cornerRadius = 0
         webView?.clipsToBounds = true
     }
     /// Applies constrains to correctly size and position the web view
@@ -169,7 +169,7 @@ extension ThreeDSView {
         
         var attributes = EKAttributes.bottomFloat
         attributes.entryBackground = .clear
-        attributes.screenBackground = .color(color: .init(light: .init(white: 0, alpha: 0.6), dark: .init(white: 0, alpha: 0.6)))//.visualEffect(style: .standard)
+        attributes.screenBackground = .color(color: .init(light: .init(white: 0, alpha: 0.6), dark: .init(red: 0.108, green: 0.108, blue: 0.108, alpha: 0.75)))//.visualEffect(style: .standard)
         attributes.displayDuration = .infinity
         //attributes.popBehavior = .animated(animation: .init(fade: .init(from: 0, to: 1, duration: 2.0, delay: 2.0)))
         attributes.entranceAnimation = .init(translate: .init(duration: 0.5))

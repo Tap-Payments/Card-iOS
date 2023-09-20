@@ -19,7 +19,8 @@ let package = Package(
         .package(url: "https://github.com/TakeScoop/SwiftyRSA.git", from: "1.0.0"),
         .package(url: "https://github.com/airbnb/lottie-spm.git", .upToNextMajor(from: "4.0.0")),
         .package(url: "https://github.com/Tap-Payments/SharedDataModels-iOS.git", from: "0.0.1"),
-        .package(url: "https://github.com/Tap-Payments/TapCardScannerWebWrapper-iOS.git", exact: "0.0.6")
+        .package(url: "https://github.com/Tap-Payments/TapCardScannerWebWrapper-iOS.git", exact: "0.0.6"),
+        .package(url: "https://github.com/Tap-Payments/TapFontKit-iOS.git", from: "0.0.1")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -31,6 +32,7 @@ let package = Package(
                            .product(name: "Lottie", package: "lottie-spm"),
                           "SwiftyRSA",
                           "SharedDataModels-iOS",
+                           "TapFontKit-iOS",
                           "TapCardScannerWebWrapper-iOS"],
             resources: [.copy("Resources/Dark_Mode_Button_Loader.json"),
                         .copy("Resources/Light_Mode_Button_Loader.json"),
