@@ -18,6 +18,7 @@
 		E898C18A2AB7190700B35A33 /* Tap-Card-SDK in Frameworks */ = {isa = PBXBuildFile; productRef = E898C1892AB7190700B35A33 /* Tap-Card-SDK */; };
 		E898C18D2AB7198000B35A33 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = E898C18C2AB7198000B35A33 /* Toast */; };
 		E898C1902AB7199600B35A33 /* Eureka in Frameworks */ = {isa = PBXBuildFile; productRef = E898C18F2AB7199600B35A33 /* Eureka */; };
+		E8EF10C72AC028E100A7304F /* TapCardCodeExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EF10C62AC028E100A7304F /* TapCardCodeExampleViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		E898C1802AB718A900B35A33 /* CardSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardSettingsViewController.swift; sourceTree = "<group>"; };
 		E898C1812AB718AA00B35A33 /* TapCardSDKExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapCardSDKExample.swift; sourceTree = "<group>"; };
 		E898C1872AB718FA00B35A33 /* Tap-Card-SDK */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "Tap-Card-SDK"; path = ..; sourceTree = "<group>"; };
+		E8EF10C62AC028E100A7304F /* TapCardCodeExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapCardCodeExampleViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 				E898C16C2AB717E200B35A33 /* AppDelegate.swift */,
 				E898C1802AB718A900B35A33 /* CardSettingsViewController.swift */,
 				E898C1812AB718AA00B35A33 /* TapCardSDKExample.swift */,
+				E8EF10C62AC028E100A7304F /* TapCardCodeExampleViewController.swift */,
 				E898C16E2AB717E200B35A33 /* SceneDelegate.swift */,
 				E898C1702AB717E200B35A33 /* ViewController.swift */,
 				E898C1722AB717E200B35A33 /* Main.storyboard */,
@@ -179,6 +182,7 @@
 			files = (
 				E898C1712AB717E200B35A33 /* ViewController.swift in Sources */,
 				E898C16D2AB717E200B35A33 /* AppDelegate.swift in Sources */,
+				E8EF10C72AC028E100A7304F /* TapCardCodeExampleViewController.swift in Sources */,
 				E898C1832AB718AA00B35A33 /* TapCardSDKExample.swift in Sources */,
 				E898C1822AB718AA00B35A33 /* CardSettingsViewController.swift in Sources */,
 				E898C16F2AB717E200B35A33 /* SceneDelegate.swift in Sources */,
@@ -328,7 +332,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 60;
+				CURRENT_PROJECT_VERSION = 61;
 				DEVELOPMENT_TEAM = G46S76PUH4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TapCardSDKExample/Info.plist;
@@ -359,7 +363,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 60;
+				CURRENT_PROJECT_VERSION = 61;
 				DEVELOPMENT_TEAM = G46S76PUH4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TapCardSDKExample/Info.plist;

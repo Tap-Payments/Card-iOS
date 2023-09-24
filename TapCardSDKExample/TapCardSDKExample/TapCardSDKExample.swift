@@ -24,7 +24,7 @@ class TapCardSDKExample: UIViewController {
                                              scope: .Authenticate,
                                              merchant: Merchant(id: ""),
                                              transaction: Transaction(amount: 1, currency: "SAR"),
-                                             authentication: Authentication(description: "Authentication description", metadata: ["utf1":"data"], reference: Reference(transaction: TapCardSDKExample.generateRandomTransactionId(), order: TapCardSDKExample.generateRandomOrderId()), invoice: nil, authentication: AuthenticationClass(), post: nil),
+                                             authentication: Authentication(description: "Authentication description", metadata: ["utf1":"data"], reference: Reference(transaction: TapCardSDKExample.generateRandomTransactionId(), order: TapCardSDKExample.generateRandomOrderId()), invoice: .init(id: "If have an invoice id to attach"), authentication: AuthenticationClass(), post: .init(url: "Your server webhook if needed")),
                                              customer: Customer(id: nil, name: [.init(lang: "en", first: "Tap", last: "Payments", middle: "")], nameOnCard: "Tap Payments", editable: true, contact: .init(email: "tappayments@tap.company", phone: .init(countryCode: "+965", number: "88888888"))),
                                              acceptance: Acceptance(supportedBrands: ["AMERICAN_EXPRESS","VISA","MASTERCARD","OMANNET","MADA"], supportedCards: ["CREDIT","DEBIT"]),
                                              fields: Fields(cardHolder: true),
@@ -241,7 +241,7 @@ extension TapCardSDKExample: TapCardViewDelegate {
 
 
 
-extension TapCardSDKExample {
+fileprivate extension TapCardSDKExample {
     
     static func generateRandomTransactionId() -> String {
         let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
