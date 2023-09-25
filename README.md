@@ -159,7 +159,30 @@ You can initialize `TapCardView` in different ways
 ```swift
 /// A class level variable
 var  tapCardView:TapCardView = .init()
-
+/// The configuration dictionary
+var dictConfig:[String:Any] = ["publicKey":"pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7",
+                                   "scope":"Authenticate",
+                                   "purpose":"PAYMENT_TRANSACTION",
+                                   "transaction":["amount":1,
+                                                  "currency":"SAR",
+                                                  "description": "Authentication description",
+                                                  "metadata":["example":"value"],
+                                                  "reference":generateRandomTransactionId()],
+                                   "order":["id":generateRandomOrderId()],
+                                   "invoice":["id":""],
+                                   "merchant":["id":""],
+                                   "customer":["id":"",
+                                               "name":[["lang":"en","first":"TAP","middle":"","last":"PAYMENTS"]],
+                                               "nameOnCard":"TAP PAYMENTS",
+                                               "editble":true,
+                                               "contact":["email":"tap@tap.company",
+                                                          "phone":["countryCode":"+965","number":"88888888"]]],
+                                   "acceptance":["supportedBrands":["AMERICAN_EXPRESS","VISA","MASTERCARD","OMANNET","MADA"],
+                                                 "supportedCards":["CREDIT","DEBIT"]],
+                                   "fields":["cardHolder":true],
+                                   "addons":["displayPaymentBrands": true, "loader": true, "saveCard": false, "scanner": false],
+                                   "interface":["locale": "en", "theme": UIView().traitCollection.userInterfaceStyle == .dark ? "dark": "light", "edges": "curved", "direction": "dynamic"],
+                                   "post":["url":""]]
 /// Add the needed constraints to show and put the card view within your layout
 func  addCardView() {
 
