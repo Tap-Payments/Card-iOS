@@ -333,7 +333,7 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
     }
     
     //MARK: - Public init methods
-    ///  configures the tap card sdk with the needed configurations for it to work
+    /*///  configures the tap card sdk with the needed configurations for it to work
     ///  - Parameter config: The configurations model
     ///  - Parameter delegate:A protocol that allows integrators to get notified from events fired from Tap card sdk
     ///  - Parameter presentScannerIn: We will need a reference to the controller that we can present from the card scanner feature
@@ -347,7 +347,7 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
         }catch {
             self.delegate?.onError?(data: "{error:\(error.localizedDescription)}")
         }
-    }
+    }*/
     
     ///  configures the tap card sdk with the needed configurations for it to work
     ///  - Parameter config: The configurations dctionary. Recommended, as it will make you able to customly add models without updating
@@ -370,7 +370,7 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
         }
     }
     
-    ///  configures the tap card sdk with the needed configurations for it to work
+    /*///  configures the tap card sdk with the needed configurations for it to work
     ///  - Parameter config: The configurations string json format. Recommended, as it will make you able to customly add models without updating
     ///  - Parameter delegate:A protocol that allows integrators to get notified from events fired from Tap card sdk
     ///  - Parameter presentScannerIn: We will need a reference to the controller that we can present from the card scanner feature
@@ -378,7 +378,7 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
         self.delegate = delegate
         self.presentScannerIn = presentScannerIn
         openUrl(url: URL(string: generateTapCardSdkURL(from: configString))!)
-    }
+    }*/
     
     
     //MARK: - Public interfaces

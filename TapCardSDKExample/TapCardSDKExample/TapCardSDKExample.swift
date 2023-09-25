@@ -7,41 +7,23 @@
 import UIKit
 import Tap_Card_SDK
 import Toast
-import SharedDataModels_iOS
 
 class TapCardSDKExample: UIViewController {
     @IBOutlet weak var tapCardView: TapCardView!
     @IBOutlet weak var button: UIButton!
     @IBOutlet weak var eventsTextView: UITextView!
-    // minimum
-    /*var config: TapCardConfiguration = .init(publicKey: "pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7",
-                                             scope: .Authenticate,
-                                             transaction: Transaction(amount: 1, currency: "SAR"),
-                                             authentication: .init(reference: Reference(transaction: TapCardSDKExample.generateRandomTransactionId(), order: TapCardSDKExample.generateRandomOrderId())),
-                                             customer: Customer(id: nil, name: [.init(lang: "en", first: "Tap", last: "Payments", middle: "")], nameOnCard: "Tap Payments", editable: true, contact: .init(email: "tappayments@tap.company", phone: .init(countryCode: "+965", number: "88888888"))))*/
-    // full
-    var config: TapCardConfiguration = .init(publicKey: "pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7",
-                                             scope: .Authenticate,
-                                             merchant: Merchant(id: ""),
-                                             transaction: Transaction(amount: 1, currency: "SAR"),
-                                             authentication: Authentication(description: "Authentication description", metadata: ["utf1":"data"], reference: Reference(transaction: TapCardSDKExample.generateRandomTransactionId(), order: TapCardSDKExample.generateRandomOrderId()), invoice: nil, authentication: AuthenticationClass(), post: nil),
-                                             customer: Customer(id: nil, name: [.init(lang: "en", first: "Tap", last: "Payments", middle: "")], nameOnCard: "Tap Payments", editable: true, contact: .init(email: "tappayments@tap.company", phone: .init(countryCode: "+965", number: "88888888"))),
-                                             acceptance: Acceptance(supportedBrands: ["AMERICAN_EXPRESS","VISA","MASTERCARD","OMANNET","MADA"], supportedCards: ["CREDIT","DEBIT"]),
-                                             fields: Fields(cardHolder: true),
-                                             addons: Addons(displayPaymentBrands: true, loader: true, saveCard: false, scanner: false),
-                                             interface: Interface(locale: "en", theme: UIView().traitCollection.userInterfaceStyle == .dark ? "dark" : "light", edges: "curved", direction: "dynamic"))
     
     var dictConfig:[String:Any] = ["publicKey":"pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7",
                                    "scope":"Authenticate",
+                                   "purpose":"PAYMENT_TRANSACTION",
+                                   "transaction":["amount":1,
+                                                  "currency":"SAR",
+                                                  "description": "Authentication description",
+                                                  "metadata":["example":"value"],
+                                                  "reference":generateRandomTransactionId()],
+                                   "order":["id":generateRandomOrderId()],
+                                   "invoice":["id":""],
                                    "merchant":["id":""],
-                                   "transaction":["amount":1, "currency":"SAR"],
-                                   "authentication":["description": "Authentication description",
-                                                     "metadata":["example":"value"],
-                                                     "reference":["transaction":generateRandomTransactionId(),
-                                                                  "order":generateRandomOrderId(),
-                                                                  "invoice":["id":""],
-                                                                  "authentication":["channel":"PAYER_BROWSER","purpose":"PAYMENT_TRANSACTION"],
-                                                                  "post":["url":""]]],
                                    "customer":["id":"",
                                                "name":[["lang":"en","first":"TAP","middle":"","last":"PAYMENTS"]],
                                                "nameOnCard":"TAP PAYMENTS",
@@ -52,82 +34,23 @@ class TapCardSDKExample: UIViewController {
                                                  "supportedCards":["CREDIT","DEBIT"]],
                                    "fields":["cardHolder":true],
                                    "addons":["displayPaymentBrands": true, "loader": true, "saveCard": false, "scanner": false],
-                                   "interface":["locale": "en", "theme": "light", "edges": "curved", "direction": "dynamic"]]
+                                   "interface":["locale": "en", "theme": UIView().traitCollection.userInterfaceStyle == .dark ? "dark": "light", "edges": "curved", "direction": "dynamic"],
+                                   "post":["url":""]]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTapCardSDK()
         button.isEnabled = false
-        do {
+        /*do {
                     let jsonData = try JSONSerialization.data(withJSONObject: self.dictConfig, options: [.prettyPrinted])
                             print(String(data: jsonData, encoding: .utf8) ?? "")
                         } catch {
                             print("json serialization error: \(error)")
-                        }
-        /*tapCardView?.initWebCardSDK(configString: """
-{
-    "publicKey": "pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7",
-    "merchant": {
-        "id": ""
-    },
-    "transaction": {
-        "amount": 1,
-        "currency": "SAR"
-    },
-    "customer": {
-        "id": "",
-        "name": [
-            {
-                "lang": "en",
-                "first": "Ahmed",
-                "last": "Sharkawy",
-                "middle": "Mohamed"
-            }
-        ],
-        "nameOnCard": "Ahmed Sharkawy",
-        "editable": true,
-        "contact": {
-            "email": "ahmed@gmail.com",
-            "phone": {
-                "countryCode": "20",
-                "number": "1000000000"
-            }
-        }
-    },
-    "acceptance": {
-        "supportedBrands": [
-            "AMERICAN_EXPRESS",
-            "VISA",
-            "MASTERCARD",
-            "MADA"
-        ],
-        "supportedCards": [
-            "CREDIT",
-            "DEBIT"
-        ]
-    },
-    "fields": {
-        "cardHolder": true
-    },
-    "addons": {
-        "displayPaymentBrands": true,
-        "loader": true,
-        "saveCard": true
-    },
-    "interface": {
-        "locale": "en",
-        "theme": "light",
-        "edges": "curved",
-        "direction": "ltr"
-    }
-}
-""")
-        */
+                        }*/
     }
 
     func setupTapCardSDK() {
-        tapCardView.initTapCardSDK(config: self.config, delegate: self, presentScannerIn: self)
-        //tapCardView.initTapCardSDK(configDict: self.dictConfig, delegate: self, presentScannerIn: self)
+        tapCardView.initTapCardSDK(configDict: self.dictConfig, delegate: self, presentScannerIn: self)
     }
     
     @IBAction func generateToken(_ sender: Any) {
@@ -151,8 +74,7 @@ class TapCardSDKExample: UIViewController {
         
         
         alertController.addAction(.init(title: "Random Trx", style: .default, handler: { _ in
-            self.config.authentication = Authentication(description: "Authentication description", metadata: ["utf1":"data"], reference: Reference(transaction: TapCardSDKExample.generateRandomTransactionId(), order: TapCardSDKExample.generateRandomOrderId()), invoice: nil, authentication: AuthenticationClass(), post: nil)
-            self.updateConfig(config: self.config)
+            self.updateConfig(config: self.dictConfig)
         }))
         
         alertController.addAction(.init(title: "Cancel", style: .cancel))
@@ -161,7 +83,7 @@ class TapCardSDKExample: UIViewController {
     
     func configClicked() {
         let configCtrl:CardSettingsViewController = storyboard?.instantiateViewController(withIdentifier: "CardSettingsViewController") as! CardSettingsViewController
-        configCtrl.config = config
+        configCtrl.config = dictConfig
         configCtrl.delegate = self
         //present(configCtrl, animated: true)
         self.navigationController?.pushViewController(configCtrl, animated: true)
@@ -176,9 +98,15 @@ class TapCardSDKExample: UIViewController {
 
 extension TapCardSDKExample: CardSettingsViewControllerDelegate {
     
-    func updateConfig(config: TapCardConfiguration) {
-        self.config = config
-        self.config.authentication = Authentication(description: "Authentication description", metadata: ["utf1":"data"], reference: Reference(transaction: TapCardSDKExample.generateRandomTransactionId(), order: TapCardSDKExample.generateRandomOrderId()), invoice: nil, authentication: AuthenticationClass(), post: nil)
+    func updateConfig(config: [String:Any]) {
+        self.dictConfig = config
+        self.dictConfig["order"] = ["id":TapCardSDKExample.generateRandomOrderId()]
+        guard var transactionData:[String:Any] = self.dictConfig["transaction"] as? [String:Any] else {
+            return
+        }
+        transactionData["reference"] = TapCardSDKExample.generateRandomTransactionId()
+        self.dictConfig["transaction"] = transactionData
+        
         setupTapCardSDK()
     }
     
