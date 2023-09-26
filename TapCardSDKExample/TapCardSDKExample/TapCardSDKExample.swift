@@ -18,7 +18,7 @@ class TapCardSDKExample: UIViewController {
                                    "purpose":"PAYMENT_TRANSACTION",
                                    "transaction":["metadata":["example":"value"],
                                                   "reference":generateRandomTransactionId()],
-                                   "order":["id":generateRandomOrderId(),
+                                   "order":["id":"",
                                             "amount":1,
                                             "currency":"KWD",
                                             "description": "Authentication description"],
@@ -109,7 +109,7 @@ extension TapCardSDKExample: CardSettingsViewControllerDelegate {
         guard var orderData:[String:Any] = self.dictConfig["order"] as? [String:Any] else {
             return
         }
-        orderData["id"] = TapCardSDKExample.generateRandomOrderId()
+        orderData["id"] = ""//TapCardSDKExample.generateRandomOrderId()
         
         self.dictConfig["order"] = orderData
         self.dictConfig["transaction"] = transactionData
