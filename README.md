@@ -59,11 +59,15 @@ Creates a configuration model to be passed to the SDK
 
 	- scope: The scope of the card sdk. Default is generating a tap token
 
+	- purpose: The intended purpose of using the generated token afterwards.
+
 	- merchant: The Tap merchant details
 
 	- transaction: The transaction details
 
-	- authenticate: The authentication data, needed only if scope is set to Authenticate
+	- order: The tap order id
+
+	- invoice: Link this token to an invoice
 
 	- customer: The Tap customer details
 
@@ -81,90 +85,62 @@ Creates a configuration model to be passed to the SDK
 |Configuration|Description | Required | Type| Sample
 |--|--|--| --|--|
 | publicKey| This is the `Tap Key` that you will get after registering you bundle id. | True  | String| `let publicKey:String = "pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"` |
-| scope| Defines the intention of using the `TapCardSDK`. | True  | `Scope` enum| ` let scope:Scope = .Token //This means you will get a Tap token to use afterwards` OR ` let scope:Scope = .Authenticate //This means you will get an authenticated Tap token to use in our charge api right away`  |
-| merchant| This is the `Merchant id` that you will get after registering you bundle id. | True  | `Merchant`| ` let merchant:Merchant = Merchant.init(id: "")` |
-| transaction| Needed to define the amount and the currency, if you are generating an authenticated token. | False  | `Transaction`| ` let transaction:Transaction = Transaction(amount: 1, currency: "SAR")` |
-| authentication| If you want to generate an authenticated token, which allows you to perform charges without any further 3DS in our [Charge api](https://developers.tap.company/reference/create-a-charge). Moreover, please create an order first, with our Order api to get `Order id` & `Transaction id` | False  | `Authentication`| ` let authentication:Authentication = Authentication(description: "Authentication description", metadata: ["utf1":"data"], reference: Reference(transaction: "Your transaction id", order: "Your order id"), invoice: .init(id: "If have an invoice id to attach"), authentication: AuthenticationClass(), post: .init(url: "Your server webhook if needed"))` |
-| customer| The customer details you want to attach to this tokenization process. | True  | `Customer`| ` let customer:Customer = Customer(id: "If you have a tap customer id", name: [.init(lang: "en", first: "Tap", last: "Payments", middle: "")], nameOnCard: "Tap Payments", editable: **true**, contact: .init(email: "tappayments@tap.company", phone: .init(countryCode: "+965", number: "88888888")))` |
-| acceptance| The acceptance details for the transaction. Including, which card brands and types you want to allow for the customer to tokenize. | False  | `Acceptance`| ` let acceptance:Acceptance = Acceptance(supportedBrands: ["AMERICAN_EXPRESS","VISA","MASTERCARD","OMANNET","MADA", "MEEZA"], supportedCards: ["CREDIT","DEBIT"])` |
-| fields| Needed to define visibility of the optional fields in the card form. | False  | `Fields`| ` let fields:Fields = Fields(cardHolder: true)` |
-| addons| Needed to define the enabling of some extra features on top of the basic card form. | False  | `Addons`| ` let addons:Addons = Addons(displayPaymentBrands: true, loader: true,scanner: true)` `/**- displayPaymentBrands: Defines to show the supported card brands logos - loader: Defines to show a loader on top of the card when it is in a processing state - scanner: Defines whether to enable card scanning functionality or not*/`|
-| interface| Needed to defines look and feel related configurations. | False  | `Interface`| ` let interface:Interface = Interface(locale: "en", theme: "light", edges: "curved", direction: "dynamic")` |
-
+| scope| Defines the intention of using the `TapCardSDK`. | True  | String| ` let scope:String = "Token" //This means you will get a Tap token to use afterwards` OR ` let scope:String = "Authenticate" //This means you will get an authenticated Tap token to use in our charge api right away`  |
+| purpose| Defines the intention of using the `Token` after generation. | True  | String| ` let purpose:String = "PAYMENT_TRANSACTION" //Using the token for a single charge.` OR ` let purpose:String = "RECURRING_TRANSACTION" //Using the token for multiple recurring charges.` OR ` let purpose:String = "INSTALLMENT_TRANSACTION" //Using the token for a charge that is a part of an installement plan.` OR ` let purpose:String = "ADD_CARD" //Using the token for a save a card for a customer.` OR ` let purpose:String = "CARDHOLDER_VERIFICATION" //Using the token for to verify the ownership of the card.` |
+| transaction| Needed to define transaction metadata and reference, if you are generating an authenticated token. | False  | `Dictionry`| ` let transaction:[String:Any] = ["metadata":["example":"value"], "reference":"A reference to this transaciton in your system"]` |
+| order| This is the `Tap order id` and needed amount and currency,  that you created before and want to attach this token to it if any. | False  | `Dictionary`| ` let order:[String:String] = ["id":"", "amount":1, "currency":"SAR", "description": "Authentication description"]` |
+| invoice| This is the `invoice id` that you want to link this token to if any. | False  | `Dictionary`| ` let invoice:[String:String] = ["id":""]` |
+| merchant| This is the `Merchant id` that you will get after registering you bundle id. | True  | `Dictionary`| ` let merchant:[String:String] = ["id":""]` |
+| customer| The customer details you want to attach to this tokenization process. | True  | `Dictionary`| ` let customer:[String:Any] = ["id":"", "name":[["lang":"en","first":"TAP","middle":"","last":"PAYMENTS"]], "nameOnCard":"TAP PAYMENTS", "editble":true, "contact":["email":"tap@tap.company", "phone":["countryCode":"+965","number":"88888888"]]]` |
+| acceptance| The acceptance details for the transaction. Including, which card brands and types you want to allow for the customer to tokenize. | False  | `Dictionary`| ` let acceptance:[String:Any] = ["supportedBrands": ["AMERICAN_EXPRESS","VISA","MASTERCARD","OMANNET","MADA"], "supportedCards":["CREDIT","DEBIT"]` |
+| fields| Needed to define visibility of the optional fields in the card form. | False  | `Dictionary`| ` let fields:[String:Bool] = ["cardHolder":true]` |
+| addons| Needed to define the enabling of some extra features on top of the basic card form. | False  | `Dictionary`| ` let addons:[String:Bool] = ["displayPaymentBrands": true, "loader": true,"scanner": false]` `/**- displayPaymentBrands: Defines to show the supported card brands logos - loader: Defines to show a loader on top of the card when it is in a processing state - scanner: Defines whether to enable card scanning functionality or not*/`|
+| interface| Needed to defines look and feel related configurations. | False  | `Dictionary`| ` let interface:[String:String] = ["locale": "en", "theme": "light", "edges": "curved", "direction": "dynamic"] // Allowed values for theme : light/dark. locale: en/ar, edges: curved/flat, direction:ltr/dynaimc` |
+| post| This is the `webhook` for your server, if you want us to update you server to server. | False  | `Dictionary`| ` let post:[String:String] = ["url":""]` |
 
 ## Initialisation of the input
-
-### Initialise as a model
-You can create a model from our defined structure to pass it afterwards to our `TapCardSDK` as a configuration.
-```swift
-var  config: TapCardConfiguration = .init(publicKey: "pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7",
-
-scope: .Authenticate,
-
-merchant: Merchant(id: ""),
-
-transaction: Transaction(amount: 1, currency: "SAR"),
-
-authentication: Authentication(description: "Authentication description", metadata: ["utf1":"data"], reference: Reference(transaction: "transaction id", order: "order id"), invoice: .init(id: "If have an invoice id to attach"), authentication: AuthenticationClass(), post: .init(url: "Your server webhook if needed")),
-
-customer: Customer(id: nil, name: [.init(lang: "en", first: "Tap", last: "Payments", middle: "")], nameOnCard: "Tap Payments", editable: true, contact: .init(email: "tappayments@tap.company", phone: .init(countryCode: "+965", number: "88888888"))),
-
-acceptance: Acceptance(supportedBrands: ["AMERICAN_EXPRESS","VISA","MASTERCARD","OMANNET","MADA"], supportedCards: ["CREDIT","DEBIT"]),
-
-fields: Fields(cardHolder: true),
-
-addons: Addons(displayPaymentBrands: true, loader: true, scanner: false),
-
-interface: Interface(locale: "en", theme: UIView().traitCollection.userInterfaceStyle == .dark ? "dark" : "light", edges: "curved", direction: "dynamic"))
-```
 
 ### Initialise as a dictionary
 You can create a dictionary to pass the data to our sdk. The good part about this, is that you can generate the data from one of your apis. Whenever we have an update to the configurations, you can update your api. This will make sure, that you will not have to update your app on the App Store.
 
 ```swift
-var  dictConfig:[String:**Any**] = ["publicKey":"pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7",
-
-"scope":"Authenticate",
-
-"merchant":["id":""],
-
-"transaction":["amount":1, "currency":"SAR"],
-
-"authentication":["description": "Authentication description",
-
-"metadata":["example":"value"],
-
-"reference":["transaction":"transaction id",
-
-"order":"order id",
-
-"invoice":["id":""],
-
-"authentication":["channel":"PAYER_BROWSER","purpose":"PAYMENT_TRANSACTION"],
-
-"post":["url":""]]],
-
-"customer":["id":"",
-
-"name":[["lang":"en","first":"TAP","middle":"","last":"PAYMENTS"]],
-
-"nameOnCard":"TAP PAYMENTS",
-
-"editble":true,
-
-"contact":["email":"tap@tap.company",
-
-"phone":["countryCode":"+965","number":"88888888"]]],
-
-"acceptance":["supportedBrands":["AMERICAN_EXPRESS","VISA","MASTERCARD","OMANNET","MADA", "MEEZA"],
-
-"supportedCards":["CREDIT","DEBIT"]],
-
-"fields":["cardHolder":true],
-
-"addons":["displayPaymentBrands":true, "loader": true, "saveCard": false, "scanner": false],
-
-"interface":["locale": "en", "theme": "light", "edges": "curved", "direction": "dynamic"]]
+var dictConfig: [String: Any] = [
+  "publicKey": "pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7",
+  "scope": "Authenticate",
+  "purpose": "PAYMENT_TRANSACTION",
+  "transaction": [
+    "metadata": ["example": "value"],
+    "reference": "",
+  ],
+  "order": ["id": "",
+	"amount": 1,
+    	"currency": "SAR",
+    	"description": "Authentication description"],
+  "invoice": ["id": ""],
+  "merchant": ["id": ""],
+  "customer": [
+    "id": "",
+    "name": [["lang": "en", "first": "TAP", "middle": "", "last": "PAYMENTS"]],
+    "nameOnCard": "TAP PAYMENTS",
+    "editble": true,
+    "contact": [
+      "email": "tap@tap.company",
+      "phone": ["countryCode": "+965", "number": "88888888"],
+    ],
+  ],
+  "acceptance": [
+    "supportedBrands": ["AMERICAN_EXPRESS", "VISA", "MASTERCARD", "OMANNET", "MADA"],
+    "supportedCards": ["CREDIT", "DEBIT"],
+  ],
+  "fields": ["cardHolder": true],
+  "addons": ["displayPaymentBrands": true, "loader": true, "saveCard": false, "scanner": false],
+  "interface": [
+    "locale": "en",
+    "theme": "light",
+    "edges": "curved", "direction": "dynamic",
+  ],
+  "post": ["url": ""],
+]
 ```
 
 # Initializing the TapCardSDK form
@@ -183,7 +159,30 @@ You can initialize `TapCardView` in different ways
 ```swift
 /// A class level variable
 var  tapCardView:TapCardView = .init()
-
+/// The configuration dictionary
+var dictConfig:[String:Any] = ["publicKey":"pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7",
+                                   "scope":"Authenticate",
+                                   "purpose":"PAYMENT_TRANSACTION",
+                                   "transaction":["metadata":["example":"value"],
+                                                  "reference":""],
+                                   "order":["id":"",
+						  "amount":1,
+                                                  "currency":"SAR",
+                                                  "description": "Authentication description"],
+                                   "invoice":["id":""],
+                                   "merchant":["id":""],
+                                   "customer":["id":"",
+                                               "name":[["lang":"en","first":"TAP","middle":"","last":"PAYMENTS"]],
+                                               "nameOnCard":"TAP PAYMENTS",
+                                               "editble":true,
+                                               "contact":["email":"tap@tap.company",
+                                                          "phone":["countryCode":"+965","number":"88888888"]]],
+                                   "acceptance":["supportedBrands":["AMERICAN_EXPRESS","VISA","MASTERCARD","OMANNET","MADA"],
+                                                 "supportedCards":["CREDIT","DEBIT"]],
+                                   "fields":["cardHolder":true],
+                                   "addons":["displayPaymentBrands": true, "loader": true, "saveCard": false, "scanner": false],
+                                   "interface":["locale": "en", "theme": UIView().traitCollection.userInterfaceStyle == .dark ? "dark": "light", "edges": "curved", "direction": "dynamic"],
+                                   "post":["url":""]]
 /// Add the needed constraints to show and put the card view within your layout
 func  addCardView() {
 
