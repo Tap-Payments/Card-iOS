@@ -87,8 +87,8 @@ Creates a configuration model to be passed to the SDK
 | publicKey| This is the `Tap Key` that you will get after registering you bundle id. | True  | String| `let publicKey:String = "pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"` |
 | scope| Defines the intention of using the `TapCardSDK`. | True  | String| ` let scope:String = "Token" //This means you will get a Tap token to use afterwards` OR ` let scope:String = "Authenticate" //This means you will get an authenticated Tap token to use in our charge api right away`  |
 | purpose| Defines the intention of using the `Token` after generation. | True  | String| ` let purpose:String = "PAYMENT_TRANSACTION" //Using the token for a single charge.` OR ` let purpose:String = "RECURRING_TRANSACTION" //Using the token for multiple recurring charges.` OR ` let purpose:String = "INSTALLMENT_TRANSACTION" //Using the token for a charge that is a part of an installement plan.` OR ` let purpose:String = "ADD_CARD" //Using the token for a save a card for a customer.` OR ` let purpose:String = "CARDHOLDER_VERIFICATION" //Using the token for to verify the ownership of the card.` |
-| transaction| Needed to define the amount and the currency, if you are generating an authenticated token. | False  | `Dictionry`| ` let transaction:[String:Any] = ["amount":1, "currency":"SAR", "description": "Authentication description", "metadata":["example":"value"], "reference":"A reference to this transaciton in your system"]` |
-| order| This is the `Tap order id` that you created before and want to attach this token to it if any. | False  | `Dictionary`| ` let order:[String:String] = ["id":""]` |
+| transaction| Needed to define transaction metadata and reference, if you are generating an authenticated token. | False  | `Dictionry`| ` let transaction:[String:Any] = ["metadata":["example":"value"], "reference":"A reference to this transaciton in your system"]` |
+| order| This is the `Tap order id` and needed amount and currency,  that you created before and want to attach this token to it if any. | False  | `Dictionary`| ` let order:[String:String] = ["id":"", "amount":1, "currency":"SAR", "description": "Authentication description"]` |
 | invoice| This is the `invoice id` that you want to link this token to if any. | False  | `Dictionary`| ` let invoice:[String:String] = ["id":""]` |
 | merchant| This is the `Merchant id` that you will get after registering you bundle id. | True  | `Dictionary`| ` let merchant:[String:String] = ["id":""]` |
 | customer| The customer details you want to attach to this tokenization process. | True  | `Dictionary`| ` let customer:[String:Any] = ["id":"", "name":[["lang":"en","first":"TAP","middle":"","last":"PAYMENTS"]], "nameOnCard":"TAP PAYMENTS", "editble":true, "contact":["email":"tap@tap.company", "phone":["countryCode":"+965","number":"88888888"]]]` |
@@ -109,13 +109,13 @@ var dictConfig: [String: Any] = [
   "scope": "Authenticate",
   "purpose": "PAYMENT_TRANSACTION",
   "transaction": [
-    "amount": 1,
-    "currency": "SAR",
-    "description": "Authentication description",
     "metadata": ["example": "value"],
     "reference": "",
   ],
-  "order": ["id": ""],
+  "order": ["id": "",
+	"amount": 1,
+    	"currency": "SAR",
+    	"description": "Authentication description"],
   "invoice": ["id": ""],
   "merchant": ["id": ""],
   "customer": [
@@ -163,12 +163,12 @@ var  tapCardView:TapCardView = .init()
 var dictConfig:[String:Any] = ["publicKey":"pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7",
                                    "scope":"Authenticate",
                                    "purpose":"PAYMENT_TRANSACTION",
-                                   "transaction":["amount":1,
+                                   "transaction":["metadata":["example":"value"],
+                                                  "reference":""],
+                                   "order":["id":"",
+						  "amount":1,
                                                   "currency":"SAR",
-                                                  "description": "Authentication description",
-                                                  "metadata":["example":"value"],
-                                                  "reference":generateRandomTransactionId()],
-                                   "order":["id":generateRandomOrderId()],
+                                                  "description": "Authentication description"],
                                    "invoice":["id":""],
                                    "merchant":["id":""],
                                    "customer":["id":"",
