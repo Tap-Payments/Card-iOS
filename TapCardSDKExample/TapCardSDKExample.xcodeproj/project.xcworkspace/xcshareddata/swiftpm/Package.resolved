@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/airbnb/lottie-spm.git",
       "state" : {
-        "revision" : "2ae19d3c4f1603b45e551e6bebf02f523ca22a2e",
-        "version" : "4.3.0"
+        "revision" : "3094834a82a75dae679fbe593f08bf1b168c2afe",
+        "version" : "4.3.1"
       }
     },
     {
@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Tap-Payments/SharedDataModels-iOS.git",
       "state" : {
-        "revision" : "8a52bbe8ddfbc2124670ab8a57d03721bfb153a9",
-        "version" : "0.0.12"
+        "revision" : "1dff74525847544e3e155503acd77f35a2022d7c",
+        "version" : "0.0.13"
       }
     },
     {

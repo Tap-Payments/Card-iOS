@@ -5,7 +5,7 @@
 //
 
 import UIKit
-import Tap_Card_SDK
+import Card_SDK_iOS
 import Toast
 
 class TapCardSDKExample: UIViewController {
@@ -112,6 +112,7 @@ extension TapCardSDKExample: CardSettingsViewControllerDelegate {
         orderData["id"] = TapCardSDKExample.generateRandomOrderId()
         
         self.dictConfig["order"] = orderData
+        self.dictConfig["transaction"] = transactionData
         
         setupTapCardSDK()
     }

@@ -9,7 +9,7 @@ import Foundation
 
 internal extension Bundle {
     static var currentBundle:Bundle {
-        let bundleName = "Tap-Card-SDK_Tap-Card-SDK"
+        let bundleName = "Card-SDK-iOS_Card-SDK-iOS"
 
         let candidates = [
             // Bundle should be present here when the package is linked into an App.

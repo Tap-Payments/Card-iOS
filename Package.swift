@@ -1,16 +1,16 @@
-// swift-tools-version: 5.8
+// swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
 let package = Package(
-    name: "Tap-Card-SDK",
+    name: "Card-SDK-iOS",
     platforms: [.iOS(.v13)],
     products: [
-        // Products define the executables and libraries a package produces, and make them visible to other packages.
+        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "Tap-Card-SDK",
-            targets: ["Tap-Card-SDK"]),
+            name: "Card-SDK-iOS",
+            targets: ["Card-SDK-iOS"]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -23,10 +23,10 @@ let package = Package(
         .package(url: "https://github.com/Tap-Payments/TapFontKit-iOS.git", from: "0.0.1")
     ],
     targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages this package depends on.
+        // Targets are the basic building blocks of a package, defining a module or a test suite.
+        // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "Tap-Card-SDK",
+            name: "Card-SDK-iOS",
             dependencies: ["SwiftEntryKit",
                           "SnapKit",
                            .product(name: "Lottie", package: "lottie-spm"),
@@ -39,15 +39,11 @@ let package = Package(
                         .process("Resources/TapCardMedia.xcassets")],
             swiftSettings: [
                     .define("SPM")
-                  ]),
+                  ]
+        ),
         .testTarget(
-            name: "Tap-Card-SDKTests",
-            dependencies: ["Tap-Card-SDK",
-                           "SwiftEntryKit",
-                            "SnapKit",
-                            "SwiftyRSA",
-                            "SharedDataModels-iOS",
-                            "TapCardScannerWebWrapper-iOS"]),
+            name: "Card-SDK-iOSTests",
+            dependencies: ["Card-SDK-iOS"]),
     ],
     swiftLanguageVersions: [.v5]
 )

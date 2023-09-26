@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/airbnb/lottie-spm.git",
       "state" : {
-        "revision" : "2ae19d3c4f1603b45e551e6bebf02f523ca22a2e",
-        "version" : "4.3.0"
+        "revision" : "3094834a82a75dae679fbe593f08bf1b168c2afe",
+        "version" : "4.3.1"
       }
     },
     {
@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Tap-Payments/SharedDataModels-iOS.git",
       "state" : {
-        "revision" : "5c7f3941cbec4cee75ed5bcb71563bf949e6139a",
-        "version" : "0.0.9"
+        "revision" : "1dff74525847544e3e155503acd77f35a2022d7c",
+        "version" : "0.0.13"
       }
     },
     {
@@ -59,8 +59,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Tap-Payments/TapCardScannerWebWrapper-iOS.git",
       "state" : {
-        "revision" : "551248e633c2c3ad0739b2e27685f97e309b5a43",
-        "version" : "0.0.4"
+        "revision" : "389436b81d1de6aafe43fc61ae4e1f8a8b4accec",
+        "version" : "0.0.6"
       }
     },
     {
@@ -70,6 +70,15 @@
       "state" : {
         "revision" : "61e2949915e2a210d89a57f450cba54d7aac551f",
         "version" : "1.0.24"
+      }
+    },
+    {
+      "identity" : "tapfontkit-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Tap-Payments/TapFontKit-iOS.git",
+      "state" : {
+        "revision" : "279ac52e3f05d04eaa14eecc548f5de9124cdf89",
+        "version" : "0.0.10"
       }
     }
   ],

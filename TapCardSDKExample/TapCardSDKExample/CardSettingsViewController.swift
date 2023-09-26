@@ -7,7 +7,7 @@
 
 import UIKit
 import Eureka
-import Tap_Card_SDK
+import Card_SDK_iOS
 
 protocol CardSettingsViewControllerDelegate {
     func updateConfig(config: [String:Any])
