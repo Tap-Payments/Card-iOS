@@ -80,7 +80,10 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
         currentlyLoadedCardConfigurations = url
         // First let us hide the web view and show the loading view
         //webView?.isHidden = true
-        reAdjustShimmeringView(with: url)
+        Task {
+            await reAdjustShimmeringView(with: url)
+        }
+        
         //animationView?.isHidden = false
         //self.animationView?.isHidden = false
         self.updateShimmerView(with: true)
@@ -109,7 +112,16 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
     /// used to setup the constraint of the shimmerling loading view
     private func setupShimmeringView() {
         // let us load the correct shimmerling lottie json file
-        animationView = .init(name: UIView().traitCollection.userInterfaceStyle == .dark ? "Dark_Mode_Button_Loader" : "Light_Mode_Button_Loader", bundle: Bundle.currentBundle)
+        Task {
+            let animationCachProvider:AnimationCacheProvider = DefaultAnimationCache()
+            await animationCachProvider.setAnimation(.loadedFrom(url: URL(string: "https://tap-assets.b-cdn.net/card-sdk/shimmer/Light_Mode_Button_Loader.json")!)!, forKey: "animLight")
+            await animationCachProvider.setAnimation(.loadedFrom(url: URL(string: "https://tap-assets.b-cdn.net/card-sdk/shimmer/Dark_Mode_Button_Loader.json")!)!, forKey: "animDark")
+        }
+        animationView = .init(url: URL(string: "https://tap-assets.b-cdn.net/card-sdk/shimmer/\(UIView().traitCollection.userInterfaceStyle == .dark ? "Dark_Mode_Button_Loader" : "Light_Mode_Button_Loader").json")!, closure: { error in
+            if let _ = error {
+                self.animationView = .init(name: UIView().traitCollection.userInterfaceStyle == .dark ? "Dark_Mode_Button_Loader" : "Light_Mode_Button_Loader", bundle: Bundle.currentBundle)
+            }
+        })
         
         // let us set the needed configuratons for the shimmering view
         animationView!.frame = .zero
@@ -125,9 +137,9 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
     
     /// Will recolor and adjust the corners of teh shimmerig view basde on the configurations
     /// - Parameters url; The url that contains the configurations passed to the web card sdk
-    private func reAdjustShimmeringView(with url:URL?) {
+    private func reAdjustShimmeringView(with url:URL?) async {
         // First set the light/dark based on the card theme
-        animationView?.animation = .named(getCardTheme() == "dark" ? "Dark_Mode_Button_Loader" : "Light_Mode_Button_Loader", bundle: Bundle.currentBundle)
+        animationView?.animation = await .loadedFrom(url: URL(string: "https://tap-assets.b-cdn.net/card-sdk/shimmer/\(getCardTheme() == "dark" ? "Dark_Mode_Button_Loader" : "Light_Mode_Button_Loader").json")!)// .named(getCardTheme() == "dark" ? "Dark_Mode_Button_Loader" : "Light_Mode_Button_Loader", bundle: Bundle.currentBundle)
             
         
         // Second set the curves based on the card edges

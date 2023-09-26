@@ -54,23 +54,6 @@ class CardSettingsViewController: FormViewController {
         }
         
         form +++ Section("transaction")
-        <<< IntRow("transaction.amount"){ row in
-            row.title = "Transaction amount"
-            row.placeholder = "Enter transactions's amount"
-            row.value = (config?["transaction"] as? [String:Any])?["amount"] as? Int ?? 1
-            row.onChange { row in
-                self.update(dictionary: &self.config!, at: ["transaction","amount"], with: row.value ?? 1)
-            }
-        }
-        <<< TextRow("transaction.currency"){ row in
-            row.title = "Transaction currency"
-            row.placeholder = "Enter transaction's currency"
-            
-            row.value = (config! as NSDictionary).value(forKeyPath: "transaction.currency") as? String ?? "SAR"
-            row.onChange { row in
-                self.update(dictionary: &self.config!, at: ["transaction","currency"], with: row.value ?? "SAR")
-            }
-        }
         
         <<< TextRow("transaction.reference"){ row in
             row.title = "Transaction reference"
@@ -82,16 +65,6 @@ class CardSettingsViewController: FormViewController {
             }
         }
         
-        <<< TextRow("transaction.description"){ row in
-            row.title = "Transaction description"
-            row.placeholder = "Enter transaction's description"
-            
-            row.value = (config! as NSDictionary).value(forKeyPath: "transaction.description") as? String ?? ""
-            row.onChange { row in
-                self.update(dictionary: &self.config!, at: ["transaction","description"], with: row.value ?? "")
-            }
-        }
-        
         
         form +++ Section("order")
         <<< TextRow("order.id"){ row in
@@ -100,6 +73,33 @@ class CardSettingsViewController: FormViewController {
             row.value = (config! as NSDictionary).value(forKeyPath: "order.id") as? String ?? TapCardSDKExample.generateRandomOrderId()
             row.onChange { row in
                 self.update(dictionary: &self.config!, at: ["order","id"], with: row.value ?? TapCardSDKExample.generateRandomOrderId())
+            }
+        }
+        <<< IntRow("order.amount"){ row in
+            row.title = "order amount"
+            row.placeholder = "Enter order's amount"
+            row.value = (config?["order"] as? [String:Any])?["amount"] as? Int ?? 1
+            row.onChange { row in
+                self.update(dictionary: &self.config!, at: ["order","amount"], with: row.value ?? 1)
+            }
+        }
+        <<< TextRow("order.currency"){ row in
+            row.title = "order currency"
+            row.placeholder = "Enter order's currency"
+            
+            row.value = (config! as NSDictionary).value(forKeyPath: "order.currency") as? String ?? "SAR"
+            row.onChange { row in
+                self.update(dictionary: &self.config!, at: ["order","currency"], with: row.value ?? "SAR")
+            }
+        }
+        
+        <<< TextRow("order.description"){ row in
+            row.title = "order description"
+            row.placeholder = "Enter order's description"
+            
+            row.value = (config! as NSDictionary).value(forKeyPath: "order.description") as? String ?? ""
+            row.onChange { row in
+                self.update(dictionary: &self.config!, at: ["order","description"], with: row.value ?? "")
             }
         }
         

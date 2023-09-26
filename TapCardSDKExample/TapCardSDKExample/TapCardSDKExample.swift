@@ -16,12 +16,12 @@ class TapCardSDKExample: UIViewController {
     var dictConfig:[String:Any] = ["publicKey":"pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7",
                                    "scope":"Authenticate",
                                    "purpose":"PAYMENT_TRANSACTION",
-                                   "transaction":["amount":1,
-                                                  "currency":"SAR",
-                                                  "description": "Authentication description",
-                                                  "metadata":["example":"value"],
+                                   "transaction":["metadata":["example":"value"],
                                                   "reference":generateRandomTransactionId()],
-                                   "order":["id":generateRandomOrderId()],
+                                   "order":["id":generateRandomOrderId(),
+                                            "amount":1,
+                                            "currency":"KWD",
+                                            "description": "Authentication description"],
                                    "invoice":["id":""],
                                    "merchant":["id":""],
                                    "customer":["id":"",
@@ -100,12 +100,18 @@ extension TapCardSDKExample: CardSettingsViewControllerDelegate {
     
     func updateConfig(config: [String:Any]) {
         self.dictConfig = config
-        self.dictConfig["order"] = ["id":TapCardSDKExample.generateRandomOrderId()]
+        
         guard var transactionData:[String:Any] = self.dictConfig["transaction"] as? [String:Any] else {
             return
         }
         transactionData["reference"] = TapCardSDKExample.generateRandomTransactionId()
-        self.dictConfig["transaction"] = transactionData
+        
+        guard var orderData:[String:Any] = self.dictConfig["order"] as? [String:Any] else {
+            return
+        }
+        orderData["id"] = TapCardSDKExample.generateRandomOrderId()
+        
+        self.dictConfig["order"] = orderData
         
         setupTapCardSDK()
     }
