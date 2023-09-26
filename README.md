@@ -1,9 +1,9 @@
-# Tap-Card-SDK
+# Card-SDK-iOS
 
 We at [Tap Payments](https://www.tap.company/) strive to make your payments easier than ever. We as a PCI compliant company, provide you a from the self solution to process card payments in your iOS apps.
 
 ![Platform](https://img.shields.io/cocoapods/p/goSellSDK.svg?style=flat)
-![CocoaPods Compatible](https://img.shields.io/cocoapods/v/Tap-Card-SDK.svg?style=flat)
+![CocoaPods Compatible](https://img.shields.io/cocoapods/v/Card-SDK-iOS.svg?style=flat)
 
 
 ![enter image description here](https://im4.ezgif.com/tmp/ezgif-4-272ebac491.gif)
@@ -25,7 +25,7 @@ We got you covered, `TapCardSDK` can be installed with all possible technologies
 
 ```swift
 target 'MyApp' do
-  pod 'Tap-Card-SDK'
+  pod 'Card-SDK-iOS'
 end
 ```
 
@@ -37,7 +37,7 @@ pod update
 
 
 ## Swift Package Manager
-In Xcode, add the `TapCardSDK` as a [package dependency](https://developer.apple.com/documentation/swift_packages/adding_package_dependencies_to_your_app) to your Xcode project. Enter [https://github.com/Tap-Payments/Tap-Card-SDK.git](https://github.com/Tap-Payments/Tap-Card-SDK.git) as the package URL. Tick the `Tap-Card-SD` checkbox to add the `TapCardSDK`  library to your app.
+In Xcode, add the `TapCardSDK` as a [package dependency](https://developer.apple.com/documentation/swift_packages/adding_package_dependencies_to_your_app) to your Xcode project. Enter [https://github.com/Tap-Payments/Card-SDK-iOS.git](https://github.com/Tap-Payments/Card-SDK-iOS.git) as the package URL. Tick the `Tap-Card-SD` checkbox to add the `TapCardSDK`  library to your app.
 
 ![enter image description here](https://i.ibb.co/mbbmRVC/Screenshot-2023-09-24-at-9-53-08-AM.png)
 
