@@ -147,6 +147,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>Card-iOSTests</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>Tap-Card-SDK</key>
 		<dict>
 			<key>primary</key>
