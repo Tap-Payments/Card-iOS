@@ -368,11 +368,9 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
     @objc public func initTapCardSDK(configDict: [String : Any], delegate: TapCardViewDelegate? = nil, presentScannerIn:UIViewController? = nil) {
         self.delegate = delegate
         self.presentScannerIn = presentScannerIn
-        let operatorModel:Operator = .init(publicKey: configDict["publicKey"] as? String ?? "", metadata: generateApplicationHeader())
+        //let operatorModel:Operator = .init(publicKey: configDict["publicKey"] as? String ?? "", metadata: generateApplicationHeader())
         var updatedConfigurations:[String:Any] = configDict
-        updatedConfigurations["operator"] = ["publicKey":operatorModel.publicKey ?? "",
-                                             "metaData":[:]]
-        updatedConfigurations["headers"] = operatorModel.metadata
+        updatedConfigurations["headers"] = generateApplicationHeader()
         
         do {
             try openUrl(url: URL(string: generateTapCardSdkURL(from: updatedConfigurations)))

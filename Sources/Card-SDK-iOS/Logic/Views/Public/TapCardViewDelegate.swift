@@ -73,4 +73,7 @@ import Foundation
     /// Will be fired whenever the card element changes its height for your convience
     /// - Parameter height: The new needed height
     @objc optional func onHeightChange(height: Double)
+    /// Will be fired whenever the customer changes the status of the save card switch
+    /// - Parameter enabled: Will be true if he enabled it. False if he disbled it
+    @objc optional func onChangeSaveCard(enabled: Bool)
 }

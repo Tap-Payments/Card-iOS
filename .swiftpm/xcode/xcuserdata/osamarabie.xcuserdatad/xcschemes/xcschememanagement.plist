@@ -132,6 +132,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>Card-SDK-iOS</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>Tap-Card-SDK</key>
 		<dict>
 			<key>primary</key>

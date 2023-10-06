@@ -13,14 +13,18 @@ class TapCardSDKExample: UIViewController {
     @IBOutlet weak var button: UIButton!
     @IBOutlet weak var eventsTextView: UITextView!
     
-    var dictConfig:[String:Any] = ["publicKey":"pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7",
-                                   "scope":"Authenticate",
+    
+    
+    var dictConfig:[String:Any] = ["operator":["publicKey":"pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"],
+                                   "scope":"AuthenticatedToken",
                                    "purpose":"PAYMENT_TRANSACTION",
                                    "transaction":["metadata":["example":"value"],
-                                                  "reference":generateRandomTransactionId()],
+                                                  "reference":generateRandomTransactionId(),
+                                                  "paymentAgreement":["id":"",
+                                                                      "contract":["id":""]]],
                                    "order":["id":"",
                                             "amount":1,
-                                            "currency":"KWD",
+                                            "currency":"SAR",
                                             "description": "Authentication description"],
                                    "invoice":["id":""],
                                    "merchant":["id":""],
@@ -30,11 +34,26 @@ class TapCardSDKExample: UIViewController {
                                                "editble":true,
                                                "contact":["email":"tap@tap.company",
                                                           "phone":["countryCode":"+965","number":"88888888"]]],
-                                   "acceptance":["supportedBrands":["AMERICAN_EXPRESS","VISA","MASTERCARD","OMANNET","MADA"],
-                                                 "supportedCards":["CREDIT","DEBIT"]],
-                                   "fields":["cardHolder":true],
-                                   "addons":["displayPaymentBrands": true, "loader": true, "saveCard": false, "scanner": false],
-                                   "interface":["locale": "en", "theme": UIView().traitCollection.userInterfaceStyle == .dark ? "dark": "light", "edges": "curved", "direction": "dynamic"],
+                                   "features":["scanner":true,
+                                               "nfc":false,
+                                               "acceptanceBadge":true,
+                                               "customerCards":["saveCard":false,
+                                                                "autoSaveCard":false]
+                                               
+                                   ],
+                                   "acceptance":["supportedSchemes":["AMERICAN_EXPRESS","VISA","MASTERCARD","OMANNET","MADA"],
+                                                 "supportedFundSource":["CREDIT","DEBIT"],
+                                                 "supportedPaymentAuthentications":["3DS"]],
+                                   "fields":["card":["cvv":true,
+                                                     "cardHolder":true]],
+                                   "addons":["loader": true],
+                                   "interface":["locale": "en",
+                                                "theme": UIView().traitCollection.userInterfaceStyle == .dark ? "dark": "light",
+                                                "edges": "curved",
+                                                "cardDirection": "dynamic",
+                                                "powered":true,
+                                                "colorStyle":UIView().traitCollection.userInterfaceStyle == .dark ? "monochrome": "colored"],
+                                   "redirect":["url":""],
                                    "post":["url":""]]
     
     override func viewDidLoad() {
@@ -138,6 +157,12 @@ extension TapCardSDKExample: TapCardViewDelegate {
         //print("CardWebSDKExample onInvalidInput \(invalid)")
         eventsTextView.text = "\n\n========\n\nonInvalidInput \(invalid)\(eventsTextView.text ?? "")"
         button.isEnabled = !invalid
+    }
+    
+    
+    func onChangeSaveCard(enabled: Bool) {
+        //print("CardWebSDKExample onInvalidInput \(invalid)")
+        eventsTextView.text = "\n\n========\n\nonChangeSaveCard \(enabled)\(eventsTextView.text ?? "")"
     }
     
     func onSuccess(data: String) {

@@ -54,6 +54,9 @@ extension TapCardView:WKNavigationDelegate {
         case _ where url.absoluteString.contains("onScannerClick"):
             scanCard()
             break
+        case _ where url.absoluteString.contains("onChangeSaveCardLater"):
+            delegate?.onChangeSaveCard?(enabled: Bool(tap_extractDataFromUrl(url.absoluteURL).lowercased()) ?? false)
+            break
         case _ where url.absoluteString.contains("onHeightChange"):
             
             let height = Double(tap_extractDataFromUrl(url,shouldBase64Decode: false))

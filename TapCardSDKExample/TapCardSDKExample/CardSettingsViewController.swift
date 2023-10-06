@@ -22,20 +22,20 @@ class CardSettingsViewController: FormViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        form +++ Section("publicKey")
-        <<< TextRow("publicKey.publicKey"){ row in
+        form +++ Section("operator")
+        <<< TextRow("operator.publicKey"){ row in
             row.title = "Tap public key"
             row.placeholder = "Enter your public key here"
-            row.value = config?["publicKey"] as? String ?? "pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"
+            row.value = (config! as NSDictionary).value(forKeyPath: "operator.publicKey") as? String ?? "pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"
             row.onChange { row in
-                self.config?["publicKey"] = row.value ?? "pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"
+                self.update(dictionary: &self.config!, at: ["operator","publicKey"], with: row.value ?? "pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7")
             }
         }
         
         form +++ Section("scope")
         <<< AlertRow<String>("scope"){ row in
             row.title = "Card scope"
-            row.options = ["Token","Authenticate"]
+            row.options = ["Token","AuthenticatedToken","SaveToken","SaveAuthenticatedToken"]
             row.value = config?["scope"] as? String ?? "Token"
             row.onChange { row in
                 self.config?["scope"] = row.value ?? "Token"
@@ -62,6 +62,27 @@ class CardSettingsViewController: FormViewController {
             row.value = (config! as NSDictionary).value(forKeyPath: "transaction.reference") as? String ?? TapCardSDKExample.generateRandomTransactionId()
             row.onChange { row in
                 self.update(dictionary: &self.config!, at: ["transaction","reference"], with: row.value ?? TapCardSDKExample.generateRandomTransactionId())
+            }
+        }
+        
+        form +++ Section("transaction.paymentagreement")
+        <<< TextRow("paymentagreement.id"){ row in
+            row.title = "id"
+            row.placeholder = "Enter paymentAgreement's id"
+            
+            row.value = (config! as NSDictionary).value(forKeyPath: "transaction.paymentAgreement.id") as? String ?? ""
+            row.onChange { row in
+                self.update(dictionary: &self.config!, at: ["transaction","paymentAgreement","id"], with: row.value ?? "")
+            }
+        }
+        
+        <<< TextRow("paymentagreement.contract"){ row in
+            row.title = "contract.id"
+            row.placeholder = "Enter contracts's id"
+            
+            row.value = (config! as NSDictionary).value(forKeyPath: "transaction.paymentAgreement.contract.id") as? String ?? ""
+            row.onChange { row in
+                self.update(dictionary: &self.config!, at: ["transaction","paymentAgreement","contract","id"], with: row.value ?? "")
             }
         }
         
@@ -179,57 +200,92 @@ class CardSettingsViewController: FormViewController {
         }
         
         
+        form +++ Section("features")
+        <<< SwitchRow("features.acceptanceBadge"){ row in
+            row.title = "acceptanceBadge"
+            row.value = (config! as NSDictionary).value(forKeyPath: "features.acceptanceBadge") as? Bool ?? true
+            row.onChange { row in
+                self.update(dictionary: &self.config!, at: ["features","acceptanceBadge"], with: row.value ?? true)
+            }
+        }
+        <<< SwitchRow("features.scanner"){ row in
+            row.title = "scanner"
+            row.value = (config! as NSDictionary).value(forKeyPath: "features.scanner") as? Bool ?? false
+            row.onChange { row in
+                self.update(dictionary: &self.config!, at: ["features","scanner"], with: row.value ?? true)
+            }
+        }
+        
+        
+        form +++ Section("features.customerCards")
+        <<< SwitchRow("features.customerCards.saveCard"){ row in
+            row.title = "customerCards.saveCard"
+            row.value = (config! as NSDictionary).value(forKeyPath: "features.customerCards.saveCard") as? Bool ?? true
+            row.onChange { row in
+                self.update(dictionary: &self.config!, at: ["features","customerCards","saveCard"], with: row.value ?? true)
+            }
+        }
+        <<< SwitchRow("features.customerCards.autoSaveCard"){ row in
+            row.title = "customerCards.autoSaveCard"
+            row.value = (config! as NSDictionary).value(forKeyPath: "features.customerCards.autoSaveCard") as? Bool ?? true
+            row.onChange { row in
+                self.update(dictionary: &self.config!, at: ["features","customerCards","autoSaveCard"], with: row.value ?? true)
+            }
+        }
+        
+        
+        
         form +++ Section("acceptance")
-        <<< MultipleSelectorRow<String>("acceptance.supportedBrands"){ row in
-            row.title = "supportedBrands"
+        <<< MultipleSelectorRow<String>("acceptance.supportedSchemes"){ row in
+            row.title = "supportedSchemes"
             row.options = ["AMERICAN_EXPRESS","MADA","MASTERCARD","VISA","OMANNET","MEEZA"]
-            row.value = Set((config! as NSDictionary).value(forKeyPath: "acceptance.supportedBrands") as? [String] ?? ["AMERICAN_EXPRESS","MADA","MASTERCARD","VISA","OMANNET","MEEZA"])
+            row.value = Set((config! as NSDictionary).value(forKeyPath: "acceptance.supportedSchemes") as? [String] ?? ["AMERICAN_EXPRESS","MADA","MASTERCARD","VISA","OMANNET","MEEZA"])
             row.onChange { row in
-                self.update(dictionary: &self.config!, at: ["acceptance","supportedBrands"], with: Array(row.value ?? ["AMERICAN_EXPRESS","MADA","MASTERCARD","VISA","OMANNET","MEEZA"]))
+                self.update(dictionary: &self.config!, at: ["acceptance","supportedSchemes"], with: Array(row.value ?? ["AMERICAN_EXPRESS","MADA","MASTERCARD","VISA","OMANNET","MEEZA"]))
             }
         }
         
-        <<< MultipleSelectorRow<String>("acceptance.supportedCards"){ row in
-            row.title = "supportedCards"
+        <<< MultipleSelectorRow<String>("acceptance.supportedFundSource"){ row in
+            row.title = "supportedFundSource"
             row.options = ["CREDIT","DEBIT"]
-            row.value = Set((config! as NSDictionary).value(forKeyPath: "acceptance.supportedCards") as? [String] ?? ["DEBIT","CREDIT"])
+            row.value = Set((config! as NSDictionary).value(forKeyPath: "acceptance.supportedFundSource") as? [String] ?? ["DEBIT","CREDIT"])
             row.onChange { row in
-                self.update(dictionary: &self.config!, at: ["acceptance","supportedCards"], with: Array(row.value ?? ["DEBIT","CREDIT"]))
+                self.update(dictionary: &self.config!, at: ["acceptance","supportedFundSource"], with: Array(row.value ?? ["DEBIT","CREDIT"]))
+            }
+        }
+        
+        <<< MultipleSelectorRow<String>("acceptance.supportedPaymentAuthentications"){ row in
+            row.title = "supportedPaymentAuthentications"
+            row.options = ["3DS"]
+            row.value = Set((config! as NSDictionary).value(forKeyPath: "acceptance.supportedPaymentAuthentications") as? [String] ?? ["3DS"])
+            row.onChange { row in
+                self.update(dictionary: &self.config!, at: ["acceptance","supportedPaymentAuthentications"], with: Array(row.value ?? ["3DS"]))
             }
         }
         
         
-        form +++ Section("fields")
-        <<< SwitchRow("fields.cardHolder"){ row in
+        form +++ Section("fields.card")
+        <<< SwitchRow("fields.card.cardHolder"){ row in
             row.title = "Card holder"
-            row.value = (config! as NSDictionary).value(forKeyPath: "fields.cardHolder") as? Bool ?? true
+            row.value = (config! as NSDictionary).value(forKeyPath: "fields.card.cardHolder") as? Bool ?? true
             row.onChange { row in
-                self.update(dictionary: &self.config!, at: ["fields","cardHolder"], with: row.value ?? true)
+                self.update(dictionary: &self.config!, at: ["fields","card","cardHolder"], with: row.value ?? true)
             }
         }
-        
+        <<< SwitchRow("fields.card.cvv"){ row in
+            row.title = "cvv"
+            row.value = (config! as NSDictionary).value(forKeyPath: "fields.card.cvv") as? Bool ?? true
+            row.onChange { row in
+                self.update(dictionary: &self.config!, at: ["fields","card","cvv"], with: row.value ?? true)
+            }
+        }
         
         form +++ Section("addons")
-        <<< SwitchRow("addons.displayPaymentBrands"){ row in
-            row.title = "displayPaymentBrands"
-            row.value = (config! as NSDictionary).value(forKeyPath: "addons.displayPaymentBrands") as? Bool ?? true
-            row.onChange { row in
-                self.update(dictionary: &self.config!, at: ["addons","displayPaymentBrands"], with: row.value ?? true)
-            }
-        }
         <<< SwitchRow("addons.loader"){ row in
             row.title = "loader"
             row.value = (config! as NSDictionary).value(forKeyPath: "addons.loader") as? Bool ?? true
             row.onChange { row in
                 self.update(dictionary: &self.config!, at: ["addons","loader"], with: row.value ?? true)
-            }
-        }
-        
-        <<< SwitchRow("addons.scanner"){ row in
-            row.title = "scanner"
-            row.value = (config! as NSDictionary).value(forKeyPath: "addons.scanner") as? Bool ?? false
-            row.onChange { row in
-                self.update(dictionary: &self.config!, at: ["addons","scanner"], with: row.value ?? true)
             }
         }
         
@@ -261,14 +317,33 @@ class CardSettingsViewController: FormViewController {
             }
         }
         
-        <<< AlertRow<String>("interface.direction"){ row in
-            row.title = "direction"
+        <<< AlertRow<String>("interface.cardDirection"){ row in
+            row.title = "cardDirection"
             row.options = ["ltr","rtl","dynamic"]
-            row.value = (config! as NSDictionary).value(forKeyPath: "interface.direction") as? String ?? "dynamic"
+            row.value = (config! as NSDictionary).value(forKeyPath: "interface.cardDirection") as? String ?? "dynamic"
             row.onChange { row in
-                self.update(dictionary: &self.config!, at: ["interface","direction"], with: row.value ?? "dynamic")
+                self.update(dictionary: &self.config!, at: ["interface","cardDirection"], with: row.value ?? "dynamic")
             }
         }
+        
+        <<< SwitchRow("interface.powered"){ row in
+            row.title = "powered"
+            row.value = (config! as NSDictionary).value(forKeyPath: "interface.powered") as? Bool ?? true
+            row.onChange { row in
+                self.update(dictionary: &self.config!, at: ["interface","powered"], with: row.value ?? true)
+            }
+        }
+        
+        
+        <<< AlertRow<String>("interface.colorStyle"){ row in
+            row.title = "colorStyle"
+            row.options = ["colored","monochrome"]
+            row.value = (config! as NSDictionary).value(forKeyPath: "interface.colorStyle") as? String ?? "colored"
+            row.onChange { row in
+                self.update(dictionary: &self.config!, at: ["interface","colorStyle"], with: row.value ?? "colored")
+            }
+        }
+        
         
         
         
