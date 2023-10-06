@@ -13,7 +13,7 @@ We at [Tap Payments](https://www.tap.company/) strive to make your payments easi
 
  1. We support from iOS 13.0+
  2. Swift Version 5.0+
- 3. Objective-C
+ 3. Objective-C 
 
 # Steps overview
 ```mermaid

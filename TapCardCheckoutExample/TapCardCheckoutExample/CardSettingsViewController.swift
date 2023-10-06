@@ -191,11 +191,11 @@ class CardSettingsViewController: FormViewController {
             }
         }
         
-        <<< SwitchRow("customer.editble"){ row in
-            row.title = "Editble"
-            row.value = (config! as NSDictionary).value(forKeyPath: "customer.editble") as? Bool ?? true
+        <<< SwitchRow("customer.editable"){ row in
+            row.title = "Editable"
+            row.value = (config! as NSDictionary).value(forKeyPath: "customer.editable") as? Bool ?? true
             row.onChange { row in
-                self.update(dictionary: &self.config!, at: ["customer","editble"], with: row.value ?? true)
+                self.update(dictionary: &self.config!, at: ["customer","editable"], with: row.value ?? true)
             }
         }
         

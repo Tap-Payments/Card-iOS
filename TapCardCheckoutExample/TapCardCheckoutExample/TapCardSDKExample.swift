@@ -31,7 +31,7 @@ class TapCardSDKExample: UIViewController {
                                    "customer":["id":"",
                                                "name":[["lang":"en","first":"TAP","middle":"","last":"PAYMENTS"]],
                                                "nameOnCard":"TAP PAYMENTS",
-                                               "editble":true,
+                                               "editable":true,
                                                "contact":["email":"tap@tap.company",
                                                           "phone":["countryCode":"+965","number":"88888888"]]],
                                    "features":["scanner":true,

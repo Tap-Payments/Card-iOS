@@ -21,7 +21,7 @@ import SwiftEntryKit
     /// A protocol that allows integrators to get notified from events fired from Tap card sdk
     internal var delegate: TapCardViewDelegate?
     /// Defines the base url for the Tap card sdk
-    internal static let tapCardBaseUrl:String = "https://demo.dev.tap.company/v2/sdk/checkout?type=card-iframe&configurations="
+    internal static let tapCardBaseUrl:String = "https://sdk.dev.tap.company/v2/card/wrapper?configurations="
     /// Defines the scanner object to be called whenever needed
     internal var fullScanner:TapFullScreenScannerViewController?
     /// Defines the UIViewController passed from the parent app to present the scanner controller within
