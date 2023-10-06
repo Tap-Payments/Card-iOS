@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "eureka",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/xmartlabs/Eureka.git",
+      "state" : {
+        "revision" : "b6e35acf77a5551070afa6248935ec68e71f22af",
+        "version" : "5.4.0"
+      }
+    },
+    {
       "identity" : "quicklayout",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/huri000/QuickLayout",
@@ -70,6 +79,15 @@
       "state" : {
         "revision" : "279ac52e3f05d04eaa14eecc548f5de9124cdf89",
         "version" : "0.0.10"
+      }
+    },
+    {
+      "identity" : "toast-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/BastiaanJansen/toast-swift",
+      "state" : {
+        "revision" : "a24a15677179e66be1a8b45f4c6b21001fbb6ab2",
+        "version" : "2.0.0"
       }
     }
   ],

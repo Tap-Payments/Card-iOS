@@ -11,7 +11,7 @@ let package = Package(
         .library(
             name: "Card-iOS",
             targets: ["Card-iOS"]),
-    ],
+    ], 
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/huri000/SwiftEntryKit.git", from: "1.0.0"),
@@ -25,23 +25,23 @@ let package = Package(
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "Card-SDK-iOS",
+            name: "Card-iOS",
             dependencies: ["SwiftEntryKit",
-                          "SnapKit",
-                          "SwiftyRSA",
-                          "SharedDataModels-iOS",
-                           "TapFontKit-iOS",
-                          "TapCardScannerWebWrapper-iOS"],
-            resources: [.copy("Resources/Dark_Mode_Button_Loader.json"),
-                        .copy("Resources/Light_Mode_Button_Loader.json"),
-                        .process("Resources/TapCardMedia.xcassets")],
+                                           "SnapKit",
+                                           "SwiftyRSA",
+                                           "SharedDataModels-iOS",
+                                            "TapFontKit-iOS",
+                                           "TapCardScannerWebWrapper-iOS"],
+                             resources: [.copy("Resources/Dark_Mode_Button_Loader.json"),
+                                         .copy("Resources/Light_Mode_Button_Loader.json"),
+                                         .process("Resources/TapCardMedia.xcassets")],
             swiftSettings: [
                     .define("SPM")
                   ]
-        ),
+            ),
         .testTarget(
-            name: "Card-SDK-iOSTests",
-            dependencies: ["Card-SDK-iOS"]),
+            name: "Card-iOSTests",
+            dependencies: ["Card-iOS"]),
     ],
     swiftLanguageVersions: [.v5]
 )
