@@ -256,9 +256,10 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
     ///  - Parameter delegate:A protocol that allows integrators to get notified from events fired from Tap card sdk
     ///  - Parameter presentScannerIn: We will need a reference to the controller that we can present from the card scanner feature
     @objc public func initTapCardSDK(configDict: [String : Any], delegate: TapCardViewDelegate? = nil, presentScannerIn:UIViewController? = nil) {
+        
         self.delegate = delegate
-        self.presentScannerIn = presentScannerIn
-        //let operatorModel:Operator = .init(publicKey: configDict["publicKey"] as? String ?? "", metadata: generateApplicationHeader())
+        self.presentScannerIn = presentScannerIn ?? self.parentViewController
+        
         var updatedConfigurations:[String:Any] = configDict
         updatedConfigurations["headers"] = generateApplicationHeader()
         

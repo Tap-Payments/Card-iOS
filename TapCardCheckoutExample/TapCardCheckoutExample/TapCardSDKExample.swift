@@ -69,7 +69,7 @@ class TapCardSDKExample: UIViewController {
     }
 
     func setupTapCardSDK() {
-        tapCardView.initTapCardSDK(configDict: self.dictConfig, delegate: self, presentScannerIn: self)
+        tapCardView.initTapCardSDK(configDict: self.dictConfig, delegate: self)
     }
     
     @IBAction func generateToken(_ sender: Any) {
