@@ -128,6 +128,7 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
             // move to the new height or safely to the default height
             self.snp.updateConstraints { make in
                 make.height.equalTo(newHeight ?? 95)
+                make.width.equalToSuperview()
             }
             // Update the layout of the affected views
             self.layoutIfNeeded()
