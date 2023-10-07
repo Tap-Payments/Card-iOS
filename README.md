@@ -7,7 +7,7 @@ We at [Tap Payments](https://www.tap.company/) strive to make your payments easi
 ![CocoaPods Compatible](https://img.shields.io/cocoapods/v/Card-iOS.svg?style=flat)
 
 
-![enter image description here](https://im4.ezgif.com/tmp/ezgif-4-272ebac491.gif)
+![](https://github.com/Tap-Payments/Card-iOS/blob/main/ezgif.com-video-to-gif.gif?raw=true)
 
 # Requirements
 
