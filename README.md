@@ -75,7 +75,7 @@ It is always recommended, that you generate this `dictionary` from your server s
 |--|--|--| --|--|
 | operator| This is the `Key` that you will get after registering you bundle id. | True  | String| `let operator:[String:Any]: ["publicKey":"pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"]` |
 | scope| Defines the intention of using the `Card-iOS`. | True  | String| ` let scope:String = "Token"`|
-| purpose| Defines the intention of using the `Token` after generation. | True  | String| ` let purpose:String = "asd"` |
+| purpose| Defines the intention of using the `Token` after generation. | True  | String| ` let purpose:String = "Transaction"` |
 | transaction| Needed to define transaction metadata and reference, if you are generating an authenticated token. | False  | `Dictionry`| ` let transaction:[String:Any] = ["metadata":["example":"value"], "reference":"A reference to this transaciton in your system"],"paymentAgreement":["id":"", "contract":["id":"If you created a contract id with the client to save his card, pass its is here. Otherwise, we will create one for you."]]` |
 | order| This is the `order id` that you created before or `amount` and `currency` to generate a new order.   It will be linked this token. | True  | `Dictionary`| ` let order:[String:String] = ["id":"", "amount":1, "currency":"SAR", "description": "Authentication description"]` |
 | invoice| This is the `invoice id` that you want to link this token to if any. | False  | `Dictionary`| ` let invoice:[String:String] = ["id":""]` |
@@ -106,11 +106,13 @@ It is always recommended, that you generate this `dictionary` from your server s
  - purpose:
 	 - Defines the intention of using the `Token` after generation.
 	 - Possible values:
-		 - `PAYMENT_TRANSACTION` Using the token for a single charge.
-		 - `RECURRING_TRANSACTION` Using the token for multiple recurring charges.
-		 - `INSTALLMENT_TRANSACTION` Using the token for a charge that is a part of an installement plan.
-		 - `ADD_CARD` Using the token for a save a card for a customer.
-		 - `CARDHOLDER_VERIFICATION` Using the token for to verify the ownership of the card.
+		 - `Transaction` Using the token for a single charge.
+		 - `Milestone Transaction` Using the token for paying a part of a bigger order, when reaching a certain milestone.
+		 - `Installment Transaction` Using the token for a charge that is a part of an installement plan.
+		 - `Billing Transaction` Using the token for paying a bill.
+		 - `Subscription Transaction` Using the token for a recurring based transaction.
+     		 - `Verify Cardholder` Using the token to verify the ownership of the card.
+        	 - `Save Card` Using the token to save this card and link it to a certain customer.
  - transaction:
 	 - Provides essential information about this transaction.
  - transaction.reference:
