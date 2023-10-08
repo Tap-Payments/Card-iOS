@@ -162,7 +162,6 @@ It is always recommended, that you generate this `dictionary` from your server s
 | operator| This is the `Key` that you will get after registering you bundle id. | True  | String| `let operator:[String:Any]: ["publicKey":"pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"]` |
 | scope| Defines the intention of using the `Card-iOS`. | True  | String| ` let scope:String = "Token"`|
 | purpose| Defines the intention of using the `Token` after generation. | True  | String| ` let purpose:String = "Transaction"` |
-| transaction| Needed to define transaction metadata and reference, if you are generating an authenticated token. | False  | `Dictionry`| ` let transaction:[String:Any] = ["reference":"A reference to this transaciton in your system"],"paymentAgreement":["id":"", "contract":["id":"If you created a contract id with the client to save his card, pass its is here. Otherwise, we will create one for you."]]` |
 | order| This is the `order id` that you created before or `amount` and `currency` to generate a new order.   It will be linked this token. | True  | `Dictionary`| ` let order:[String:String] = ["id":"", "amount":1, "currency":"SAR", "description": "Authentication description","reference":"","metadata":[:]]` |
 | invoice| This is the `invoice id` that you want to link this token to if any. | False  | `Dictionary`| ` let invoice:[String:String] = ["id":""]` |
 | merchant| This is the `Merchant id` that you will get after registering you bundle id. | True  | `Dictionary`| ` let merchant:[String:String] = ["id":""]` |
@@ -199,18 +198,6 @@ It is always recommended, that you generate this `dictionary` from your server s
 		 - `Verify Cardholder` Using the token to verify the ownership of the card.
 		 - `Save Card` Using the token to save this card and link it to a certain customer.
 		 - `Maintain Card` Used to renew a saved card.
- - transaction:
-	 - Provides essential information about this transaction.
- - transaction.reference:
-	 - Pass this value if you want to link this transaction to the a one you have within your system.
- - transaction.paymentAgreement.id:
-	 - The id the payment agreement you created using our Apis.
-	 - This is an agreement between you and your client to allow saving his card for further payments.
-	 - If not passed, it will be created on the fly.
- - transaction.paymentAgreement.contract.id:
-	 - The id the contract you created using our Apis.
-	 - This is a contract between you and your client to allow saving his card for further payments.
-	 - If not passed, it will be created on the fly.
  - order:
 	 - The details about the order that you will be using the token you are generating within.
  - order.id:
