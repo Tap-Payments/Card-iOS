@@ -140,11 +140,11 @@ A protocol that allows integrators to get notified from events fired from the `C
     /// Will be fired whenever the validity of the card data changes.
     /// - Parameter invalid: Will be true if the card data is invalid and false otherwise.
     @objc optional func onInvalidInput(invalid: Bool)
-    /**
-        Will be fired whenever the card sdk finishes successfully the task assigned to it. Whether `TapToken` or `AuthenticatedToken`
-    @objc optional func onSuccess(data: String)
-    /// Will be fired whenever there is an error related to the card connectivity or apis
-    /// - Parameter data: includes a JSON format for the error description and error
+    
+        ///Will be fired whenever the card sdk finishes successfully the task assigned to it. Whether `TapToken` or `AuthenticatedToken`
+    	@objc optional func onSuccess(data: String)
+    	/// Will be fired whenever there is an error related to the card connectivity or apis
+    	/// - Parameter data: includes a JSON format for the error description and error
     @objc optional func onError(data: String)
 }
 ```
