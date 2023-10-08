@@ -1,4 +1,5 @@
 
+
 # Card-iOS
 
 We at [Tap Payments](https://www.tap.company/) strive to make your payments easier than ever. We as a PCI compliant company, provide you a from the self solution to process card payments in your iOS apps.
@@ -34,7 +35,7 @@ C -->> C : Enter card data
 C -->> A : onBinIdentification(data)
 C -->> A : onValidInput
 A ->> C : tapCardView.generateTapToken()
-C -->> A : onSuccess(data(
+C -->> A : onSuccess(data)
 ```
 
 # Get your keys
@@ -62,10 +63,95 @@ pod update
 ## Swift Package Manager
 In Xcode, add the `TapCardSDK` as a [package dependency](https://developer.apple.com/documentation/swift_packages/adding_package_dependencies_to_your_app) to your Xcode project. Enter [https://github.com/Tap-Payments/Card-iOS.git](https://github.com/Tap-Payments/Card-iOS.git) as the package URL. 
 
+# Simple Integration
 
-# Prepare input
+You can initialize `Card-iOS` in different ways
 
-## Documentation
+ 1. Storyboard.
+ 2. Code.
+ 3. SwiftUI
+
+ 
+## Storyboard
+
+### Adjust the UI
+1. Drag and drop a UIView inside the UIViewController you want in the Storyboard.
+2. Declare as of type `TapCardView`
+3. Make an IBOutlet to the `UIViewController`.
+
+![enter image description here](https://i.ibb.co/F6H9JXy/Screenshot-2023-10-03-at-8-30-35-AM.png)
+
+### Configure the UI in the UIViewController
+```swift
+/// The outlet from the created view above
+@IBOutlet  weak  var  tapCardView: TapCardView!
+.
+.
+.
+tapCardView.initTapCardSDK(configDict: self.dictConfig, delegate: self, presentScannerIn: self)
+```
+
+## Code
+```swift
+/// A class level variable
+var  tapCardView:TapCardView = .init()
+/// The minimum needed configuration dictionary
+let  configurations:[String:Any] = 
+["operator":["publicKey":"pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"],
+"scope":"AuthenticatedToken",
+"order":["amount":1,
+	"currency":"SAR",
+	"metadata":["key":"value"]],
+"customer":["name":[["lang":"en","first":"TAP","middle":"","last":"PAYMENTS"]],
+	"contact":["email":"tap@tap.company",
+	"phone":["countryCode":"+965","number":"88888888"]]]]
+	
+/// Add the needed constraints to show and put the card view within your layout
+func  addCardView() {
+
+
+		view.addSubview(tapCardView)
+
+		tapCardView.translatesAutoresizingMaskIntoConstraints = false
+// Please it is a must to set the constraints, don't asssign a height constraint to allow the card to adapt dynamically.
+		NSLayoutConstraint.activate([
+			cardiOS.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10),
+			cardiOS.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10),
+			cardiOS.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
+		])
+
+		cardiOS.initTapCardSDK(configDict: configurations, delegate: self)
+}
+```
+## Tokenize the card
+
+Once you get notified that the `TapCardView` now has a valid input from the delegate. You can start the tokenization process by calling the public interface:
+
+```swift
+///  Wil start the process of generating a `TapToken` with the current card data
+cardiOS.generateTapToken()
+```
+
+## Simple TapCardViewDelegate
+A protocol that allows integrators to get notified from events fired from the `Card-iOS`. 
+
+```swift
+@objc public protocol TapCardViewDelegate {
+    /// Will be fired whenever the validity of the card data changes.
+    /// - Parameter invalid: Will be true if the card data is invalid and false otherwise.
+    @objc optional func onInvalidInput(invalid: Bool)
+    /**
+        Will be fired whenever the card sdk finishes successfully the task assigned to it. Whether `TapToken` or `AuthenticatedToken`
+    @objc optional func onSuccess(data: String)
+    /// Will be fired whenever there is an error related to the card connectivity or apis
+    /// - Parameter data: includes a JSON format for the error description and error
+    @objc optional func onError(data: String)
+}
+```
+
+# Advanced Integration
+
+## Advanced Documentation
 
 ### Main input documentation
 To make our sdk as dynamic as possible, we accept the input in a form of a `dictionary` . We will provide you with a sample full one for reference.
@@ -76,16 +162,15 @@ It is always recommended, that you generate this `dictionary` from your server s
 | operator| This is the `Key` that you will get after registering you bundle id. | True  | String| `let operator:[String:Any]: ["publicKey":"pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"]` |
 | scope| Defines the intention of using the `Card-iOS`. | True  | String| ` let scope:String = "Token"`|
 | purpose| Defines the intention of using the `Token` after generation. | True  | String| ` let purpose:String = "Transaction"` |
-| transaction| Needed to define transaction metadata and reference, if you are generating an authenticated token. | False  | `Dictionry`| ` let transaction:[String:Any] = ["metadata":["example":"value"], "reference":"A reference to this transaciton in your system"],"paymentAgreement":["id":"", "contract":["id":"If you created a contract id with the client to save his card, pass its is here. Otherwise, we will create one for you."]]` |
-| order| This is the `order id` that you created before or `amount` and `currency` to generate a new order.   It will be linked this token. | True  | `Dictionary`| ` let order:[String:String] = ["id":"", "amount":1, "currency":"SAR", "description": "Authentication description"]` |
+| transaction| Needed to define transaction metadata and reference, if you are generating an authenticated token. | False  | `Dictionry`| ` let transaction:[String:Any] = ["reference":"A reference to this transaciton in your system"],"paymentAgreement":["id":"", "contract":["id":"If you created a contract id with the client to save his card, pass its is here. Otherwise, we will create one for you."]]` |
+| order| This is the `order id` that you created before or `amount` and `currency` to generate a new order.   It will be linked this token. | True  | `Dictionary`| ` let order:[String:String] = ["id":"", "amount":1, "currency":"SAR", "description": "Authentication description","reference":"","metadata":[:]]` |
 | invoice| This is the `invoice id` that you want to link this token to if any. | False  | `Dictionary`| ` let invoice:[String:String] = ["id":""]` |
 | merchant| This is the `Merchant id` that you will get after registering you bundle id. | True  | `Dictionary`| ` let merchant:[String:String] = ["id":""]` |
 | customer| The customer details you want to attach to this tokenization process. | True  | `Dictionary`| ` let customer:[String:Any] = ["id":"", "name":[["lang":"en","first":"TAP","middle":"","last":"PAYMENTS"]], "nameOnCard":"TAP PAYMENTS", "editble":true, "contact":["email":"tap@tap.company", "phone":["countryCode":"+965","number":"88888888"]]]` |
-| features| Some extra features that you can enable/disable based on the experience you want to provide.. | False  | `Dictionary`| ` let features:[String:Any] = ["scanner":true, "acceptanceBadge":true, "customerCards":["saveCard":false, "autoSaveCard":false]`|
+| features| Some extra features that you can enable/disable based on the experience you want to provide.. | False  | `Dictionary`| ` let features:[String:Any] = ["acceptanceBadge":true, "customerCards":["saveCard":false, "autoSaveCard":false], "alternativeCardInputs":["cardScanner":true] `|
 | acceptance| The acceptance details for the transaction. Including, which card brands and types you want to allow for the customer to tokenize/save. | False  | `Dictionary`| ` let acceptance:[String:Any] = ["supportedSchemes":["AMERICAN_EXPRESS","VISA","MASTERCARD","OMANNET","MADA"], "supportedFundSource":["CREDIT","DEBIT"], "supportedPaymentAuthentications":["3DS"]]`|
-| fields| Needed to define visibility of the optional fields in the card form. | False  | `Dictionary`| ` let fields:[String:Any] = "card":["cardHolder":true]` |
-| addons| Needed to define the enabling of some addons on top of the basic card form. | False  | `Dictionary`| ` let addons:[String:Bool] = ["loader": true]`|
-| interface| Needed to defines look and feel related configurations. | False  | `Dictionary`| ` let interface:[String:String] = ["locale": "en", "theme": "light", "edges": "curved", "direction": "dynamic", "powered": true, "colorStyle": "colored"]` |
+| fieldsVisibility| Needed to define visibility of the optional fields in the card form. | False  | `Dictionary`| ` let fieldsVisibility:[String:Any] = "card":["cardHolder":true]` |
+| interface| Needed to defines look and feel related configurations. | False  | `Dictionary`| ` let interface:[String:String] = ["locale": "en", "theme": "light", "edges": "curved", "direction": "dynamic", "powered": true, "colorStyle": "colored", "loader": true]` |
 | post| This is the `webhook` for your server, if you want us to update you server to server. | False  | `Dictionary`| ` let post:[String:String] = ["url":""]` |
 
 ### Documentation per variable
@@ -111,14 +196,12 @@ It is always recommended, that you generate this `dictionary` from your server s
 		 - `Installment Transaction` Using the token for a charge that is a part of an installement plan.
 		 - `Billing Transaction` Using the token for paying a bill.
 		 - `Subscription Transaction` Using the token for a recurring based transaction.
-     		 - `Verify Cardholder` Using the token to verify the ownership of the card.
-        	 - `Save Card` Using the token to save this card and link it to a certain customer.
+     	- `Verify Cardholder` Using the token to verify the ownership of the card.
+        - `Save Card` Using the token to save this card and link it to a certain customer.
  - transaction:
 	 - Provides essential information about this transaction.
  - transaction.reference:
 	 - Pass this value if you want to link this transaction to the a one you have within your system.
- - transaction.metadata:
-	 - It is a key-value based parameter. You can pass it to attach any miscellaneous data with this transaction for your own convenience.
  - transaction.paymentAgreement.id:
 	 - The id the payment agreement you created using our Apis.
 	 - This is an agreement between you and your client to allow saving his card for further payments.
@@ -137,6 +220,10 @@ It is always recommended, that you generate this `dictionary` from your server s
 	 - The intended amount you will perform the order linked to this token afterwards.
  - order.description:
 	 - Optional string to put some clarifications about the order if needed.
+ - order.reference:
+	 - Optional string to put a reference to link it to your system.
+- order.metadata:
+	 - Optional, It is a key-value based parameter. You can pass it to attach any miscellaneous data with this order for your own convenience.
  - invoice.id:
 	 - Optional string to pass an invoice id, that you want to link to this token afterwards.
  - merchant.id:
@@ -161,7 +248,7 @@ It is always recommended, that you generate this `dictionary` from your server s
 		 - number
  - features:
 	 - Some extra features/functionalities that can be configured as per your needs.
- - features.scanner:
+ - features.alternativeCardInputs.cardScanner:
 	 - A boolean to indicate whether or not you want to display the scan card icon.
 	 - Make sure you have access to camera usage, before enabling the scanner function.
  - features.acceptanceBadge:
@@ -189,9 +276,9 @@ It is always recommended, that you generate this `dictionary` from your server s
 - acceptance.supportedPaymentAuthentications:
 	- A list of what authentication techniques you want to enforce and apple. For example:
 		- 3DS
-- fields.card.cardHolder:
+- fieldsVisibility.card.cardHolder:
 	- A boolean to indicate wether or not you want to show/collect the card holder name.
-- addons.loader:
+- interface.loader:
 	- A boolean to indicate wether or not you want to show a loading view on top of the card form while it is performing api requests.
 - interface.locale:
 	- The language of the card form. Accepted values as of now are:
@@ -226,192 +313,76 @@ You can create a dictionary to pass the data to our sdk. The good part about thi
 
 ```swift
 var  dictConfig:[String:Any] = 
-	["operator":["publicKey":"pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"],
-	"scope":"AuthenticatedToken",
-	
-	"purpose":"PAYMENT_TRANSACTION",
-	
-	"transaction":[	"metadata":["example":"value"],
-					"reference":"",
-					"paymentAgreement":["id":"",
-						"contract":["id":""]
-						]
-					],
-					
-	"order":[	"id":"",
-				"amount":1,
-				"currency":"SAR",
-				"description": "Authentication description"
-			],
-	"invoice":["id":""],
-	
-	"merchant":["id":""],
-	
-	"customer":["id":"",
-				"name":[["lang":"en","first":"TAP","middle":"","last":"PAYMENTS"]],
-				"nameOnCard":"TAP PAYMENTS",
-				"editable":true,
-				"contact":[	"email":"tap@tap.company",
-							"phone":["countryCode":"+965","number":"88888888"]
-						  ]
-			  ],
+	  
 
-"features":["scanner":true,
-			"nfc":false,
-			"acceptanceBadge":true,
-			"customerCards":["saveCard":false,"autoSaveCard":false]
-			],
+var dictConfig: [String: Any] = [
+  "operator": ["publicKey": "pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"],
+  "scope": "AuthenticatedToken",
+  "purpose": "Transaction",
+  "transaction": [
+    "paymentAgreement": [
+      "id": "",
+      "contract": ["id": ""],
+    ]
+  ],
+  "order": [
+    "id": "",
+    "amount": 1,
+    "currency": "SAR",
+    "description": "Authentication description",
+    "reference": "",
+    "metadata": ["key": "value"],
+  ],
+  "invoice": ["id": ""],
+  "merchant": ["id": ""],
+  "customer": [
+    "id": "",
+    "name": [["lang": "en", "first": "TAP", "middle": "", "last": "PAYMENTS"]],
+    "nameOnCard": "TAP PAYMENTS",
+    "editable": true,
+    "contact": [
+      "email": "tap@tap.company",
+      "phone": ["countryCode": "+965", "number": "88888888"],
+    ],
+  ],
+  "features": [
+    "alternativeCardInputs": [
+      "cardScanner": true,
+      "cardNFC": false,
+    ],
+    "acceptanceBadge": true,
+    "customerCards": [
+      "saveCard": false,
+      "autoSaveCard": false,
+    ],
 
-"acceptance":["supportedSchemes": 	["AMERICAN_EXPRESS","VISA","MASTERCARD","OMANNET","MADA"],
-			  "supportedFundSource":["CREDIT","DEBIT"],
-			  "supportedPaymentAuthentications":["3DS"]
-			  ],
+  ],
+  "acceptance": [
+    "supportedSchemes": ["AMERICAN_EXPRESS", "VISA", "MASTERCARD", "OMANNET", "MADA"],
+    "supportedFundSource": ["CREDIT", "DEBIT"],
+    "supportedPaymentAuthentications": ["3DS"],
+  ],
+  "fieldsVisibility": [
+    "card": [
+      "cvv": true,
+      "cardHolder": true,
+    ]
+  ],
+  "interface": [
+    "locale": "en",
+    "theme": "light",
+    "edges": "curved",
+    "cardDirection": "dynamic",
+    "powered": true,
+    "loader": true,
+    "colorStyle": "colored",
+  ],
+  "post": ["url": ""]
+]
 
-"fields":["card":["cvv":true,"cardHolder":true]],
-
-"addons":["loader": true],
-
-"interface":["locale": "en",
-			 "theme": "light",
-			 "edges": "curved",
-			 "cardDirection": "dynamic",
-			 "powered":true,
-			 "colorStyle":"colored"
-			 ],
-
-"redirect":["url":""],
-
-"post":["url":""]]
 ```
 
-# Initializing the Card-iOS form
-
-You can initialize `Card-iOS` in different ways
-
- 1. Storyboard.
- 2. Code.
- 3. SwiftUI
-
- 
-## Storyboard
-
-### Adjust the UI
-1. Drag and drop a UIView inside the UIViewController you want in the Storyboard.
-2. Declare as of type `TapCardView`
-3. Make an IBOutlet to the `UIViewController`.
-
-![enter image description here](https://i.ibb.co/F6H9JXy/Screenshot-2023-10-03-at-8-30-35-AM.png)
-
-### Configure the UI in the UIViewController
-```swift
-/// The outlet from the created view above
-@IBOutlet  weak  var  tapCardView: TapCardView!
-.
-.
-.
-tapCardView.initTapCardSDK(configDict: self.dictConfig, delegate: self, presentScannerIn: self)
-```
-
-## Code
-```swift
-/// A class level variable
-var  tapCardView:TapCardView = .init()
-/// The configuration dictionary
-var  dictConfig:[String:Any] = 
-	["operator":["publicKey":"pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"],
-	"scope":"AuthenticatedToken",
-	
-	"purpose":"PAYMENT_TRANSACTION",
-	
-	"transaction":[	"metadata":["example":"value"],
-					"reference":"",
-					"paymentAgreement":["id":"",
-						"contract":["id":""]
-						]
-					],
-					
-	"order":[	"id":"",
-				"amount":1,
-				"currency":"SAR",
-				"description": "Authentication description"
-			],
-	"invoice":["id":""],
-	
-	"merchant":["id":""],
-	
-	"customer":["id":"",
-				"name":[["lang":"en","first":"TAP","middle":"","last":"PAYMENTS"]],
-				"nameOnCard":"TAP PAYMENTS",
-				"editable":true,
-				"contact":[	"email":"tap@tap.company",
-							"phone":["countryCode":"+965","number":"88888888"]
-						  ]
-			  ],
-
-"features":["scanner":true,
-			"nfc":false,
-			"acceptanceBadge":true,
-			"customerCards":["saveCard":false,"autoSaveCard":false]
-			],
-
-"acceptance":["supportedSchemes": 	["AMERICAN_EXPRESS","VISA","MASTERCARD","OMANNET","MADA"],
-			  "supportedFundSource":["CREDIT","DEBIT"],
-			  "supportedPaymentAuthentications":["3DS"]
-			  ],
-
-"fields":["card":["cvv":true,"cardHolder":true]],
-
-"addons":["loader": true],
-
-"interface":["locale": "en",
-			 "theme": "light",
-			 "edges": "curved",
-			 "cardDirection": "dynamic",
-			 "powered":true,
-			 "colorStyle":"colored"
-			 ],
-
-"redirect":["url":""],
-
-"post":["url":""]]
-/// Add the needed constraints to show and put the card view within your layout
-func  addCardView() {
-
-
-		view.addSubview(tapCardView)
-
-		tapCardView.translatesAutoresizingMaskIntoConstraints = false
-
-		let constraints = [
-
-		tapCardView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-
-		tapCardView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
-
-		tapCardView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-
-		tapCardView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 20),
-
-		view.heightAnchor.constraint(equalToConstant: 95)
-
-		]
-
-		NSLayoutConstraint.activate(constraints)
-
-		tapCardView.setNeedsLayout()
-
-		tapCardView.updateConstraints()
-
-		view.updateConstraints()
-}
-
-/// Pass the required configuration data to the tap card view sdk
-func configureTheSDK() {
-	tapCardView.initTapCardSDK(configDict: dictConfig, delegate: self, presentScannerIn: self)
-}
-```
-
-# TapCardViewDelegate
+## Advanced TapCardViewDelegate
 A protocol that allows integrators to get notified from events fired from the `TapCardSDK`. 
 
 ```swift
@@ -484,13 +455,4 @@ A protocol that allows integrators to get notified from events fired from the `T
 	///  - Parameter  enabled: Will be true if he enabled it. False if he disbled it
 	@objc optional func  onChangeSaveCard(enabled: Bool)
 }
-```
-
-# Tokenize the card
-
-Once you get notified that the `TapCardView` now has a valid input from the delegate. You can start the tokenization process by calling the public interface:
-
-```swift
-///  Wil start the process of generating a `TapToken` with the current card data
-tapCardView.generateTapToken()
 ```
