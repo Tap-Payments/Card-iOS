@@ -61,7 +61,7 @@ pod update
 
 
 ## Swift Package Manager
-In Xcode, add the `TapCardSDK` as a [package dependency](https://developer.apple.com/documentation/swift_packages/adding_package_dependencies_to_your_app) to your Xcode project. Enter [https://github.com/Tap-Payments/Card-iOS.git](https://github.com/Tap-Payments/Card-iOS.git) as the package URL. 
+In Xcode, add the `Card-iOS` as a [package dependency](https://developer.apple.com/documentation/swift_packages/adding_package_dependencies_to_your_app) to your Xcode project. Enter [https://github.com/Tap-Payments/Card-iOS.git](https://github.com/Tap-Payments/Card-iOS.git) as the package URL. 
 
 # Simple Integration
 
@@ -371,7 +371,7 @@ var dictConfig: [String: Any] = [
 ```
 
 ## Advanced TapCardViewDelegate
-A protocol that allows integrators to get notified from events fired from the `TapCardSDK`. 
+A protocol that allows integrators to get notified from events fired from the `Card-iOS`. 
 
 ```swift
 @objc public protocol TapCardViewDelegate {
