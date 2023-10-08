@@ -196,8 +196,9 @@ It is always recommended, that you generate this `dictionary` from your server s
 		 - `Installment Transaction` Using the token for a charge that is a part of an installement plan.
 		 - `Billing Transaction` Using the token for paying a bill.
 		 - `Subscription Transaction` Using the token for a recurring based transaction.
-     	- `Verify Cardholder` Using the token to verify the ownership of the card.
-        - `Save Card` Using the token to save this card and link it to a certain customer.
+		 - `Verify Cardholder` Using the token to verify the ownership of the card.
+		 - `Save Card` Using the token to save this card and link it to a certain customer.
+		 - `Maintain Card` Used to renew a saved card.
  - transaction:
 	 - Provides essential information about this transaction.
  - transaction.reference:
