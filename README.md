@@ -168,7 +168,7 @@ It is always recommended, that you generate this `dictionary` from your server s
 | customer| The customer details you want to attach to this tokenization process. | True  | `Dictionary`| ` let customer:[String:Any] = ["id":"", "name":[["lang":"en","first":"TAP","middle":"","last":"PAYMENTS"]], "nameOnCard":"TAP PAYMENTS", "editble":true, "contact":["email":"tap@tap.company", "phone":["countryCode":"+965","number":"88888888"]]]` |
 | features| Some extra features that you can enable/disable based on the experience you want to provide.. | False  | `Dictionary`| ` let features:[String:Any] = ["acceptanceBadge":true, "customerCards":["saveCard":false, "autoSaveCard":false], "alternativeCardInputs":["cardScanner":true] `|
 | acceptance| The acceptance details for the transaction. Including, which card brands and types you want to allow for the customer to tokenize/save. | False  | `Dictionary`| ` let acceptance:[String:Any] = ["supportedSchemes":["AMERICAN_EXPRESS","VISA","MASTERCARD","OMANNET","MADA"], "supportedFundSource":["CREDIT","DEBIT"], "supportedPaymentAuthentications":["3DS"]]`|
-| fieldsVisibility| Needed to define visibility of the optional fields in the card form. | False  | `Dictionary`| ` let fieldsVisibility:[String:Any] = "card":["cardHolder":true]` |
+| fieldVisibility| Needed to define visibility of the optional fields in the card form. | False  | `Dictionary`| ` let fieldVisibility:[String:Any] = "card":["cardHolder":true]` |
 | interface| Needed to defines look and feel related configurations. | False  | `Dictionary`| ` let interface:[String:String] = ["locale": "en", "theme": "light", "edges": "curved", "direction": "dynamic", "powered": true, "colorStyle": "colored", "loader": true]` |
 | post| This is the `webhook` for your server, if you want us to update you server to server. | False  | `Dictionary`| ` let post:[String:String] = ["url":""]` |
 
@@ -264,7 +264,7 @@ It is always recommended, that you generate this `dictionary` from your server s
 - acceptance.supportedPaymentAuthentications:
 	- A list of what authentication techniques you want to enforce and apple. For example:
 		- 3DS
-- fieldsVisibility.card.cardHolder:
+- fieldVisibility.card.cardHolder:
 	- A boolean to indicate wether or not you want to show/collect the card holder name.
 - interface.loader:
 	- A boolean to indicate wether or not you want to show a loading view on top of the card form while it is performing api requests.
@@ -350,7 +350,7 @@ var dictConfig: [String: Any] = [
     "supportedFundSource": ["CREDIT", "DEBIT"],
     "supportedPaymentAuthentications": ["3DS"],
   ],
-  "fieldsVisibility": [
+  "fieldVisibility": [
     "card": [
       "cvv": true,
       "cardHolder": true,
