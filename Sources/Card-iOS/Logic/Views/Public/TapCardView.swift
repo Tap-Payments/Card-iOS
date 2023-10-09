@@ -28,6 +28,8 @@ import SwiftEntryKit
     internal var presentScannerIn:UIViewController? = nil
     /// keeps a hold of the loaded web sdk configurations url
     internal var currentlyLoadedCardConfigurations:URL?
+    /// holds the initial width
+    internal var initialWidth:CGFloat = 0
     /// The headers encryption key
     internal var headersEncryptionPublicKey:String {
         if getCardKey().contains("test") {
@@ -109,14 +111,38 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
         
         // Define the web view constraints
         let top  = webView.topAnchor.constraint(equalTo: self.topAnchor)
-        let left = webView.leftAnchor.constraint(equalTo: self.leftAnchor)
-        let right = webView.rightAnchor.constraint(equalTo: self.rightAnchor)
+        let left = webView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 4)
+        let right = webView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -4)
         let bottom = webView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-        let cardHeight = self.heightAnchor.constraint(greaterThanOrEqualToConstant: 95)
-        
+        let cardHeight = self.heightAnchor.constraint(equalToConstant: 95)
+        let cardWidth = self.widthAnchor.constraint(equalToConstant: self.frame.width)
         
         // Activate the constraints
-        NSLayoutConstraint.activate([left, right, top, bottom, cardHeight])
+        constraints.first { $0.firstAnchor == heightAnchor }?.isActive = false
+        constraints.first { $0.firstAnchor == widthAnchor }?.isActive = false
+        
+        NSLayoutConstraint.activate([left, right, top, bottom, cardHeight,cardWidth])
+        DispatchQueue.main.async {
+            /*let currentWidth:CGFloat = self.frame.width
+            self.snp.remakeConstraints { make in
+                make.height.equalTo(95)
+                make.width.equalTo(currentWidth)
+            }
+            
+            self.webView?.snp.remakeConstraints { make in
+                make.leading.equalToSuperview()
+                make.trailing.equalToSuperview()
+                make.top.equalToSuperview()
+                make.bottom.equalToSuperview()
+            }
+            */
+            self.layoutIfNeeded()
+            self.updateConstraints()
+            self.layoutSubviews()
+            self.initialWidth = self.frame.width
+            self.webView?.layoutIfNeeded()
+        }
+        
     }
     
     
@@ -126,10 +152,15 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
         // make sure we are in the main thread
         DispatchQueue.main.async {
             // move to the new height or safely to the default height
-            self.snp.updateConstraints { make in
-                make.height.equalTo(newHeight ?? 95)
-                make.width.equalToSuperview()
-            }
+            let currentWidth:CGFloat = self.frame.width
+            
+            let cardHeight = self.heightAnchor.constraint(equalToConstant: (newHeight ?? 95) + 10.0)
+            let cardWidth = self.widthAnchor.constraint(equalToConstant: currentWidth)
+            
+            // Activate the constraints
+            self.constraints.first { $0.firstAnchor == self.heightAnchor }?.isActive = false
+            self.constraints.first { $0.firstAnchor == self.widthAnchor }?.isActive = false
+            NSLayoutConstraint.activate([cardHeight,cardWidth])
             // Update the layout of the affected views
             self.layoutIfNeeded()
             self.updateConstraints()

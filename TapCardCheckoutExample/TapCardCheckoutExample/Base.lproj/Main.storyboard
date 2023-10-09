@@ -2,13 +2,14 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="dGE-HH-EqT">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Tap CardSDK Example-->
+        <!--Simplifying payments-->
         <scene sceneID="Nue-4W-n5X">
             <objects>
                 <viewController storyboardIdentifier="CardWebSDKExample" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ksL-9R-rHt" customClass="TapCardSDKExample" customModule="TapCardCheckoutExample" customModuleProvider="target" sceneMemberID="viewController">
@@ -51,6 +52,15 @@
                                     <action selector="optionsClicked:" destination="ksL-9R-rHt" eventType="touchUpInside" id="507-Kb-URW"/>
                                 </connections>
                             </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="neY-Ap-QLu">
+                                <rect key="frame" x="20" y="103" width="76" height="35"/>
+                                <color key="tintColor" systemColor="labelColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Simple"/>
+                                <connections>
+                                    <segue destination="gnc-iN-nZH" kind="show" id="bba-W7-YGP"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="gbY-IL-c40"/>
                         <color key="backgroundColor" systemColor="systemGray6Color"/>
@@ -61,14 +71,16 @@
                             <constraint firstItem="8sZ-XL-izW" firstAttribute="bottom" secondItem="gbY-IL-c40" secondAttribute="bottom" id="Xji-WS-3Tj"/>
                             <constraint firstItem="s4I-Pq-vtO" firstAttribute="leading" secondItem="gbY-IL-c40" secondAttribute="leading" constant="10" id="Zmm-b5-oEB"/>
                             <constraint firstItem="8sZ-XL-izW" firstAttribute="leading" secondItem="gbY-IL-c40" secondAttribute="leading" constant="20" id="eOH-b2-yBg"/>
+                            <constraint firstItem="neY-Ap-QLu" firstAttribute="top" secondItem="gbY-IL-c40" secondAttribute="top" id="hHN-Ab-Zrl"/>
                             <constraint firstItem="zwX-BX-CsZ" firstAttribute="top" secondItem="gbY-IL-c40" secondAttribute="top" id="iFb-NK-T7w"/>
+                            <constraint firstItem="neY-Ap-QLu" firstAttribute="leading" secondItem="gbY-IL-c40" secondAttribute="leading" constant="20" id="nUR-xm-xBL"/>
                             <constraint firstItem="gbY-IL-c40" firstAttribute="trailing" secondItem="s4I-Pq-vtO" secondAttribute="trailing" constant="10" id="oZQ-TS-sUb"/>
                             <constraint firstItem="3n0-Vg-c1i" firstAttribute="top" secondItem="s4I-Pq-vtO" secondAttribute="bottom" constant="20" id="tU4-th-TQI"/>
                             <constraint firstItem="gbY-IL-c40" firstAttribute="trailing" secondItem="zwX-BX-CsZ" secondAttribute="trailing" constant="20" id="xaa-Re-UNp"/>
                             <constraint firstItem="8sZ-XL-izW" firstAttribute="top" secondItem="3n0-Vg-c1i" secondAttribute="bottom" constant="8" id="yMC-Kj-jQa"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="24W-pe-xF4"/>
+                    <navigationItem key="navigationItem" title="Simplifying payments" id="24W-pe-xF4"/>
                     <connections>
                         <outlet property="button" destination="3n0-Vg-c1i" id="KbU-Vq-sx5"/>
                         <outlet property="eventsTextView" destination="8sZ-XL-izW" id="kKH-aE-Nx0"/>
@@ -79,10 +91,50 @@
             </objects>
             <point key="canvasLocation" x="4787.0229007633588" y="809.15492957746483"/>
         </scene>
-        <!--Card Settings View Controller-->
+        <!--Simple Integration View Controller-->
+        <scene sceneID="8fW-SD-ZRs">
+            <objects>
+                <viewController id="gnc-iN-nZH" customClass="SimpleIntegrationViewController" customModule="TapCardCheckoutExample" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5IQ-g3-5ge">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AnM-md-5Ms">
+                                <rect key="frame" x="20" y="103.00000000000001" width="353" height="162.33333333333337"/>
+                                <string key="text">Only passing:  ["operator":["publicKey":"pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"],"scope":"AuthenticatedToken","order":["amount":1, "currency":"SAR"], "customer":["name"[["lang":"en","first":"TAP","middle":"","last":"PAYMENTS"]],"contact":["email":"tap@tap.company"]]]</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z7H-mc-Vlu">
+                                <rect key="frame" x="128.66666666666666" y="783" width="135.99999999999997" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="generateToken"/>
+                                <connections>
+                                    <action selector="generateToken:" destination="gnc-iN-nZH" eventType="touchUpInside" id="DHw-0g-qCe"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="wkC-pt-axz"/>
+                        <color key="backgroundColor" systemColor="systemGray6Color"/>
+                        <constraints>
+                            <constraint firstItem="wkC-pt-axz" firstAttribute="trailing" secondItem="AnM-md-5Ms" secondAttribute="trailing" constant="20" id="3fA-rK-lxJ"/>
+                            <constraint firstItem="AnM-md-5Ms" firstAttribute="top" secondItem="wkC-pt-axz" secondAttribute="top" id="Vl2-GZ-105"/>
+                            <constraint firstItem="Z7H-mc-Vlu" firstAttribute="bottom" secondItem="wkC-pt-axz" secondAttribute="bottom" id="fMa-EU-hiY"/>
+                            <constraint firstItem="AnM-md-5Ms" firstAttribute="leading" secondItem="wkC-pt-axz" secondAttribute="leading" constant="20" id="kBc-sH-oFX"/>
+                            <constraint firstItem="Z7H-mc-Vlu" firstAttribute="centerX" secondItem="5IQ-g3-5ge" secondAttribute="centerX" id="x9E-wc-Oql"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="la0-OB-Wxt"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="V1p-cA-Xu7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4787" y="1675"/>
+        </scene>
+        <!--Configuration-->
         <scene sceneID="Jbf-By-SfP">
             <objects>
-                <viewController storyboardIdentifier="CardSettingsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="l4v-Ta-TZn" customClass="CardSettingsViewController" customModule="TapCardCheckoutExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CardSettingsViewController" title="Configuration" useStoryboardIdentifierAsRestorationIdentifier="YES" id="l4v-Ta-TZn" customClass="CardSettingsViewController" customModule="TapCardCheckoutExample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5DH-lY-OWz">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

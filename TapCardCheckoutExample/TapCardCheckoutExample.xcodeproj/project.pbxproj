@@ -18,6 +18,7 @@
 		E84C704D2ACAC7A800901501 /* Eureka in Frameworks */ = {isa = PBXBuildFile; productRef = E84C704C2ACAC7A800901501 /* Eureka */; };
 		E84C70502ACAC7BC00901501 /* TapCardSDKExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84C704E2ACAC7BC00901501 /* TapCardSDKExample.swift */; };
 		E84C70512ACAC7BC00901501 /* CardSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84C704F2ACAC7BC00901501 /* CardSettingsViewController.swift */; };
+		E88A88642AD2A5B60034863B /* SimpleIntegrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88A88632AD2A5B60034863B /* SimpleIntegrationViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		E84C703F2ACAC74900901501 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E84C704E2ACAC7BC00901501 /* TapCardSDKExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapCardSDKExample.swift; sourceTree = "<group>"; };
 		E84C704F2ACAC7BC00901501 /* CardSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardSettingsViewController.swift; sourceTree = "<group>"; };
+		E88A88632AD2A5B60034863B /* SimpleIntegrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleIntegrationViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +77,7 @@
 				E84C703A2ACAC74900901501 /* Assets.xcassets */,
 				E84C703C2ACAC74900901501 /* LaunchScreen.storyboard */,
 				E84C703F2ACAC74900901501 /* Info.plist */,
+				E88A88632AD2A5B60034863B /* SimpleIntegrationViewController.swift */,
 			);
 			path = TapCardCheckoutExample;
 			sourceTree = "<group>";
@@ -161,6 +164,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E84C70362ACAC74700901501 /* ViewController.swift in Sources */,
+				E88A88642AD2A5B60034863B /* SimpleIntegrationViewController.swift in Sources */,
 				E84C70512ACAC7BC00901501 /* CardSettingsViewController.swift in Sources */,
 				E84C70322ACAC74700901501 /* AppDelegate.swift in Sources */,
 				E84C70342ACAC74700901501 /* SceneDelegate.swift in Sources */,
@@ -315,7 +319,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 71;
 				DEVELOPMENT_TEAM = G46S76PUH4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TapCardCheckoutExample/Info.plist;
@@ -345,7 +349,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 71;
 				DEVELOPMENT_TEAM = G46S76PUH4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TapCardCheckoutExample/Info.plist;

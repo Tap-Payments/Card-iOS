@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "8216D3CB-C0A5-498E-B9DB-EE6E98FAD5DE"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "98B4FC74-8067-4FA1-AC0C-F78261943881"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Sources/Card-iOS/Logic/Views/Public/TapCardView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "168"
+            endingLineNumber = "168"
+            landmarkName = "changeHeight(to:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "98B4FC74-8067-4FA1-AC0C-F78261943881 - 879fc6f5aebe0f9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in Card_iOS.TapCardView.changeHeight(to: Swift.Optional&lt;Swift.Double&gt;) -&gt; ()"
+                  moduleName = "TapCardCheckoutExample"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/osamarabie/desktop/Tap/Card-iOS/Sources/Card-iOS/Logic/Views/Public/TapCardView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "161"
+                  endingLineNumber = "161"
+                  offsetFromSymbolStart = "416">
+               </Location>
+               <Location
+                  uuid = "98B4FC74-8067-4FA1-AC0C-F78261943881 - 879fc6f5aebe180"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in Card_iOS.TapCardView.changeHeight(to: Swift.Optional&lt;Swift.Double&gt;) -&gt; ()"
+                  moduleName = "TapCardCheckoutExample"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/osamarabie/desktop/Tap/Card-iOS/Sources/Card-iOS/Logic/Views/Public/TapCardView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "168"
+                  endingLineNumber = "168"
+                  offsetFromSymbolStart = "1625">
+               </Location>
+               <Location
+                  uuid = "98B4FC74-8067-4FA1-AC0C-F78261943881 - 879fc6f5aebe004"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in Card_iOS.TapCardView.changeHeight(to: Swift.Optional&lt;Swift.Double&gt;) -&gt; ()"
+                  moduleName = "TapCardCheckoutExample"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/osamarabie/desktop/Tap/Card-iOS/Sources/Card-iOS/Logic/Views/Public/TapCardView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "164"
+                  endingLineNumber = "164"
+                  offsetFromSymbolStart = "236">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

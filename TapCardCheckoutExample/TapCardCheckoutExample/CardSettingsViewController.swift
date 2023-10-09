@@ -46,22 +46,10 @@ class CardSettingsViewController: FormViewController {
         form +++ Section("purpose")
         <<< AlertRow<String>("purpose"){ row in
             row.title = "Token purpose"
-            row.options = ["PAYMENT_TRANSACTION","RECURRING_TRANSACTION","INSTALLMENT_TRANSACTION","ADD_CARD","CARDHOLDER_VERIFICATION"]
-            row.value = config?["purpose"] as? String ?? "PAYMENT_TRANSACTION"
+            row.options = ["Transaction","Save Card","Verify Cardholder","Order Transaction","Subscription Transaction","Billing Transaction","Installment Transaction","Milestone Transaction","Maintain Card"]
+            row.value = config?["purpose"] as? String ?? "Transaction"
             row.onChange { row in
-                self.config?["purpose"] = row.value ?? "PAYMENT_TRANSACTION"
-            }
-        }
-        
-        form +++ Section("transaction")
-        
-        <<< TextRow("transaction.reference"){ row in
-            row.title = "Transaction reference"
-            row.placeholder = "Enter transaction's reference"
-            
-            row.value = (config! as NSDictionary).value(forKeyPath: "transaction.reference") as? String ?? TapCardSDKExample.generateRandomTransactionId()
-            row.onChange { row in
-                self.update(dictionary: &self.config!, at: ["transaction","reference"], with: row.value ?? TapCardSDKExample.generateRandomTransactionId())
+                self.config?["purpose"] = row.value ?? "Transaction"
             }
         }
         
@@ -121,6 +109,16 @@ class CardSettingsViewController: FormViewController {
             row.value = (config! as NSDictionary).value(forKeyPath: "order.description") as? String ?? ""
             row.onChange { row in
                 self.update(dictionary: &self.config!, at: ["order","description"], with: row.value ?? "")
+            }
+        }
+        
+        <<< TextRow("order.reference"){ row in
+            row.title = "order reference"
+            row.placeholder = "Enter order's reference"
+            
+            row.value = (config! as NSDictionary).value(forKeyPath: "order.reference") as? String ?? ""
+            row.onChange { row in
+                self.update(dictionary: &self.config!, at: ["order","reference"], with: row.value ?? "")
             }
         }
         
@@ -208,11 +206,11 @@ class CardSettingsViewController: FormViewController {
                 self.update(dictionary: &self.config!, at: ["features","acceptanceBadge"], with: row.value ?? true)
             }
         }
-        <<< SwitchRow("features.scanner"){ row in
-            row.title = "scanner"
-            row.value = (config! as NSDictionary).value(forKeyPath: "features.scanner") as? Bool ?? false
+        <<< SwitchRow("features.alternativeCardInputs.scanner"){ row in
+            row.title = "cardScanner"
+            row.value = (config! as NSDictionary).value(forKeyPath: "features.alternativeCardInputs.cardScanner") as? Bool ?? false
             row.onChange { row in
-                self.update(dictionary: &self.config!, at: ["features","scanner"], with: row.value ?? true)
+                self.update(dictionary: &self.config!, at: ["features","alternativeCardInputs","cardScanner"], with: row.value ?? true)
             }
         }
         
@@ -264,28 +262,19 @@ class CardSettingsViewController: FormViewController {
         }
         
         
-        form +++ Section("fields.card")
-        <<< SwitchRow("fields.card.cardHolder"){ row in
+        form +++ Section("fieldVisibility.card")
+        <<< SwitchRow("fieldVisibility.card.cardHolder"){ row in
             row.title = "Card holder"
-            row.value = (config! as NSDictionary).value(forKeyPath: "fields.card.cardHolder") as? Bool ?? true
+            row.value = (config! as NSDictionary).value(forKeyPath: "fieldVisibility.card.cardHolder") as? Bool ?? true
             row.onChange { row in
-                self.update(dictionary: &self.config!, at: ["fields","card","cardHolder"], with: row.value ?? true)
+                self.update(dictionary: &self.config!, at: ["fieldVisibility","card","cardHolder"], with: row.value ?? true)
             }
         }
-        <<< SwitchRow("fields.card.cvv"){ row in
+        <<< SwitchRow("fieldVisibility.card.cvv"){ row in
             row.title = "cvv"
-            row.value = (config! as NSDictionary).value(forKeyPath: "fields.card.cvv") as? Bool ?? true
+            row.value = (config! as NSDictionary).value(forKeyPath: "fieldVisibility.card.cvv") as? Bool ?? true
             row.onChange { row in
-                self.update(dictionary: &self.config!, at: ["fields","card","cvv"], with: row.value ?? true)
-            }
-        }
-        
-        form +++ Section("addons")
-        <<< SwitchRow("addons.loader"){ row in
-            row.title = "loader"
-            row.value = (config! as NSDictionary).value(forKeyPath: "addons.loader") as? Bool ?? true
-            row.onChange { row in
-                self.update(dictionary: &self.config!, at: ["addons","loader"], with: row.value ?? true)
+                self.update(dictionary: &self.config!, at: ["fieldVisibility","card","cvv"], with: row.value ?? true)
             }
         }
         
@@ -334,6 +323,14 @@ class CardSettingsViewController: FormViewController {
             }
         }
         
+        
+        <<< SwitchRow("interface.loader"){ row in
+            row.title = "loader"
+            row.value = (config! as NSDictionary).value(forKeyPath: "interface.loader") as? Bool ?? true
+            row.onChange { row in
+                self.update(dictionary: &self.config!, at: ["interface","loader"], with: row.value ?? true)
+            }
+        }
         
         <<< AlertRow<String>("interface.colorStyle"){ row in
             row.title = "colorStyle"
