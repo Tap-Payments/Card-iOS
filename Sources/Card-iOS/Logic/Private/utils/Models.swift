@@ -16,6 +16,8 @@ struct CardRedirection: Codable {
     var redirectUrl: String?
     /// The keyword we need to listen to know that this is the desired url that has the data post the current process
     var keyword:String?
+    /// Whether or not we shall show the powered by tap flag
+    var powered:Bool?
 }
 
 // MARK: CardRedirection convenience initializers and mutators
@@ -39,12 +41,14 @@ extension CardRedirection {
     func with(
         threeDsUrl: String?? = nil,
         redirectUrl: String?? = nil,
-        keyword: String?? = nil
+        keyword: String?? = nil,
+        powered: Bool?? = true
     ) -> CardRedirection {
         return CardRedirection(
             threeDsUrl: threeDsUrl ?? self.threeDsUrl,
             redirectUrl: redirectUrl ?? self.redirectUrl,
-            keyword: keyword ?? self.keyword
+            keyword: keyword ?? self.keyword,
+            powered: powered ?? self.powered
         )
     }
     

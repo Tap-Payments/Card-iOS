@@ -212,6 +212,8 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
             // dismiss the threeds page
             SwiftEntryKit.dismiss()
         }
+        // Hide or show the powered by tap based on coming parameter
+        threeDsView.poweredByTapView.isHidden = !(cardRedirection.powered ?? true)
         // Set to web view what should it when the process is completed by the user
         threeDsView.redirectionReached = { redirectionUrl in
             SwiftEntryKit.dismiss {
