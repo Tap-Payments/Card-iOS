@@ -67,8 +67,8 @@ class TapCardSDKExample: UIViewController {
                         }*/
     }
 
-    func setupTapCardSDK() {
-        tapCardView.initTapCardSDK(configDict: self.dictConfig, delegate: self)
+    func setupTapCardSDK(cardNumber:String = "", cardExpiry:String = "") {
+        tapCardView.initTapCardSDK(configDict: self.dictConfig, delegate: self, cardNumber: cardNumber, cardExpiry: cardExpiry)
     }
     
     @IBAction func generateToken(_ sender: Any) {
@@ -91,10 +91,6 @@ class TapCardSDKExample: UIViewController {
         }))
         
         
-        alertController.addAction(.init(title: "Random Trx", style: .default, handler: { _ in
-            self.updateConfig(config: self.dictConfig)
-        }))
-        
         alertController.addAction(.init(title: "Cancel", style: .cancel))
         present(alertController, animated: true)
     }
@@ -116,7 +112,7 @@ class TapCardSDKExample: UIViewController {
 
 extension TapCardSDKExample: CardSettingsViewControllerDelegate {
     
-    func updateConfig(config: [String:Any]) {
+    func updateConfig(config: [String:Any], cardNumber:String, cardExpiry:String) {
         self.dictConfig = config
         
         guard var transactionData:[String:Any] = self.dictConfig["transaction"] as? [String:Any] else {
@@ -132,7 +128,7 @@ extension TapCardSDKExample: CardSettingsViewControllerDelegate {
         self.dictConfig["order"] = orderData
         self.dictConfig["transaction"] = transactionData
         
-        setupTapCardSDK()
+        setupTapCardSDK(cardNumber: cardNumber, cardExpiry: cardExpiry)
     }
     
 }

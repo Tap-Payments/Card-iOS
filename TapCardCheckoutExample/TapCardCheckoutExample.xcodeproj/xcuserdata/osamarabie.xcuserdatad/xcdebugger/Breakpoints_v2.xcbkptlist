@@ -14,8 +14,8 @@
             filePath = "../Sources/Card-iOS/Logic/Views/Public/TapCardView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "168"
-            endingLineNumber = "168"
+            startingLineNumber = "172"
+            endingLineNumber = "172"
             landmarkName = "changeHeight(to:)"
             landmarkType = "7">
             <Locations>
@@ -65,6 +65,22 @@
                   offsetFromSymbolStart = "236">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7586523F-CFAC-4936-A489-AC3E9D6E26A8"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Sources/Card-iOS/Logic/Views/Public/TapCardView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "313"
+            endingLineNumber = "313"
+            landmarkName = "initTapCardSDK(configDict:delegate:presentScannerIn:cardNumber:cardExpiry:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

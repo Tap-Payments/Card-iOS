@@ -20,8 +20,12 @@ import SwiftEntryKit
     internal var webView: WKWebView?
     /// A protocol that allows integrators to get notified from events fired from Tap card sdk
     internal var delegate: TapCardViewDelegate?
+    /// Holds a reference to the prefilling card number if  any
+    internal var cardNumber:String = ""
+    /// Holds a reference to the prefilling card expiry if  any
+    internal var cardExpiry:String = ""
     /// Defines the base url for the Tap card sdk
-    internal static let tapCardBaseUrl:String = "https://sdk.dev.tap.company/v2/card/wrapper?configurations="
+    internal static let tapCardBaseUrl:String = "https://sdk.staging.tap.company/v2/card/wrapper?configurations="
     /// Defines the scanner object to be called whenever needed
     internal var fullScanner:TapFullScreenScannerViewController?
     /// Defines the UIViewController passed from the parent app to present the scanner controller within
@@ -182,7 +186,20 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
         // Give a moment for the iFrame to be fully rendered
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
             self.delegate?.onReady?()
+            self.prefillCardData()
         }
+    }
+    
+    /// Will check if card number and expiry are passed by merchant, will ask the web sdk to fill them in
+    internal func prefillCardData() {
+        guard cardNumber.count > 6 else {
+            cardNumber = ""
+            cardExpiry = ""
+            return
+        }
+        webView?.evaluateJavaScript("window.fillCardInputs({cardNumber: '\(cardNumber)',expiryDate: '\(cardExpiry)',cvv: '',cardHolderName: ''})")
+        cardNumber = ""
+        cardExpiry = ""
     }
     
     /// Will handle & starte the redirection process when called
@@ -288,10 +305,12 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
     ///  - Parameter config: The configurations dctionary. Recommended, as it will make you able to customly add models without updating
     ///  - Parameter delegate:A protocol that allows integrators to get notified from events fired from Tap card sdk
     ///  - Parameter presentScannerIn: We will need a reference to the controller that we can present from the card scanner feature
-    @objc public func initTapCardSDK(configDict: [String : Any], delegate: TapCardViewDelegate? = nil, presentScannerIn:UIViewController? = nil) {
+    @objc public func initTapCardSDK(configDict: [String : Any], delegate: TapCardViewDelegate? = nil, presentScannerIn:UIViewController? = nil, cardNumber:String = "", cardExpiry:String = "") {
         
         self.delegate = delegate
         self.presentScannerIn = presentScannerIn ?? self.parentViewController
+        self.cardNumber = cardNumber.tap_byRemovingAllCharactersExcept("0123456789")
+        self.cardExpiry = cardExpiry.tap_byRemovingAllCharactersExcept("0123456789/")
         
         var updatedConfigurations:[String:Any] = configDict
         updatedConfigurations["headers"] = generateApplicationHeader()

@@ -10,13 +10,15 @@ import Eureka
 import Card_iOS
 
 protocol CardSettingsViewControllerDelegate {
-    func updateConfig(config: [String:Any])
+    func updateConfig(config: [String:Any], cardNumber:String, cardExpiry:String)
 }
 
 class CardSettingsViewController: FormViewController {
 
     var config: [String:Any]?
     var delegate: CardSettingsViewControllerDelegate?
+    var cardNumber:String = ""
+    var cardExpiry:String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -341,7 +343,27 @@ class CardSettingsViewController: FormViewController {
             }
         }
         
+        form +++ Section("Prefill Card")
+        <<< AlertRow<String>("card.number"){ row in
+            row.title = "Card number"
+            row.options = ["","4242424242424242","5123450000000008","4111 1111 1111 1111","4242424","4242"]
+            row.value = ""
+            row.onChange { row in
+                self.cardNumber = row.value ?? ""
+            }
+        }
         
+        <<< AlertRow<String>("card.expiry"){ row in
+            row.title = "Card expiry YEAR 2025"
+            row.options = ["","01","02","03","04","05","06","07","08"]
+            row.value = ""
+            row.onChange { row in
+                self.cardExpiry = row.value ?? ""
+                if !self.cardExpiry.isEmpty {
+                    self.cardExpiry = "\(self.cardExpiry)/25"
+                }
+            }
+        }
         
         
         
@@ -377,7 +399,7 @@ class CardSettingsViewController: FormViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        delegate?.updateConfig(config: config!)
+        delegate?.updateConfig(config: config!, cardNumber: cardNumber, cardExpiry: cardExpiry)
     }
     
     /*
