@@ -1,5 +1,5 @@
 
-# Android
+# Card-iOS
 
 Integrating iOS Card SDK in your application
 
