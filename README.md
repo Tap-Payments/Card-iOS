@@ -657,3 +657,356 @@ class ViewController: UIViewController, TapCardViewDelegate {
 }
 ```
 
+
+# Parameters Reference[](https://developers.tap.company/docs/card-sdk-ios#parameters-reference)
+
+Below you will find more details about each parameter shared in the above tables that will help you easily integrate Card-iOS SDK.
+
+## operator[](https://developers.tap.company/docs/card-sdk-ios#operator)
+
+1.  Definition: It links the payment gateway to your merchant account with Tap, in order to know your business name, logo, etc...
+2.  Type: string (_required_)
+3.  Fields:
+    -   **publicKey**  
+        _Definition_: This is a unique public key that you will receive after creating an account with Tap which is considered a reference to identify you as a merchant. You will receive 2 public keys, one for sandbox/testing and another one for production.  
+4. Example:
+        
+```swift
+let operator:[String:Any]: ["publicKey":"pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"]
+```
+## scope [](https://developers.tap.company/docs/card-sdk-ios#scope)
+
+1.  Definition: This is used in order to identify the type of token you want to generate. A token is created in order to save the card details after submitting the form in a more secure way.
+2.  Type: string (_required_)
+3.  Possible Values:
+    -   **Token**  
+        _Definition:_  Created before the payment in complete, in order to save the card and do a charge later  
+	4. Example: `let scope:String = "Token"`
+        
+    -   **AuthenticatedToken**  
+        _Definition:_  This is a token created and authenticated by the customer. Which means that the customer entered the card information and also passed the Authentication step (3DS) and got the token after.  
+        _Example:_ `let scope:String = "AuthenticatedToken"`
+        
+    -   **SaveToken**  
+        _Definition:_  This is used in case you want to have the card information saved in a token, however you want the customer to go through the authentication step (receive OTP or PIN) each time the card is used.  
+        _Example:_ `let scope:String = "SaveToken"`
+    
+        
+    -   **SaveAuthenticatedToken**  
+        _Definition:_  This means you will get an authenticated token to use in multiple times right away.  
+        _Example:_ `let scope:String = "SaveAuthenticatedToken"`
+
+## purpose[](https://developers.tap.company/docs/card-sdk-ios#purpose)
+
+1.  Definition: This will identify the reason of choosing the type of token generated in the scope field, like if it will be used for a single transaction, recurring, saving the token, etc...  
+    Note: Only choose the option that suits your needs best.
+2.  Type: string (_required_)
+3.  Possible Values:
+    -   **Transaction**:  
+        _Definition:_  In case the token will be used only for a single charge request.  
+        _Example:_ `let purpose:String = "Transaction"`
+        
+    -   **Milestone Transaction**:  
+        _Definition:_  Using the token for paying a part of a bigger order, when reaching a certain milestone.  
+        _Example:_`let purpose:String = "Milestone Transaction"`
+        
+    -   **Instalment Transaction**:  
+        _Definition:_  Using the token for a charge that is a part of an instalment plan.  
+        _Example:_`let purpose:String = "Instalment Transaction"`
+        
+    -   **Billing Transaction**:  
+        _Definition:_  Using the token for paying a bill.  
+        _Example:_`let purpose:String = "Billing Transaction"`
+        
+    -   **Subscription Transaction**:  
+        _Definition:_  Using the token for a recurring based transaction.  
+        _Example:_`let purpose:String = "Subscription Transaction"`
+        
+    -   **Verify Cardholder**:  
+        _Definition:_  Using the token to verify the ownership of the card, in other words, making sure of the identity of the cardholder.  
+        _Example:_`let purpose:String = "Verify Cardholder*"`
+        
+    -   **Save Card**:  
+        _Definition:_  Using the token to save this card and link it to the customer itself.  
+        _Example:_`let purpose:String = "Save Card"`
+        
+    -   **Maintain Card**:  
+        _Definition:_  Used to renew a saved card.  
+        _Example:_`let purpose:String = "Maintain Card"`
+        
+
+##  order [](https://developers.tap.company/docs/card-sdk-ios#order)
+
+1.  Definition: This defined the details of the order that you are trying to purchase, in which you need to specify some details like the id, amount, currency ...
+2.  Type: Dictionary, (_required_)
+3.  Fields:
+    -   **id**  
+        _Definition:_  Pass the order ID created for the order you are trying to purchase, which will be available in your database.  
+        Note: This field can be empty  
+    -   **currency**  
+        _Definition:_  The currency which is linked to the order being paid.  
+    -   **amount**  
+        _Definition:_  The order amount to be paid by the customer.  
+        Note: Minimum amount to be added is 0.1.  
+    -   **description**  
+        _Definition:_  Order details, which defines what the customer is paying for or the description of the service you are providing.  
+    -   **reference**  
+        _Definition:_  This will be the order reference present in your database in which the paying is being done for.  
+4.  _Example:_
+  ```swift
+  let order: [String: String] = [
+      "id": "", "amount": 1, "currency": "SAR", "description": "Authentication description",
+      "reference": "",
+    ]
+  ```
+
+## 
+
+merchant
+
+[](https://developers.tap.company/docs/card-sdk-ios#merchant)
+
+1.  Definition: It is the Merchant id that you get from our onboarding team. This will be used as reference for your account in Tap.
+2.  Type: Dictionary (_required_)
+3.  Fields:
+    -   **id**  
+        _Definition:_  Generated once your account with Tap is created, which is unique for every merchant.  
+        _Example:_
+```swift
+	let merchant:[String:String] = ["id":""]
+```
+        
+
+##  invoice [](https://developers.tap.company/docs/card-sdk-ios#invoice)
+
+1.  Definition: After the token is generated, you can use it to pay for any invoice. Each invoice will have an invoice ID which you can add here using the SDK.  
+    Note: An invoice will first show you a receipt/summary of the order you are going to pay for as well as the amount, currency, and any related field before actually opening the payment form and completing the payment.
+2.  Type: Dictionary (_optional_)
+3.  Fields:
+    -   **id**  
+        _Definition:_  Unique Invoice ID which we are trying to pay.  
+        _Example:_
+```swift
+let invoice:[String:String] = ["id":""]
+```
+        
+
+## customer [](https://developers.tap.company/docs/card-sdk-ios#customer)
+
+1.  Definition: Here, you will collect the information of the customer that is paying using the token generate in the SDK.
+    
+2.  Type: Dictionary (_required_)
+    
+3.  Fields:
+    
+    -   **id**  
+        _Definition:_  This is an optional field that you do not have before the token is generated. But, after the token is created once the card details are added, then you will receive the customer ID in the response which can be handled in the onSuccess callback function.  
+    -   **name**  
+        _Definition:_  Full Name of the customer paying.  
+        _Fields:_
+        
+        1.  **lang**  
+            Definition: Language chosen to write the customer name.
+        2.  **first**  
+            Definition: Customer's first name.
+        3.  **middle**  
+            Definition: Customer's middle name.
+        4.  **last**  
+            Definition: Customer's last name.  
+        
+    -   **editable**  
+        _Definition:_  The customer's name on the card he is paying with, also known as cardholder name.  
+        Note: It is of type Boolean, and indicated whether or not the customer can edit the cardholder name already entered when the token got created.  
+      
+    -   **contact**  
+        _Definition:_  The customer's contact information like email address and phone number.  
+        Note: The contact information has to either have the email address or the phone details of the customers or both but it should not be empty.  
+        _Fields:_
+        
+        1.  **email**  
+            Definition: Customer's email address  
+            Note: The email is of type string.
+        2.  **phone**  
+            Definition: Customer's Phone number details
+            1.  **countryCode**
+            2.  **number**  
+      
+    -   **nameOnCard**  
+        _Definition:_  Pre-fill the cardholder name already received once the payment form is submitted.  
+4.  _Example:_
+```swift
+let customer: [String: Any] = [
+      "id": "", "name": [["lang": "en", "first": "TAP", "middle": "", "last": "PAYMENTS"]],
+      "nameOnCard": "TAP PAYMENTS", "editble": true,
+      "contact": [
+        "email": "tap@tap.company", "phone": ["countryCode": "+965", "number": "88888888"],
+      ],
+    ]
+```
+        
+
+##  featuresv[](https://developers.tap.company/docs/card-sdk-ios#features)
+
+1.  Definition: Additional functionalities to be added in order to make the payment gateway experience more customisable for your needs, like showing the accepted card brands on the payment form, save card toggle button...
+    
+2.  Type: Dictionary (optional)
+    
+3.  Fields:
+    
+    -   **acceptanceBadge**  
+        _Definition:_  A boolean to indicate wether or not you want to display the list of supported card brands that appear beneath the card form itself.  
+        
+    -   **customerCards**  
+        _Definition:_  You will have the option to display either the toggle button that allows to save the card or the autosave card.  
+        _Fields:_
+        
+        1.  **saveCard**  
+            Definition: A boolean to indicate wether or not you want to display the save card option to the customer.  
+            Must be used with a combination of these 2 scopes either SaveToken or SaveAuthenticatedToken.
+        2.  **autoSave**  
+            Definition: A boolean to indicate wether or not you want the save card switch to be on by default.  
+       
+    -   **alternativeCardInput**  
+        _Definition:_ You can also, either add the card information by scanning the card or by using NFC.  
+        Note: In order for that to work, you will need to add the Camera usage description to your info.plist file like so 
+```xml
+<key>NSCameraUsageDescription</key>
+<string>Card SDK needs it for scanner functionality</string>
+```
+		_Fields:_
+        
+        1.  **cardScanner**  
+            Definition: A boolean to indicate whether or not you want to display the scan card icon.
+4. - _Example:_
+```swift
+let features: [String: Any] = [
+      "acceptanceBadge": true, "customerCards": ["saveCard": false, "autoSaveCard": false],
+      "alternativeCardInputs": ["cardScanner": true],
+    ]
+```
+    
+        
+
+## acceptancev[](https://developers.tap.company/docs/card-sdk-ios#acceptance)
+
+1.  Definition: This will help in controlling the supported payment schemes, like MasterCard and Visa, and the fund source either being debit or credit card and you will also be able to check if you want the customers to complete the 3DS phase (Authentication) or not.
+2.  Type: Dictionary (_optional_)
+3.  Fields:
+    -   **supportedSchemes**  
+        _Definition:_  A list to control which card schemes the customer can pay with, note that he can choose more than one card scheme.  
+        _Possible Values:_
+        
+        1.  AMERICAN_EXPRESS
+        2.  VISA
+        3.  MASTERCARD
+        4.  MADA
+        5.  OMANNET  
+        
+    -   **supportedFundSource**  
+        _Definition:_  A list to control which card types are allowed by your customer.  
+        _Possible Values:_
+        
+        1.  Debit
+        2.  Credit  
+        
+    -   **supportedPaymentAuthentications**  
+        _Definition:_  A list of what authentication techniques you want to enforce like 3DS authentication  
+        _Possible Values:_
+        
+        1.  3DS
+4.  _Example:_
+```swift
+let acceptance: [String: Any] = [
+      "supportedSchemes": ["AMERICAN_EXPRESS", "VISA", "MASTERCARD", "OMANNET", "MADA"],
+      "supportedFundSource": ["CREDIT", "DEBIT"], "supportedPaymentAuthentications": ["3DS"],
+    ]
+  ```
+        
+
+## fieldVisibility [](https://developers.tap.company/docs/card-sdk-ios#fieldvisibility)
+
+1.  Definition: A boolean to indicate wether or not you want to show/collect the card holder name.
+2.  Type: Dictionary (_optional_)
+3.  Fields:
+    -   **card**
+        1.  **cardHolder**  
+            _Definition:_  The person that is paying using credit or debit card.  
+4. _Example:_
+```swift
+let fieldVisibility: [String: Any] = ["card": ["cardHolder": true]]
+```
+            
+
+##  interface [](https://developers.tap.company/docs/card-sdk-ios#interface)
+
+1.  Definition: This will help you control the layout (UI) of the payment form, like changing the theme light to dark, the language used (en or ar), ...
+2.  Type: Dictionary (_optional_)
+3.  Fields:
+    -   **loader**  
+        _Definition:_  A boolean to indicate wether or not you want to show a loading view on top of the card form while it is performing api requests.  
+    -   **locale**  
+        _Definition:_  The language of the card form. Accepted values as of now are:  
+        _Possible Values:_
+        
+        1.  **en**(for english)
+        2.  **ar**(for arabic).  
+        
+    -   **theme**  
+        _Definition:_  The display styling of the card form. Accepted values as of now are:  
+        _Options:_
+        
+        1.  **light**
+        2.  **dark**
+        3.  **dynamic**  ( follow the device's display style )  
+        
+    -   **edges**  
+        _Definition:_  Control the edges of the payment form.  
+        _Possible Values:_
+        
+        1.  **curved**
+        2.  **flat**  
+        
+    -   **cardDirection**  
+        _Definition:_  The layout of the fields (card logo, number, date & CVV) within the card element itself.  
+        _Possible Values:_
+        
+        1.  **ltr**  
+            Definition: The fields will inflate from left to right.
+        2.  **rtl  
+            **Definition: The fields will inflate from right to left.
+        3.  **dynamic**  
+            Definition: The fields will inflate in the locale's direction.  
+        
+    -   **powered**  
+        _Definition:_  A boolean to indicate wether or not you want to show powered by tap.  
+        Note, that you have to have the permission to hide it from the integration team. Otherwise, you will get an error if you pass it as false.  
+
+    -   **colorStyle**  
+        _Definition:_  How do you want the icons rendered inside the card form.  
+        _Possible Values:_
+        
+        1.  **colored**
+        2.  **monochrome**  
+4.  _Example:_
+```swift
+let interface: [String: String] = [
+      "locale": "en", "theme": "light", "edges": "curved", "direction": "dynamic", "powered": true,
+      "colorStyle": "colored", "loader": true,
+    ]
+```
+        
+
+##  post [](https://developers.tap.company/docs/card-sdk-ios#post)
+
+1.  Definition: Here you can pass the webhook URL you have, in order to receive notifications of the results of each Transaction happening on your application.
+    
+2.  Type: Dictionary (_optional_)
+    
+3.  Fields:
+    
+    -   **url**  
+        _Definition:_  The webhook server's URL that you want to receive notifications on.  
+        _Example:_
+```swift
+let post:[String:String] = ["url":""]
+```        
