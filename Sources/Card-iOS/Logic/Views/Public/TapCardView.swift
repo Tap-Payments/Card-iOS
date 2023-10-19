@@ -309,11 +309,15 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
         
         self.delegate = delegate
         self.presentScannerIn = presentScannerIn ?? self.parentViewController
+        // Remove any non numerical charachters for passed card number and date
         self.cardNumber = cardNumber.tap_byRemovingAllCharactersExcept("0123456789")
         self.cardExpiry = cardExpiry.tap_byRemovingAllCharactersExcept("0123456789/")
         
+        // We will have to add app related information to the request
         var updatedConfigurations:[String:Any] = configDict
         updatedConfigurations["headers"] = generateApplicationHeader()
+        // We will have to force NFC to false in iOS
+        self.update(dictionary: &updatedConfigurations, at: ["features","alternativeCardInputs","cardNFC"], with: false)
         
         do {
             try openUrl(url: URL(string: generateTapCardSdkURL(from: updatedConfigurations)))
@@ -342,5 +346,40 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
         endEditing(true)
         webView?.evaluateJavaScript("window.generateTapToken()")
     }
-}
+    
+    private func update(dictionary dict: inout [String: Any], at keys: [String], with value: Any) {
 
+        if keys.count < 2 {
+            for key in keys { dict[key] = value }
+            return
+        }
+
+        var levels: [[AnyHashable: Any]] = []
+
+        for key in keys.dropLast() {
+            if let lastLevel = levels.last {
+                if let currentLevel = lastLevel[key] as? [AnyHashable: Any] {
+                    levels.append(currentLevel)
+                }
+                else if lastLevel[key] != nil, levels.count + 1 != keys.count {
+                    break
+                } else { return }
+            } else {
+                if let firstLevel = dict[keys[0]] as? [AnyHashable : Any] {
+                    levels.append(firstLevel )
+                }
+                else { return }
+            }
+        }
+
+        if levels[levels.indices.last!][keys.last!] != nil {
+            levels[levels.indices.last!][keys.last!] = value
+        } else { return }
+
+        for index in levels.indices.dropLast().reversed() {
+            levels[index][keys[index + 1]] = levels[index + 1]
+        }
+
+        dict[keys[0]] = levels[0]
+    }
+}

@@ -34,8 +34,7 @@ class TapCardSDKExample: UIViewController {
                                                "editable":true,
                                                "contact":["email":"tap@tap.company",
                                                           "phone":["countryCode":"+965","number":"88888888"]]],
-                                   "features":["alternativeCardInputs":["cardScanner":true,
-                                                                        "cardNFC":false],
+                                   "features":["alternativeCardInputs":["cardScanner":true],
                                                "acceptanceBadge":true,
                                                "customerCards":["saveCard":false,
                                                                 "autoSaveCard":false]
