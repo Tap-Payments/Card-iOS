@@ -36,8 +36,8 @@ class TapCardSDKExample: UIViewController {
                                                           "phone":["countryCode":"+965","number":"88888888"]]],
                                    "features":["alternativeCardInputs":["cardScanner":true],
                                                "acceptanceBadge":true,
-                                               "customerCards":["saveCard":false,
-                                                                "autoSaveCard":false]
+                                               "customerCards":["saveCard":true,
+                                                                "autoSaveCard":true]
                                                
                                    ],
                                    "acceptance":["supportedSchemes":["AMERICAN_EXPRESS","VISA","MASTERCARD","OMANNET","MADA"],
@@ -58,12 +58,12 @@ class TapCardSDKExample: UIViewController {
         super.viewDidLoad()
         setupTapCardSDK()
         button.isEnabled = false
-        /*do {
+    do {
                     let jsonData = try JSONSerialization.data(withJSONObject: self.dictConfig, options: [.prettyPrinted])
                             print(String(data: jsonData, encoding: .utf8) ?? "")
                         } catch {
                             print("json serialization error: \(error)")
-                        }*/
+                        }
     }
 
     func setupTapCardSDK(cardNumber:String = "", cardExpiry:String = "") {

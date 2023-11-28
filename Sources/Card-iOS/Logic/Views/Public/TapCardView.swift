@@ -18,6 +18,8 @@ import SwiftEntryKit
 @objc public class TapCardView: UIView {
     /// The web view used to render the tap card sdk
     internal var webView: WKWebView?
+    /// The detected IP of the device
+    internal var detectedIP:String = ""
     /// A protocol that allows integrators to get notified from events fired from Tap card sdk
     internal var delegate: TapCardViewDelegate?
     /// Holds a reference to the prefilling card number if  any
@@ -25,7 +27,7 @@ import SwiftEntryKit
     /// Holds a reference to the prefilling card expiry if  any
     internal var cardExpiry:String = ""
     /// Defines the base url for the Tap card sdk
-    internal static let tapCardBaseUrl:String = "https://sdk.staging.tap.company/v2/card/wrapper?configurations="
+    internal static let tapCardBaseUrl:String = "https://sdk.dev.tap.company/v2/card/wrapper?configurations="
     /// Defines the scanner object to be called whenever needed
     internal var fullScanner:TapFullScreenScannerViewController?
     /// Defines the UIViewController passed from the parent app to present the scanner controller within
@@ -72,6 +74,7 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
     private func commonInit() {
         setupWebView()
         setupConstraints()
+        getIP()
     }
     
     
@@ -150,6 +153,20 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
     }
     
     
+    /// Fetches the IP of the device
+    internal func getIP() {
+        let url = URL(string: "https://geolocation-db.com/json/")!
+        let task = URLSession.shared.dataTask(with: url) {data, response, error in
+            guard let data = data,
+                  error == nil,
+                  let jsonIP:[String:Any] = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String : Any],
+                  let ipString:String = jsonIP["IPv4"] as? String else { return }
+            
+            self.detectedIP = ipString
+        }
+        task.resume()
+    }
+    
     /// Auto adjusts the height of the card view
     /// - Parameter to newHeight: The new height the card view should expand/shrink to
     internal func changeHeight(to newHeight:Double?) {
@@ -187,6 +204,7 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
             self.delegate?.onReady?()
             self.prefillCardData()
+            self.passIP()
         }
     }
     
@@ -200,6 +218,11 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
         webView?.evaluateJavaScript("window.fillCardInputs({cardNumber: '\(cardNumber)',expiryDate: '\(cardExpiry)',cvv: '',cardHolderName: ''})")
         cardNumber = ""
         cardExpiry = ""
+    }
+    
+    /// Will pass the detected IP to the card web sdk
+    internal func passIP() {
+        webView?.evaluateJavaScript("window.setIP('\(detectedIP)')")
     }
     
     /// Will handle & starte the redirection process when called
