@@ -37,7 +37,7 @@ class CardSettingsViewController: FormViewController {
         form +++ Section("scope")
         <<< AlertRow<String>("scope"){ row in
             row.title = "Card scope"
-            row.options = ["Token","AuthenticatedToken","SaveToken","SaveAuthenticatedToken"]
+            row.options = ["Token","AuthenticatedToken"]
             row.value = config?["scope"] as? String ?? "Token"
             row.onChange { row in
                 self.config?["scope"] = row.value ?? "Token"
@@ -48,7 +48,7 @@ class CardSettingsViewController: FormViewController {
         form +++ Section("purpose")
         <<< AlertRow<String>("purpose"){ row in
             row.title = "Token purpose"
-            row.options = ["Transaction","Save Card","Verify Cardholder","Order Transaction","Subscription Transaction","Billing Transaction","Installment Transaction","Milestone Transaction","Maintain Card"]
+            row.options = ["Transaction","Save Token"]
             row.value = config?["purpose"] as? String ?? "Transaction"
             row.onChange { row in
                 self.config?["purpose"] = row.value ?? "Transaction"
@@ -301,7 +301,7 @@ class CardSettingsViewController: FormViewController {
         
         <<< AlertRow<String>("interface.edges"){ row in
             row.title = "edges"
-            row.options = ["curved","flat"]
+            row.options = ["curved","flat","circular"]
             row.value = (config! as NSDictionary).value(forKeyPath: "interface.edges") as? String ?? "curved"
             row.onChange { row in
                 self.update(dictionary: &self.config!, at: ["interface","edges"], with: row.value ?? "curved")

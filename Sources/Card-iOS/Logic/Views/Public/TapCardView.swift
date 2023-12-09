@@ -84,7 +84,8 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
         // Store it for further usages
         currentlyLoadedCardConfigurations = url
         // instruct the web view to load the needed url
-        let request = URLRequest(url: url!)
+        var request = URLRequest(url: url!)
+        request.setValue(TapApplicationPlistInfo.shared.bundleIdentifier ?? "", forHTTPHeaderField: "referer")
         webView?.navigationDelegate = self
         webView?.load(request)
     }

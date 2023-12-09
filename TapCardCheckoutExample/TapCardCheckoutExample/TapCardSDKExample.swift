@@ -19,7 +19,7 @@ class TapCardSDKExample: UIViewController {
                                    "scope":"AuthenticatedToken",
                                    "purpose":"Transaction",
                                    "transaction":["paymentAgreement":["id":"",
-                                                                      "contract":["id":""]]],
+                                                                      "contract":["id":""]],"reference":""],
                                    "order":["id":"",
                                             "amount":1,
                                             "currency":"SAR",

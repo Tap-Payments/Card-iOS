@@ -98,9 +98,10 @@ internal extension TapCardView {
         let osName = UIDevice.current.systemName
         let osVersion = UIDevice.current.systemVersion
         let deviceName = UIDevice.current.name
-        let deviceNameFiltered =  deviceName.tap_byRemovingAllCharactersExcept("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789")
+        let deviceNameFiltered =  deviceName.tap_byRemovingAllCharactersExcept("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789 ()")
         let deviceType = UIDevice.current.model
-        let deviceModel = UIDevice.current.localizedModel
+        let deviceModel = getDeviceCode() ?? ""
+        let deviceID = UIDevice.current.identifierForVendor?.uuidString ?? ""
         var simNetWorkName:String? = ""
         var simCountryISO:String? = ""
         
@@ -120,7 +121,9 @@ internal extension TapCardView {
             Constants.HTTPHeaderValueKey.requirerDeviceType: Crypter.encrypt(deviceType, using: headersEncryptionPublicKey) ?? "",
             Constants.HTTPHeaderValueKey.requirerDeviceModel: Crypter.encrypt(deviceModel, using: headersEncryptionPublicKey) ?? "",
             Constants.HTTPHeaderValueKey.requirerSimNetworkName: Crypter.encrypt(simNetWorkName ?? "", using: headersEncryptionPublicKey) ?? "",
-            Constants.HTTPHeaderValueKey.requirerSimCountryIso: Crypter.encrypt(simCountryISO ?? "", using: headersEncryptionPublicKey) ?? ""
+            Constants.HTTPHeaderValueKey.requirerSimCountryIso: Crypter.encrypt(simCountryISO ?? "", using: headersEncryptionPublicKey) ?? "",
+            Constants.HTTPHeaderValueKey.deviceID: Crypter.encrypt(deviceID , using: headersEncryptionPublicKey) ?? "",
+            Constants.HTTPHeaderValueKey.appType: Crypter.encrypt("app" , using: headersEncryptionPublicKey) ?? ""
         ]
         
         return result
@@ -154,11 +157,11 @@ internal extension TapCardView {
             fileprivate static let appID                    = "cu"
             fileprivate static let appLocale                = "al"
             fileprivate static let appType                  = "at"
-            fileprivate static let deviceID                 = "device_id"
+            fileprivate static let deviceID                 = "di"
             fileprivate static let requirer                 = "aid"
             fileprivate static let requirerOS               = "ro"
             fileprivate static let requirerOSVersion        = "rov"
-            fileprivate static let requirerValue            = "iOS-checkout-sdk"
+            fileprivate static let requirerValue            = "card-ios"
             fileprivate static let requirerVersion          = "av"
             fileprivate static let requirerDeviceName       = "rn"
             fileprivate static let requirerDeviceType       = "rt"
@@ -170,6 +173,18 @@ internal extension TapCardView {
             
             //@available(*, unavailable) private init() { }
         }
+    }
+    
+    
+    func getDeviceCode() -> String? {
+        var systemInfo = utsname()
+        uname(&systemInfo)
+        let modelCode = withUnsafePointer(to: &systemInfo.machine) {
+            $0.withMemoryRebound(to: CChar.self, capacity: 1) {
+                ptr in String.init(validatingUTF8: ptr)
+            }
+        }
+        return modelCode
     }
 }
 
