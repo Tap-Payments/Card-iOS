@@ -284,7 +284,7 @@ class CardSettingsViewController: FormViewController {
         form +++ Section("interface")
         <<< AlertRow<String>("interface.locale"){ row in
             row.title = "locale"
-            row.options = ["en","ar"]
+            row.options = ["en","ar","dynamic"]
             row.value = (config! as NSDictionary).value(forKeyPath: "interface.locale") as? String ?? "en"
             row.onChange { row in
                 self.update(dictionary: &self.config!, at: ["interface","locale"], with: row.value ?? "en")
@@ -292,7 +292,7 @@ class CardSettingsViewController: FormViewController {
         }
         <<< AlertRow<String>("interface.theme"){ row in
             row.title = "theme"
-            row.options = ["light","dark"]
+            row.options = ["light","dark","dynamic"]
             row.value = (config! as NSDictionary).value(forKeyPath: "interface.theme") as? String ?? "light"
             row.onChange { row in
                 self.update(dictionary: &self.config!, at: ["interface","theme"], with: row.value ?? "light")
