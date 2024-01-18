@@ -48,10 +48,10 @@ class CardSettingsViewController: FormViewController {
         form +++ Section("purpose")
         <<< AlertRow<String>("purpose"){ row in
             row.title = "Token purpose"
-            row.options = ["Transaction","Save Token"]
-            row.value = config?["purpose"] as? String ?? "Transaction"
+            row.options = ["Charge","Authorize", "Save Token"]
+            row.value = config?["purpose"] as? String ?? "Charge"
             row.onChange { row in
-                self.config?["purpose"] = row.value ?? "Transaction"
+                self.config?["purpose"] = row.value ?? "Charge"
             }
         }
         
