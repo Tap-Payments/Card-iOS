@@ -27,7 +27,7 @@ import SwiftEntryKit
     /// Holds a reference to the prefilling card expiry if  any
     internal var cardExpiry:String = ""
     /// Defines the base url for the Tap card sdk
-    internal static let tapCardBaseUrl:String = "https://sdk.dev.tap.company/v2/card/wrapper?configurations="
+    internal static var tapCardBaseUrl:String = "https://sdk.dev.tap.company/v2/card/wrapper?configurations="
     /// Defines the scanner object to be called whenever needed
     internal var fullScanner:TapFullScreenScannerViewController?
     /// Defines the UIViewController passed from the parent app to present the scanner controller within
@@ -36,26 +36,30 @@ import SwiftEntryKit
     internal var currentlyLoadedCardConfigurations:URL?
     /// holds the initial width
     internal var initialWidth:CGFloat = 0
+    /// Default public sandbox encryption key
+    internal static var sandboxHeadersEncryptionPublicKey: String = """
+-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC8AX++RtxPZFtns4XzXFlDIxPB
+h0umN4qRXZaKDIlb6a3MknaB7psJWmf2l+e4Cfh9b5tey/+rZqpQ065eXTZfGCAu
+BLt+fYLQBhLfjRpk8S6hlIzc1Kdjg65uqzMwcTd0p7I4KLwHk1I0oXzuEu53fU1L
+SZhWp4Mnd6wjVgXAsQIDAQAB
+-----END PUBLIC KEY-----
+"""
+    /// Default public production encryption key
+    internal static var productionHeadersEncryptionPublicKey: String = """
+-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC8AX++RtxPZFtns4XzXFlDIxPB
+h0umN4qRXZaKDIlb6a3MknaB7psJWmf2l+e4Cfh9b5tey/+rZqpQ065eXTZfGCAu
+BLt+fYLQBhLfjRpk8S6hlIzc1Kdjg65uqzMwcTd0p7I4KLwHk1I0oXzuEu53fU1L
+SZhWp4Mnd6wjVgXAsQIDAQAB
+-----END PUBLIC KEY-----
+"""
     /// The headers encryption key
     internal var headersEncryptionPublicKey:String {
         if getCardKey().contains("test") {
-            return """
------BEGIN PUBLIC KEY-----
-MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC8AX++RtxPZFtns4XzXFlDIxPB
-h0umN4qRXZaKDIlb6a3MknaB7psJWmf2l+e4Cfh9b5tey/+rZqpQ065eXTZfGCAu
-BLt+fYLQBhLfjRpk8S6hlIzc1Kdjg65uqzMwcTd0p7I4KLwHk1I0oXzuEu53fU1L
-SZhWp4Mnd6wjVgXAsQIDAQAB
------END PUBLIC KEY-----
-"""
+            return TapCardView.sandboxHeadersEncryptionPublicKey
         }else{
-            return """
------BEGIN PUBLIC KEY-----
-MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC8AX++RtxPZFtns4XzXFlDIxPB
-h0umN4qRXZaKDIlb6a3MknaB7psJWmf2l+e4Cfh9b5tey/+rZqpQ065eXTZfGCAu
-BLt+fYLQBhLfjRpk8S6hlIzc1Kdjg65uqzMwcTd0p7I4KLwHk1I0oXzuEu53fU1L
-SZhWp4Mnd6wjVgXAsQIDAQAB
------END PUBLIC KEY-----
-"""
+            return TapCardView.productionHeadersEncryptionPublicKey
         }
     }
     //MARK: - Init methods
@@ -119,8 +123,8 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
         
         // Define the web view constraints
         let top  = webView.topAnchor.constraint(equalTo: self.topAnchor)
-        let left = webView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 4)
-        let right = webView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -4)
+        let left = webView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 0)
+        let right = webView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: 0)
         let bottom = webView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         let cardHeight = self.heightAnchor.constraint(equalToConstant: 95)
         let cardWidth = self.widthAnchor.constraint(equalToConstant: self.frame.width)
@@ -246,12 +250,14 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
         threeDsView.selectedLocale = getCardLocale()
         // Set to web view what should it when the process is canceled by the user
         threeDsView.threeDSCanceled = {
-            // reload the card data
-            self.openUrl(url: self.currentlyLoadedCardConfigurations)
-            // inform the merchant
-            self.delegate?.onError?(data: "Payer canceled three ds process")
-            // dismiss the threeds page
-            SwiftEntryKit.dismiss()
+            DispatchQueue.main.async {
+                // reload the card data
+                self.openUrl(url: self.currentlyLoadedCardConfigurations)
+                // inform the merchant
+                self.delegate?.onError?(data: "Payer canceled three ds process")
+                // dismiss the threeds page
+                SwiftEntryKit.dismiss()
+            }
         }
         // Hide or show the powered by tap based on coming parameter
         threeDsView.poweredByTapView.isHidden = !(cardRedirection.powered ?? true)
@@ -337,17 +343,52 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
         self.cardNumber = cardNumber.tap_byRemovingAllCharactersExcept("0123456789")
         self.cardExpiry = cardExpiry.tap_byRemovingAllCharactersExcept("0123456789/")
         
-        // We will have to add app related information to the request
-        var updatedConfigurations:[String:Any] = configDict
-        updatedConfigurations["headers"] = generateApplicationHeader()
-        // We will have to force NFC to false in iOS
-        self.update(dictionary: &updatedConfigurations, at: ["features","alternativeCardInputs","cardNFC"], with: false)
-        
-        do {
-            try openUrl(url: URL(string: generateTapCardSdkURL(from: updatedConfigurations)))
-        }
-        catch {
-            self.delegate?.onError?(data: "{error:\(error.localizedDescription)}")
+        // We will first need to try to load the latest base url from the CDN to make sure our backend doesn't want us to look somewhere else
+        if let url = URL(string: "https://tap-sdks.b-cdn.net/mobile/card/1.0.0/base_url.json") {
+            var cdnRequest = URLRequest(url: url)
+            cdnRequest.timeoutInterval = 2
+            cdnRequest.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
+            URLSession.shared.dataTask(with: cdnRequest) { data, response, error in
+                 if let data = data {
+                     do {
+                         if let cdnResponse:[String:String] = try JSONSerialization.jsonObject(with: data, options: []) as? [String: String],
+                            let cdnBaseUrlString:String = cdnResponse["baseURL"], cdnBaseUrlString != "",
+                            let cdnBaseUrl:URL = URL(string: cdnBaseUrlString),
+                            let sandboxEncryptionKey:String = cdnResponse["testEncKey"],
+                            let productionEncryptionKey:String = cdnResponse["prodEncKey"] {
+                             TapCardView.tapCardBaseUrl = cdnBaseUrlString
+                             TapCardView.sandboxHeadersEncryptionPublicKey = sandboxEncryptionKey
+                             TapCardView.productionHeadersEncryptionPublicKey = productionEncryptionKey
+                         }
+                     } catch {}
+                  }
+                DispatchQueue.main.async {
+                    do {
+                        // We will have to add app related information to the request
+                        var updatedConfigurations:[String:Any] = configDict
+                        updatedConfigurations["headers"] = self.generateApplicationHeader()
+                        // We will have to force NFC to false in iOS
+                        self.update(dictionary: &updatedConfigurations, at: ["features","alternativeCardInputs","cardNFC"], with: false)
+                        
+                        try self.openUrl(url: URL(string: self.generateTapCardSdkURL(from: updatedConfigurations)))
+                    }
+                    catch {
+                        self.delegate?.onError?(data: "{error:\(error.localizedDescription)}")
+                    }
+                }
+              }.resume()
+        }else{
+            do {
+                // We will have to add app related information to the request
+                var updatedConfigurations:[String:Any] = configDict
+                updatedConfigurations["headers"] = generateApplicationHeader()
+                // We will have to force NFC to false in iOS
+                self.update(dictionary: &updatedConfigurations, at: ["features","alternativeCardInputs","cardNFC"], with: false)
+                try openUrl(url: URL(string: generateTapCardSdkURL(from: updatedConfigurations)))
+            }
+            catch {
+                self.delegate?.onError?(data: "{error:\(error.localizedDescription)}")
+            }
         }
     }
     
@@ -368,6 +409,7 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
     @objc public func generateTapToken() {
         // Let us instruct the card sdk to start the tokenizaion process
         endEditing(true)
+        self.passIP()
         webView?.evaluateJavaScript("window.generateTapToken()")
     }
     

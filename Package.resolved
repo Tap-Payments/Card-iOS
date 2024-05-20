@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "aptabase-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/aptabase/aptabase-swift.git",
+      "state" : {
+        "revision" : "157685dcfcb6de75484c138f53039ef8a68dfb7d",
+        "version" : "0.3.6"
+      }
+    },
+    {
       "identity" : "quicklayout",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/huri000/QuickLayout",

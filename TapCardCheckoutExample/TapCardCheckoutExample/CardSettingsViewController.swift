@@ -78,14 +78,6 @@ class CardSettingsViewController: FormViewController {
         
         
         form +++ Section("order")
-        <<< TextRow("order.id"){ row in
-            row.title = "Tap order id"
-            row.placeholder = "Enter your tap order id"
-            row.value = (config! as NSDictionary).value(forKeyPath: "order.id") as? String ?? TapCardSDKExample.generateRandomOrderId()
-            row.onChange { row in
-                self.update(dictionary: &self.config!, at: ["order","id"], with: row.value ?? TapCardSDKExample.generateRandomOrderId())
-            }
-        }
         <<< IntRow("order.amount"){ row in
             row.title = "order amount"
             row.placeholder = "Enter order's amount"
@@ -94,10 +86,10 @@ class CardSettingsViewController: FormViewController {
                 self.update(dictionary: &self.config!, at: ["order","amount"], with: row.value ?? 1)
             }
         }
-        <<< TextRow("order.currency"){ row in
+        
+        <<< AlertRow<String>("order.currency"){ row in
             row.title = "order currency"
-            row.placeholder = "Enter order's currency"
-            
+            row.options = ["SAR","EGP","KWD","QAR","OMR","BHD","AED","USD"]
             row.value = (config! as NSDictionary).value(forKeyPath: "order.currency") as? String ?? "SAR"
             row.onChange { row in
                 self.update(dictionary: &self.config!, at: ["order","currency"], with: row.value ?? "SAR")
@@ -238,10 +230,10 @@ class CardSettingsViewController: FormViewController {
         form +++ Section("acceptance")
         <<< MultipleSelectorRow<String>("acceptance.supportedSchemes"){ row in
             row.title = "supportedSchemes"
-            row.options = ["AMERICAN_EXPRESS","MADA","MASTERCARD","VISA","OMANNET","MEEZA"]
-            row.value = Set((config! as NSDictionary).value(forKeyPath: "acceptance.supportedSchemes") as? [String] ?? ["AMERICAN_EXPRESS","MADA","MASTERCARD","VISA","OMANNET","MEEZA"])
+            row.options = ["AMERICAN_EXPRESS","MADA","MASTERCARD","VISA","OMANNET"]
+            row.value = Set((config! as NSDictionary).value(forKeyPath: "acceptance.supportedSchemes") as? [String] ?? ["AMERICAN_EXPRESS","MADA","MASTERCARD","VISA","OMANNET"])
             row.onChange { row in
-                self.update(dictionary: &self.config!, at: ["acceptance","supportedSchemes"], with: Array(row.value ?? ["AMERICAN_EXPRESS","MADA","MASTERCARD","VISA","OMANNET","MEEZA"]))
+                self.update(dictionary: &self.config!, at: ["acceptance","supportedSchemes"], with: Array(row.value ?? ["AMERICAN_EXPRESS","MADA","MASTERCARD","VISA","OMANNET"]))
             }
         }
         
