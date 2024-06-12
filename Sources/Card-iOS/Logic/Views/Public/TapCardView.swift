@@ -367,6 +367,8 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
                         // We will have to add app related information to the request
                         var updatedConfigurations:[String:Any] = configDict
                         updatedConfigurations["headers"] = self.generateApplicationHeader()
+                        // Add the flag to indicate it is a new version
+                        updatedConfigurations["sdkVersion"] = "1";
                         // We will have to force NFC to false in iOS
                         self.update(dictionary: &updatedConfigurations, at: ["features","alternativeCardInputs","cardNFC"], with: false)
                         

@@ -293,7 +293,7 @@ class CardSettingsViewController: FormViewController {
         
         <<< AlertRow<String>("interface.edges"){ row in
             row.title = "edges"
-            row.options = ["curved","flat","circular"]
+            row.options = ["curved","flat"]
             row.value = (config! as NSDictionary).value(forKeyPath: "interface.edges") as? String ?? "curved"
             row.onChange { row in
                 self.update(dictionary: &self.config!, at: ["interface","edges"], with: row.value ?? "curved")
