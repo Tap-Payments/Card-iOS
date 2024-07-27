@@ -17,16 +17,16 @@ class TapCardSDKExample: UIViewController {
     
     var dictConfig:[String:Any] = ["operator":["publicKey":"pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"],
                                    "scope":"AuthenticatedToken",
-                                   "purpose":"Transaction",
+                                   "purpose":"Charge",
                                    "transaction":["paymentAgreement":["id":"",
-                                                                      "contract":["id":""]],"reference":""],
+                                                                      "contract":["id":""]],"reference":"trx_ref"],
                                    "order":["id":"",
                                             "amount":1,
                                             "currency":"SAR",
                                             "description": "Authentication description",
-                                            "reference":"",
+                                            "reference":"order_ref",
                                             "metadata":["key":"value"]],
-                                   "invoice":["id":""],
+                                   "invoice":["id":"inv"],
                                    "merchant":["id":""],
                                    "customer":["id":"",
                                                "name":[["lang":"en","first":"TAP","middle":"","last":"PAYMENTS"]],
@@ -45,7 +45,7 @@ class TapCardSDKExample: UIViewController {
                                                  "supportedPaymentAuthentications":["3DS"]],
                                    "fieldVisibility":["card":["cvv":true,
                                                      "cardHolder":true]],
-                                   "interface":["locale": "en",
+                                   "interface":["locale": "dynamic",
                                                 "theme": UIView().traitCollection.userInterfaceStyle == .dark ? "dark": "light",
                                                 "edges": "curved",
                                                 "cardDirection": "dynamic",
@@ -113,19 +113,6 @@ extension TapCardSDKExample: CardSettingsViewControllerDelegate {
     
     func updateConfig(config: [String:Any], cardNumber:String, cardExpiry:String) {
         self.dictConfig = config
-        
-        guard var transactionData:[String:Any] = self.dictConfig["transaction"] as? [String:Any] else {
-            return
-        }
-        transactionData["reference"] = TapCardSDKExample.generateRandomTransactionId()
-        
-        guard var orderData:[String:Any] = self.dictConfig["order"] as? [String:Any] else {
-            return
-        }
-        orderData["id"] = ""//TapCardSDKExample.generateRandomOrderId()
-        
-        self.dictConfig["order"] = orderData
-        self.dictConfig["transaction"] = transactionData
         
         setupTapCardSDK(cardNumber: cardNumber, cardExpiry: cardExpiry)
     }

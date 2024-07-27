@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="dGE-HH-EqT">
-    <device id="retina6_12" orientation="landscape" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="dGE-HH-EqT">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -14,18 +14,18 @@
             <objects>
                 <viewController storyboardIdentifier="CardWebSDKExample" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ksL-9R-rHt" customClass="TapCardSDKExample" customModule="TapCardCheckoutExample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jCS-is-Qc1">
-                        <rect key="frame" x="0.0" y="0.0" width="852" height="393"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s4I-Pq-vtO" customClass="TapCardView" customModule="Card_iOS">
-                                <rect key="frame" x="69" y="99" width="714" height="95"/>
+                                <rect key="frame" x="0.0" y="163.33333333333334" width="393" height="95.000000000000028"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" priority="250" constant="95" id="Zpr-oq-Pmp"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3n0-Vg-c1i">
-                                <rect key="frame" x="354" y="214" width="144" height="50"/>
+                                <rect key="frame" x="124.66666666666669" y="278.33333333333331" width="144" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="2wO-7X-4S7"/>
                                 </constraints>
@@ -37,14 +37,14 @@
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8sZ-XL-izW">
-                                <rect key="frame" x="79" y="272" width="694" height="100"/>
+                                <rect key="frame" x="20" y="336.33333333333326" width="353" height="481.66666666666674"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zwX-BX-CsZ">
-                                <rect key="frame" x="689" y="44" width="84" height="35"/>
+                                <rect key="frame" x="289" y="103" width="84" height="40.333333333333343"/>
                                 <color key="tintColor" systemColor="labelColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Options"/>
@@ -53,7 +53,7 @@
                                 </connections>
                             </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="neY-Ap-QLu">
-                                <rect key="frame" x="79" y="44" width="76" height="35"/>
+                                <rect key="frame" x="20" y="103" width="76" height="40.333333333333343"/>
                                 <color key="tintColor" systemColor="labelColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Simple"/>
@@ -68,13 +68,13 @@
                             <constraint firstItem="gbY-IL-c40" firstAttribute="trailing" secondItem="8sZ-XL-izW" secondAttribute="trailing" constant="20" id="9eB-8m-laE"/>
                             <constraint firstItem="3n0-Vg-c1i" firstAttribute="centerX" secondItem="jCS-is-Qc1" secondAttribute="centerX" id="L1V-eb-LkE"/>
                             <constraint firstItem="8sZ-XL-izW" firstAttribute="bottom" secondItem="gbY-IL-c40" secondAttribute="bottom" id="Xji-WS-3Tj"/>
-                            <constraint firstItem="s4I-Pq-vtO" firstAttribute="leading" secondItem="gbY-IL-c40" secondAttribute="leading" constant="10" id="Zmm-b5-oEB"/>
+                            <constraint firstItem="s4I-Pq-vtO" firstAttribute="leading" secondItem="gbY-IL-c40" secondAttribute="leading" id="Zmm-b5-oEB"/>
                             <constraint firstItem="8sZ-XL-izW" firstAttribute="leading" secondItem="gbY-IL-c40" secondAttribute="leading" constant="20" id="eOH-b2-yBg"/>
                             <constraint firstItem="s4I-Pq-vtO" firstAttribute="top" secondItem="zwX-BX-CsZ" secondAttribute="bottom" constant="20" id="f4f-HS-dXf"/>
                             <constraint firstItem="neY-Ap-QLu" firstAttribute="top" secondItem="gbY-IL-c40" secondAttribute="top" id="hHN-Ab-Zrl"/>
                             <constraint firstItem="zwX-BX-CsZ" firstAttribute="top" secondItem="gbY-IL-c40" secondAttribute="top" id="iFb-NK-T7w"/>
                             <constraint firstItem="neY-Ap-QLu" firstAttribute="leading" secondItem="gbY-IL-c40" secondAttribute="leading" constant="20" id="nUR-xm-xBL"/>
-                            <constraint firstItem="gbY-IL-c40" firstAttribute="trailing" secondItem="s4I-Pq-vtO" secondAttribute="trailing" constant="10" id="oZQ-TS-sUb"/>
+                            <constraint firstItem="gbY-IL-c40" firstAttribute="trailing" secondItem="s4I-Pq-vtO" secondAttribute="trailing" id="oZQ-TS-sUb"/>
                             <constraint firstItem="3n0-Vg-c1i" firstAttribute="top" secondItem="s4I-Pq-vtO" secondAttribute="bottom" constant="20" id="tU4-th-TQI"/>
                             <constraint firstItem="gbY-IL-c40" firstAttribute="trailing" secondItem="zwX-BX-CsZ" secondAttribute="trailing" constant="20" id="xaa-Re-UNp"/>
                             <constraint firstItem="8sZ-XL-izW" firstAttribute="top" secondItem="3n0-Vg-c1i" secondAttribute="bottom" constant="8" id="yMC-Kj-jQa"/>
@@ -96,18 +96,18 @@
             <objects>
                 <viewController id="gnc-iN-nZH" customClass="SimpleIntegrationViewController" customModule="TapCardCheckoutExample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5IQ-g3-5ge">
-                        <rect key="frame" x="0.0" y="0.0" width="852" height="393"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AnM-md-5Ms">
-                                <rect key="frame" x="79" y="44.000000000000007" width="694" height="101.66666666666669"/>
+                                <rect key="frame" x="20" y="103.00000000000001" width="353" height="162.33333333333337"/>
                                 <string key="text">Only passing:  ["operator":["publicKey":"pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"],"scope":"AuthenticatedToken","order":["amount":1, "currency":"SAR"], "customer":["name"[["lang":"en","first":"TAP","middle":"","last":"PAYMENTS"]],"contact":["email":"tap@tap.company"]]]</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z7H-mc-Vlu">
-                                <rect key="frame" x="358" y="337" width="136" height="35"/>
+                                <rect key="frame" x="128.66666666666666" y="777.66666666666663" width="135.99999999999997" height="40.333333333333371"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="generateToken"/>
                                 <connections>
@@ -136,7 +136,7 @@
             <objects>
                 <viewController storyboardIdentifier="CardSettingsViewController" title="Configuration" useStoryboardIdentifierAsRestorationIdentifier="YES" id="l4v-Ta-TZn" customClass="CardSettingsViewController" customModule="TapCardCheckoutExample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5DH-lY-OWz">
-                        <rect key="frame" x="0.0" y="0.0" width="852" height="393"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="eH0-fU-f80"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -152,7 +152,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="dGE-HH-EqT" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="iIa-4R-Jf2">
-                        <rect key="frame" x="0.0" y="0.0" width="852" height="44"/>
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -173,7 +173,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
