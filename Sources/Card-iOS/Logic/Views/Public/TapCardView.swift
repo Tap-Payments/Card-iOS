@@ -27,7 +27,23 @@ import SwiftEntryKit
     /// Holds a reference to the prefilling card expiry if  any
     internal var cardExpiry:String = ""
     /// Defines the base url for the Tap card sdk
-    internal static let tapCardBaseUrl:String = "https://sdk.dev.tap.company/v2/card/wrapper?configurations="
+    internal static var tapCardBaseUrl:String = "https://sdk.dev.tap.company/v2/card/wrapper?configurations="
+    internal static var sandboxKey:String = """
+-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC8AX++RtxPZFtns4XzXFlDIxPB
+h0umN4qRXZaKDIlb6a3MknaB7psJWmf2l+e4Cfh9b5tey/+rZqpQ065eXTZfGCAu
+BLt+fYLQBhLfjRpk8S6hlIzc1Kdjg65uqzMwcTd0p7I4KLwHk1I0oXzuEu53fU1L
+SZhWp4Mnd6wjVgXAsQIDAQAB
+-----END PUBLIC KEY-----
+"""
+    internal static var productionKey:String = """
+-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC8AX++RtxPZFtns4XzXFlDIxPB
+h0umN4qRXZaKDIlb6a3MknaB7psJWmf2l+e4Cfh9b5tey/+rZqpQ065eXTZfGCAu
+BLt+fYLQBhLfjRpk8S6hlIzc1Kdjg65uqzMwcTd0p7I4KLwHk1I0oXzuEu53fU1L
+SZhWp4Mnd6wjVgXAsQIDAQAB
+-----END PUBLIC KEY-----
+"""
     /// Defines the scanner object to be called whenever needed
     internal var fullScanner:TapFullScreenScannerViewController?
     /// Defines the UIViewController passed from the parent app to present the scanner controller within
@@ -39,23 +55,9 @@ import SwiftEntryKit
     /// The headers encryption key
     internal var headersEncryptionPublicKey:String {
         if getCardKey().contains("test") {
-            return """
------BEGIN PUBLIC KEY-----
-MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC8AX++RtxPZFtns4XzXFlDIxPB
-h0umN4qRXZaKDIlb6a3MknaB7psJWmf2l+e4Cfh9b5tey/+rZqpQ065eXTZfGCAu
-BLt+fYLQBhLfjRpk8S6hlIzc1Kdjg65uqzMwcTd0p7I4KLwHk1I0oXzuEu53fU1L
-SZhWp4Mnd6wjVgXAsQIDAQAB
------END PUBLIC KEY-----
-"""
+            return TapCardView.sandboxKey
         }else{
-            return """
------BEGIN PUBLIC KEY-----
-MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC8AX++RtxPZFtns4XzXFlDIxPB
-h0umN4qRXZaKDIlb6a3MknaB7psJWmf2l+e4Cfh9b5tey/+rZqpQ065eXTZfGCAu
-BLt+fYLQBhLfjRpk8S6hlIzc1Kdjg65uqzMwcTd0p7I4KLwHk1I0oXzuEu53fU1L
-SZhWp4Mnd6wjVgXAsQIDAQAB
------END PUBLIC KEY-----
-"""
+            return TapCardView.productionKey
         }
     }
     //MARK: - Init methods
@@ -86,8 +88,10 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
         // instruct the web view to load the needed url
         var request = URLRequest(url: url!)
         request.setValue(TapApplicationPlistInfo.shared.bundleIdentifier ?? "", forHTTPHeaderField: "referer")
-        webView?.navigationDelegate = self
-        webView?.load(request)
+        DispatchQueue.main.async {
+            self.webView?.navigationDelegate = self
+            self.webView?.load(request)
+        }
     }
     
     /// used to setup the constraint of the Tap card sdk view
@@ -343,8 +347,45 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
         // We will have to force NFC to false in iOS
         self.update(dictionary: &updatedConfigurations, at: ["features","alternativeCardInputs","cardNFC"], with: false)
         
+        // Then we need to load base url and encryption keys from cdn
+        // We will first need to try to load the latest base url from the CDN to make sure our backend doesn't want us to look somewhere else
+        if let url = URL(string: "https://firebasestorage.googleapis.com/v0/b/tapcardcheckout.appspot.com/o/base_url.json?alt=media&token=c9df8f79-1832-4222-bcc0-259cf621b823") {
+            var cdnRequest = URLRequest(url: url)
+            cdnRequest.timeoutInterval = 2
+            cdnRequest.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
+            URLSession.shared.dataTask(with: cdnRequest) { data, response, error in
+                self.setLoadedDataFromCDN(data: data)
+                // we need to update the intent with the sdk info
+                self.postLoadingFromCDN(configDict: updatedConfigurations, delegate: delegate)
+              }.resume()
+        }else{
+            // Use the default embedded values as a fallback of all we need to update the intent with the sdk info
+            postLoadingFromCDN(configDict: updatedConfigurations, delegate: delegate)
+        }
+    }
+    
+    /// Saves the data loaded from the CDN to be used afterwards
+    /// - Parameter data: The data loaded from the CDN file
+    internal func setLoadedDataFromCDN(data: Data?) {
+        if let data = data {
+            do {
+                if let cdnResponse:[String:String] = try JSONSerialization.jsonObject(with: data, options: []) as? [String: String],
+                   let cdnBaseUrlString:String = cdnResponse["baseURL"], cdnBaseUrlString != "",
+                   let cdnBaseUrl:URL = URL(string: cdnBaseUrlString),
+                   let sandboxEncryptionKey:String = cdnResponse["testEncKey"],
+                   let productionEncryptionKey:String = cdnResponse["prodEncKey"] {
+                    TapCardView.sandboxKey = sandboxEncryptionKey
+                    TapCardView.productionKey = productionEncryptionKey
+                    TapCardView.tapCardBaseUrl = cdnBaseUrlString
+                }
+            } catch {}
+         }
+    }
+    
+    
+    internal func postLoadingFromCDN(configDict: [String : Any], delegate: TapCardViewDelegate? = nil) {
         do {
-            try openUrl(url: URL(string: generateTapCardSdkURL(from: updatedConfigurations)))
+            try openUrl(url: URL(string: generateTapCardSdkURL(from: configDict)))
         }
         catch {
             self.delegate?.onError?(data: "{error:\(error.localizedDescription)}")
