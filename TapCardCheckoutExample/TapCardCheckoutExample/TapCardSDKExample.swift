@@ -16,7 +16,7 @@ class TapCardSDKExample: UIViewController {
     
     
     var dictConfig:[String:Any] = ["operator":["publicKey":"pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"],
-                                   "scope":"AuthenticatedToken",
+                                   "scope":"Token",
                                    "purpose":"Charge",
                                    "transaction":["paymentAgreement":["id":"",
                                                                       "contract":["id":""]],"reference":"trx_ref"],
