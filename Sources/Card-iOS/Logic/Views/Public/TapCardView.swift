@@ -27,7 +27,7 @@ import SwiftEntryKit
     /// Holds a reference to the prefilling card expiry if  any
     internal var cardExpiry:String = ""
     /// Defines the base url for the Tap card sdk
-    internal static var tapCardBaseUrl:String = "https://sdk.dev.tap.company/v2/card/wrapper?configurations="
+    internal static var tapCardBaseUrl:String = "https://sdk.beta.tap.company/v2/card/wrapper?configurations="
     internal static var sandboxKey:String = """
 -----BEGIN PUBLIC KEY-----
 MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC8AX++RtxPZFtns4XzXFlDIxPB
@@ -344,12 +344,13 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
         // We will have to add app related information to the request
         var updatedConfigurations:[String:Any] = configDict
         updatedConfigurations["headers"] = generateApplicationHeader()
+        updatedConfigurations["sdkVersion"] = "1"
         // We will have to force NFC to false in iOS
         self.update(dictionary: &updatedConfigurations, at: ["features","alternativeCardInputs","cardNFC"], with: false)
         
         // Then we need to load base url and encryption keys from cdn
         // We will first need to try to load the latest base url from the CDN to make sure our backend doesn't want us to look somewhere else
-        if let url = URL(string: "https://firebasestorage.googleapis.com/v0/b/tapcardcheckout.appspot.com/o/base_url.json?alt=media&token=c9df8f79-1832-4222-bcc0-259cf621b823") {
+        if let url = URL(string: "https://tap-sdks.b-cdn.net/mobile/card/1.0.3/base_url.json") {
             var cdnRequest = URLRequest(url: url)
             cdnRequest.timeoutInterval = 2
             cdnRequest.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData

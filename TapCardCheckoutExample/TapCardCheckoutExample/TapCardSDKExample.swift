@@ -27,7 +27,7 @@ class TapCardSDKExample: UIViewController {
                                             "reference":"order_ref",
                                             "metadata":["key":"value"]],
                                    "invoice":["id":"inv"],
-                                   "merchant":["id":""],
+                                   "merchant":["id":"1124340"],
                                    "customer":["id":"",
                                                "name":[["lang":"en","first":"TAP","middle":"","last":"PAYMENTS"]],
                                                "nameOnCard":"TAP PAYMENTS",
