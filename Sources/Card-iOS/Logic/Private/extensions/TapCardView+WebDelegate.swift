@@ -10,6 +10,12 @@ import UIKit
 import WebKit
 import SharedDataModels_iOS
 
+extension TapCardView:UIScrollViewDelegate {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        scrollView.contentOffset = .zero
+    }
+}
+
 extension TapCardView:WKNavigationDelegate {
     
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {

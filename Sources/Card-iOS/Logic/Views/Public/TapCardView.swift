@@ -104,6 +104,8 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
         webView?.backgroundColor = UIColor.clear
         webView?.scrollView.backgroundColor = UIColor.clear
         webView?.scrollView.bounces = false
+        webView?.scrollView.delegate = self
+        webView?.scrollView.showsVerticalScrollIndicator = false
         webView?.isHidden = false
         // Let us add it to the view
         self.backgroundColor = .clear
@@ -180,7 +182,7 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
             // move to the new height or safely to the default height
             let currentWidth:CGFloat = self.frame.width
             
-            let cardHeight = self.heightAnchor.constraint(equalToConstant: (newHeight ?? 95) + 10.0)
+            let cardHeight = self.heightAnchor.constraint(equalToConstant: (newHeight ?? 95) + 15.0)
             let cardWidth = self.widthAnchor.constraint(equalToConstant: currentWidth)
             
             // Activate the constraints
