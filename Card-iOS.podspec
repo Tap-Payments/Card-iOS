@@ -12,12 +12,12 @@ Pod::Spec.new do |s|
   s.resource_bundles = {
     'Card-iOS_Card-iOS' => ['Sources/Card-iOS/Resources/**/*.{xcassets,json,xib,pdf,png,gif,storyboard,xcdatamodeld,lproj}']
   }  
-  s.dependency'SwiftEntryKit'
-  s.dependency'SwiftyRSA'
-  s.dependency'SnapKit'
-  s.dependency'SharedDataModels-iOS'
-  s.dependency'TapCardScannerWebWrapper-iOS'
-  s.dependency'TapFontKit-iOS'
+  s.dependency 'SwiftEntryKit'
+  s.dependency 'SwiftyRSA'
+  s.dependency 'SnapKit'
+  s.dependency 'SharedDataModels-iOS'
+  s.dependency 'TapCardScannerWebWrapper-iOS'
+  s.dependency 'TapFontKit-iOS'
   
   
 end
