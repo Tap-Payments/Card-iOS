@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "Card-iOS",
-    platforms: [.iOS(.v13)],
+    platforms: [.iOS(.v15)],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
@@ -15,7 +15,6 @@ let package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/huri000/SwiftEntryKit.git", from: "1.0.0"),
-        .package(url: "https://github.com/SnapKit/SnapKit.git", from: "5.0.0"),
         .package(url: "https://github.com/Tap-Payments/SharedDataModels-iOS.git", from: "0.0.1"),
         .package(url: "https://github.com/Tap-Payments/TapCardScannerWebWrapper-iOS.git", exact: "0.0.6"),
         .package(url: "https://github.com/Tap-Payments/TapFontKit-iOS.git", from: "0.0.1")
@@ -26,7 +25,6 @@ let package = Package(
         .target(
             name: "Card-iOS",
             dependencies: ["SwiftEntryKit",
-                           "SnapKit",
                            "SharedDataModels-iOS",
                            "TapFontKit-iOS",
                            "TapCardScannerWebWrapper-iOS"],

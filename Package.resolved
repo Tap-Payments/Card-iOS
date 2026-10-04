@@ -1,15 +1,6 @@
 {
   "pins" : [
     {
-      "identity" : "aptabase-swift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/aptabase/aptabase-swift.git",
-      "state" : {
-        "revision" : "157685dcfcb6de75484c138f53039ef8a68dfb7d",
-        "version" : "0.3.6"
-      }
-    },
-    {
       "identity" : "quicklayout",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/huri000/QuickLayout",
@@ -28,30 +19,12 @@
       }
     },
     {
-      "identity" : "snapkit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SnapKit/SnapKit.git",
-      "state" : {
-        "revision" : "f222cbdf325885926566172f6f5f06af95473158",
-        "version" : "5.6.0"
-      }
-    },
-    {
       "identity" : "swiftentrykit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/huri000/SwiftEntryKit.git",
       "state" : {
         "revision" : "c2d42574e4fe4e1f9719843f35add7922942a16b",
         "version" : "1.2.7"
-      }
-    },
-    {
-      "identity" : "swiftyrsa",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/TakeScoop/SwiftyRSA.git",
-      "state" : {
-        "revision" : "6521919ad0e99dff927685f142d8136479acb452",
-        "version" : "1.8.0"
       }
     },
     {

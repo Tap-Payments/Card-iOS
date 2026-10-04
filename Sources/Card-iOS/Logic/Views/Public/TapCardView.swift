@@ -7,7 +7,6 @@
 
 import UIKit
 import WebKit
-import SnapKit
 import SharedDataModels_iOS
 import Foundation
 import TapCardScannerWebWrapper_iOS
@@ -137,19 +136,6 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
         
         NSLayoutConstraint.activate([left, right, top, bottom, cardHeight,cardWidth])
         DispatchQueue.main.async {
-            /*let currentWidth:CGFloat = self.frame.width
-            self.snp.remakeConstraints { make in
-                make.height.equalTo(95)
-                make.width.equalTo(currentWidth)
-            }
-            
-            self.webView?.snp.remakeConstraints { make in
-                make.leading.equalToSuperview()
-                make.trailing.equalToSuperview()
-                make.top.equalToSuperview()
-                make.bottom.equalToSuperview()
-            }
-            */
             self.layoutIfNeeded()
             self.updateConstraints()
             self.layoutSubviews()

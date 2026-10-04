@@ -127,47 +127,36 @@ extension PoweredByTapView {
         poweredByTapImageView.translatesAutoresizingMaskIntoConstraints = false
         poweredByTapImageView.tintColor = .white
         
-        blurView.snp.remakeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.bottom.equalToSuperview()
-        }
-        
-        poweredByTapImageView.snp.remakeConstraints { make in
-            make.width.equalTo(112)
-            make.height.equalTo(30)
-            make.top.equalToSuperview().offset(9)
-            make.trailing.equalToSuperview().offset(-16)
-        }
-        
-        
-        backView.snp.remakeConstraints { make in
-            make.width.equalTo(64)
-            make.height.equalTo(20)
-            make.centerY.equalTo(poweredByTapImageView.snp.centerY)
-            make.leading.equalToSuperview().offset(16)
-        }
-        
-        backButton.snp.remakeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.bottom.equalToSuperview()
-        }
-        
-        backIconImageView.snp.remakeConstraints { make in
-            make.width.equalTo(10)
-            make.height.equalTo(20)
-            make.centerY.equalToSuperview()
-            make.leading.equalToSuperview()
-        }
-        
-        backLabel.snp.remakeConstraints { make in
-            make.centerY.equalTo(backIconImageView.snp.centerY)
-            make.leading.equalTo(backIconImageView.snp.trailing).offset(8)
-            make.trailing.equalToSuperview()
-        }
+        NSLayoutConstraint.activate([
+            blurView.topAnchor.constraint(equalTo: topAnchor),
+            blurView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            blurView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            blurView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            
+            poweredByTapImageView.widthAnchor.constraint(equalToConstant: 112),
+            poweredByTapImageView.heightAnchor.constraint(equalToConstant: 30),
+            poweredByTapImageView.topAnchor.constraint(equalTo: topAnchor, constant: 9),
+            poweredByTapImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            
+            backView.widthAnchor.constraint(equalToConstant: 64),
+            backView.heightAnchor.constraint(equalToConstant: 20),
+            backView.centerYAnchor.constraint(equalTo: poweredByTapImageView.centerYAnchor),
+            backView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            
+            backButton.topAnchor.constraint(equalTo: backView.topAnchor),
+            backButton.leadingAnchor.constraint(equalTo: backView.leadingAnchor),
+            backButton.trailingAnchor.constraint(equalTo: backView.trailingAnchor),
+            backButton.bottomAnchor.constraint(equalTo: backView.bottomAnchor),
+            
+            backIconImageView.widthAnchor.constraint(equalToConstant: 10),
+            backIconImageView.heightAnchor.constraint(equalToConstant: 20),
+            backIconImageView.centerYAnchor.constraint(equalTo: backView.centerYAnchor),
+            backIconImageView.leadingAnchor.constraint(equalTo: backView.leadingAnchor),
+            
+            backLabel.centerYAnchor.constraint(equalTo: backIconImageView.centerYAnchor),
+            backLabel.leadingAnchor.constraint(equalTo: backIconImageView.trailingAnchor, constant: 8),
+            backLabel.trailingAnchor.constraint(equalTo: backView.trailingAnchor)
+        ])
         
         DispatchQueue.main.async {
             self.blurView.setNeedsLayout()
