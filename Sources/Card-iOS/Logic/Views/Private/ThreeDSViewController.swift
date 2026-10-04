@@ -7,7 +7,6 @@
 
 import UIKit
 import WebKit
-import SnapKit
 import SwiftEntryKit
 import SharedDataModels_iOS
 
@@ -89,15 +88,12 @@ extension ThreeDSView {
     func webViewConstraints() {
         addSubview(webView!)
         webView?.translatesAutoresizingMaskIntoConstraints = false
-        webView?.snp.remakeConstraints({ make in
-            make.top.equalToSuperview().offset(56)
-            make.bottom.equalToSuperview()//.offset(80)
-            //make.height.equalTo(500)
-            make.leading.equalToSuperview()//.offset(10)
-            make.trailing.equalToSuperview()//.offset(100)
-            //make.width.equalTo(500)
-           // make.height.equalTo(self.webView!.snp.width)
-        })
+        NSLayoutConstraint.activate([
+            webView!.topAnchor.constraint(equalTo: topAnchor, constant: 56),
+            webView!.bottomAnchor.constraint(equalTo: bottomAnchor),
+            webView!.leadingAnchor.constraint(equalTo: leadingAnchor),
+            webView!.trailingAnchor.constraint(equalTo: trailingAnchor)
+        ])
         
         DispatchQueue.main.async {
             self.webView?.setNeedsLayout()
@@ -112,12 +108,12 @@ extension ThreeDSView {
         addSubview(poweredByTapView)
         sendSubviewToBack(poweredByTapView)
         poweredByTapView.translatesAutoresizingMaskIntoConstraints = false
-        poweredByTapView.snp.remakeConstraints({ make in
-            make.height.equalTo(56)
-            make.bottom.equalTo(self.webView!.snp.top).offset(12)
-            make.leading.equalToSuperview()//.offset(10)
-            make.trailing.equalToSuperview()//.offset(-10)
-        })
+        NSLayoutConstraint.activate([
+            poweredByTapView.heightAnchor.constraint(equalToConstant: 56),
+            poweredByTapView.bottomAnchor.constraint(equalTo: webView!.topAnchor, constant: 12),
+            poweredByTapView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            poweredByTapView.trailingAnchor.constraint(equalTo: trailingAnchor)
+        ])
         
         DispatchQueue.main.async {
             self.poweredByTapView.setNeedsLayout()
