@@ -38,8 +38,24 @@ jobs:
             exit 1
           fi
 
+      # Trunk sometimes times out on its GitHub commit after the version is already registered,
+      # and rejects a re-run as a duplicate. In both cases check trunk itself before failing.
       - name: Push to trunk
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
           LANG: en_US.UTF-8
-        run: pod trunk push Card-iOS.podspec --allow-warnings
+        run: |
+          VERSION=$(grep -E "s.version\s*=" Card-iOS.podspec | sed -E "s/.*'(.*)'.*/\1/")
+          if pod trunk push Card-iOS.podspec --allow-warnings; then
+            exit 0
+          fi
+          echo "pod trunk push failed, checking whether $VERSION was registered anyway"
+          for attempt in 1 2 3 4 5; do
+            if pod trunk info Card-iOS | grep -qE "^\s+- $VERSION \("; then
+              echo "Card-iOS $VERSION is on trunk, treating the push as successful"
+              exit 0
+            fi
+            sleep 30
+          done
+          echo "Card-iOS $VERSION is not on trunk"
+          exit 1
