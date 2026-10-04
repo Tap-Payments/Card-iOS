@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'Card-iOS'
-  s.version          = '1.0.6'
+  s.version          = '1.0.7'
   s.summary          = 'From the shelf card processing library provided by Tap Payments'
   s.homepage         = 'https://github.com/Tap-Payments/Card-iOS'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
@@ -13,7 +13,6 @@ Pod::Spec.new do |s|
     'Card-iOS_Card-iOS' => ['Sources/Card-iOS/Resources/**/*.{xcassets,json,xib,pdf,png,gif,storyboard,xcdatamodeld,lproj}']
   }  
   s.dependency 'SwiftEntryKit'
-  s.dependency 'SwiftyRSA'
   s.dependency 'SnapKit'
   s.dependency 'SharedDataModels-iOS'
   s.dependency 'TapCardScannerWebWrapper-iOS'
