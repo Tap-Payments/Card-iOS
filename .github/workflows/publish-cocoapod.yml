@@ -37,6 +37,11 @@ jobs:
             echo "Tag $TAG does not match podspec version $VERSION"
             exit 1
           fi
+          SDK_VERSION=$(grep -E "let tapCardSDKVersion" Sources/Card-iOS/Logic/Private/utils/SDKVersion.swift | sed -E 's/.*"(.*)".*/\1/')
+          if [ "$TAG" != "$SDK_VERSION" ]; then
+            echo "Tag $TAG does not match tapCardSDKVersion $SDK_VERSION in SDKVersion.swift"
+            exit 1
+          fi
 
       # Trunk sometimes times out on its GitHub commit after the version is already registered,
       # and rejects a re-run as a duplicate. In both cases check trunk itself before failing.

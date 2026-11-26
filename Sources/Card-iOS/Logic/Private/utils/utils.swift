@@ -86,12 +86,9 @@ internal extension TapCardView {
         
         let bundleID = TapApplicationPlistInfo.shared.bundleIdentifier ?? ""
         
-        let sdkPlistInfo = TapBundlePlistInfo(bundle: Bundle(for: TapCardView.self))
-        
-        guard let requirerVersion = sdkPlistInfo.shortVersionString, !requirerVersion.isEmpty else {
-            
-            fatalError("Seems like SDK is not integrated well.")
-        }
+        // Not read from Bundle(for: TapCardView.self): with Swift Package Manager or a static
+        // CocoaPods build, that bundle is the app's, so its version would be sent instead.
+        let requirerVersion = tapCardSDKVersion
         let networkInfo = CTTelephonyNetworkInfo()
         let providers = networkInfo.serviceSubscriberCellularProviders
         
