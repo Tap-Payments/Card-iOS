@@ -17,8 +17,6 @@ import SwiftEntryKit
 @objc public class TapCardView: UIView {
     /// The web view used to render the tap card sdk
     internal var webView: WKWebView?
-    /// The detected IP of the device
-    internal var detectedIP:String = ""
     /// A protocol that allows integrators to get notified from events fired from Tap card sdk
     internal var delegate: TapCardViewDelegate?
     /// Holds a reference to the prefilling card number if  any
@@ -75,7 +73,6 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
     private func commonInit() {
         setupWebView()
         setupConstraints()
-        getIP()
     }
     
     
@@ -146,20 +143,6 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
     }
     
     
-    /// Fetches the IP of the device
-    internal func getIP() {
-        let url = URL(string: "https://geolocation-db.com/json/")!
-        let task = URLSession.shared.dataTask(with: url) {data, response, error in
-            guard let data = data,
-                  error == nil,
-                  let jsonIP:[String:Any] = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String : Any],
-                  let ipString:String = jsonIP["IPv4"] as? String else { return }
-            
-            self.detectedIP = ipString
-        }
-        task.resume()
-    }
-    
     /// Auto adjusts the height of the card view
     /// - Parameter to newHeight: The new height the card view should expand/shrink to
     internal func changeHeight(to newHeight:Double?) {
@@ -197,7 +180,6 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
             self.delegate?.onReady?()
             self.prefillCardData()
-            self.passIP()
         }
     }
     
@@ -213,10 +195,6 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
         cardExpiry = ""
     }
     
-    /// Will pass the detected IP to the card web sdk
-    internal func passIP() {
-        webView?.evaluateJavaScript("window.setIP('\(detectedIP)')")
-    }
     
     /// Will handle & starte the redirection process when called
     /// - Parameter data: The data string fetched from the url parameter
